@@ -8,6 +8,7 @@ import Offcanvas from "react-bootstrap/Offcanvas";
 import BopcornIcon from "../../svgs/BopcornIcon";
 import LockIcon from "../../svgs/LockIcon";
 import SearchIcon from "../../svgs/SearchIcon";
+import Sidebar from "../sidebar";
 import "./style.css";
 
 export default function Header() {
@@ -49,7 +50,8 @@ export default function Header() {
           </div>
           <div className="header-right">
             <div className="header-right-icon">
-              <LockIcon />
+              {/* <LockIcon /> */}
+              <Sidebar />
             </div>
           </div>
         </div>

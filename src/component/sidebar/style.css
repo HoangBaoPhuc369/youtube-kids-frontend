@@ -1,0 +1,135 @@
+.bm-menu-wrap {
+  top: 0;
+}
+
+.bm-item {
+    position: absolute;
+    top: 80px;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    display: inline-block;
+    text-decoration: none;
+    margin-bottom: 10px;
+    color: #fff;
+    transition: color 0.2s;
+}
+
+.bm-item:hover {
+  color: white;
+}
+
+.bm-burger-button {
+  position: fixed;
+  width: 36px;
+  height: 30px;
+  /* top: 36px; */
+}
+
+.bm-burger-bars {
+  background: #d90a17;
+}
+
+.bm-cross-button {
+  height: 24px;
+  width: 24px;
+}
+
+.bm-cross {
+  background: #bdc3c7;
+}
+
+.bm-menu {
+  position: relative;
+  background: #d90a17;
+  padding: 2.5em 1.5em 0;
+  font-size: 1.15em;
+}
+
+.bm-morph-shape {
+  fill: #d90a17;
+}
+
+.bm-item-list {
+  color: #b8b7ad;
+  position: relative;
+}
+
+.bm-overlay {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.bm-burger-button > svg {
+  width: 32px;
+  height: 32px;
+}
+
+.bm-burger-button:hover {
+  transform: scale(1.1);
+}
+
+.bm-cross-button {
+  display: none;
+}
+
+.sidebar-title {
+  text-align: center;
+  font-size: 34px;
+  font-weight: 600;
+}
+
+.sidebar-subtitle {
+  text-align: center;
+  font-size: 16px;
+}
+
+.sidebar-calculate {
+  font-size: 34px;
+  font-weight: 600;
+  text-align: center;
+  margin-top: 16px;
+}
+
+.sidebar-input {
+  display: flex;
+  justify-content: center;
+  margin: 40px 0;
+}
+
+.sidebar-input > input {
+  width: 28px;
+  height: 40px;
+  border: none;
+  margin-left: 11px;
+  font-size: 34px;
+  color: #fff;
+  outline: none;
+  background: transparent;
+  border-bottom: 2px solid #fff;
+}
+
+.sidebar-input > input::placeholder {
+  color: #fff;
+}
+
+.sidebar-button {
+    text-align: center;
+}
+
+.sidebar-button > button {
+    width: 128px;
+    height: 48px;
+    font-size: 18px;
+    font-weight: 600;
+    background-color: #008596;
+    border: 3px solid #008596;
+    color: #fff;
+    transition: all 0.1s ease-in;
+}
+
+.sidebar-button > .btn:hover {
+    transform: scale(1.1);
+    background-color: #008596;
+    border: 3px solid #008596;
+}

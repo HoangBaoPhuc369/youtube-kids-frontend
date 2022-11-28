@@ -1,11 +1,12 @@
 .home-container {
-  width: 1248px;
+  /* width: 1248px;
   height: 50px;
-  margin: 0 auto;
+  margin: 0 auto; */
 }
 
 .video-title {
   margin: 0;
+  width: 244px;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
@@ -15,7 +16,9 @@
 }
 
 .video-body {
+  height: 80px;
   display: flex;
+  align-items: center;
 }
 
 .video-body > .btn-group {
@@ -52,4 +55,18 @@
 
 .dropdown-toggle::after {
   display: none;
+}
+
+.video-card {
+  position: relative;
+  transition: all 0.35s cubic-bezier(0, 0.15, 0, 1);
+}
+
+.video-card:hover {
+  cursor: pointer;
+  transform: scale(1.08);
+}
+
+.dropdown-menu.show {
+  z-index: 99999;
 }

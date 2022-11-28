@@ -1,0 +1,11 @@
+.video-duration {
+    position: absolute;
+    bottom: 85px;
+    right: 5px;
+    border-radius: 2px;
+    color: #fff;
+    background-color: rgba(0,0,0,0.87) !important;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 2px 4px;
+}
