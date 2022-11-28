@@ -1,0 +1,145 @@
+.header {
+    padding: 40px 16px 0;
+    height: 244px;
+    background-color: #fff;
+}
+
+.header-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+}
+
+.header-left > img {
+    height: 64px;
+    width: 64px;
+    border-radius: 50%;
+    margin-left: 32px;
+    transition: all 0.1s ease-in;
+
+}
+
+.header-left > img:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+}
+
+.header-center {
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 756px;
+    height: 64px;
+}
+
+.header-center-search {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    border-radius: 32px;
+    background-color: #f4f4f4;
+    transition: all 0.1s ease-in;
+}
+
+.header-center-search:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+    box-shadow: 0 0 2px 0 rgb(0 0 0 / 12%), 0 8px 13px 0 rgb(0 0 0 / 24%);
+}
+
+.header-center-search > input {
+    width: 100%;
+    height: 100%;
+    outline: none;
+    border: none;
+    margin-left: 32px;
+    font-size: 20px;
+    font-family: Arial;
+    color: rgba(0,0,0,0.87);
+    background-color: inherit;
+}
+
+.header-center-search > button {
+    width: 79px;
+    height: 100%;
+    border-top-right-radius: 32px;
+    border-bottom-right-radius: 32px;
+    outline: none;
+    border: none;
+    background: #2e5fd8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header-center-search > button > svg  {
+    width: 29.6px !important;
+    height: 29.4px !important;
+}
+
+.header-center-category {
+    position: absolute;
+    top: 59px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 724px;
+    height: 126px;
+}
+
+.header-center-category-item {
+    width: 104px;
+    height: 136px;
+    
+}
+
+.header-center-category-item:hover > svg {
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+.header-center-category-item > span {
+    color: #d90a17;
+    font-size: 24px;
+    opacity: 0.87;
+    line-height: 28px;
+    position: relative;
+    left: -40px;
+    text-align: center;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.header-center-category-item > svg {
+    width: 104px !important;
+    height: 104px !important;
+    transition: all 0.1s ease-in;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+}
+
+.header-right-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 20px;
+    margin-right: 32px;
+    cursor: pointer;
+    transition: all 0.1s ease-in;
+}
+
+.header-right-icon:hover {
+    transform: scale(1.1);
+}
+
