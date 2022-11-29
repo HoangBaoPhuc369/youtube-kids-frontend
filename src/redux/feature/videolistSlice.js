@@ -31,7 +31,8 @@ export const videolistSlice = createSlice({
       state.loading = false;
 
       const videos = action.payload.items;
-      // const videoListForKids = videos.filter((video) => video.status.madeForKids === true);
+      const videoListForKids = videos.filter((video) => video.status.madeForKids === true);
+      console.log(videoListForKids);
       state.videos = action.payload.items;
       state.error = "";
     },

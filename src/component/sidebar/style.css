@@ -3,17 +3,17 @@
 }
 
 .bm-item {
-    position: absolute;
-    top: 80px;
-    margin-left: auto;
-    margin-right: auto;
-    left: 0;
-    right: 0;
-    display: inline-block;
-    text-decoration: none;
-    margin-bottom: 10px;
-    color: #fff;
-    transition: color 0.2s;
+  position: absolute;
+  top: 80px;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  display: inline-block;
+  text-decoration: none;
+  margin-bottom: 10px;
+  color: #fff;
+  transition: color 0.2s;
 }
 
 .bm-item:hover {
@@ -114,22 +114,43 @@
 }
 
 .sidebar-button {
-    text-align: center;
+  text-align: center;
 }
 
 .sidebar-button > button {
-    width: 128px;
-    height: 48px;
-    font-size: 18px;
-    font-weight: 600;
-    background-color: #008596;
-    border: 3px solid #008596;
-    color: #fff;
-    transition: all 0.1s ease-in;
+  width: 128px;
+  height: 48px;
+  font-size: 18px;
+  font-weight: 600;
+  background-color: #008596;
+  border: 3px solid #008596;
+  color: #fff;
+  transition: all 0.1s ease-in;
 }
 
-.sidebar-button > .btn:hover {
-    transform: scale(1.1);
-    background-color: #008596;
-    border: 3px solid #008596;
+.sidebar-button > .sidebar-button-active:hover {
+  transform: scale(1.1);
+  background-color: #008596;
+  border: 3px solid #008596;
+}
+
+.sidebar-button > .sidebar-button-disable[disabled] {
+  background-color: #ccc;
+  border-color: #ccc;
+  color: rgba(0, 0, 0, 0.24);
+}
+
+.sidebar-button,
+.sidebar-button-disable:hover:disabled,
+.sidebar-button-disable:hover[disabled] {
+  cursor: no-drop;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
 }

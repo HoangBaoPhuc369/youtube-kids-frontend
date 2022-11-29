@@ -5,10 +5,12 @@ import Parent from "./pages/Parent/index";
 import Details from "./pages/Details/index";
 import Channel from "./pages/Channel/index";
 import Home from "./pages/home/index";
+import Login from "./pages/login";
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
+      <Route path="/login" element={<Login />} />
       <Route path="/parent" element={<Parent />} />
       <Route path="/details/:id" element={<Details />} />
       <Route path="/channel/:id" element={<Channel />} />
