@@ -27,7 +27,7 @@ const ChildrenForm = ({ nextStep, prevStep }) => {
           <Card.Title className="login-form-img">
             <div className="login-form-img-item" ref={container} style={{height: '340px'}}></div>
           </Card.Title>
-          <Card.Text className="login-form-text">
+          <Card.Text className="login-form-title">
             Hãy nhờ cha mẹ thiết lập YouTube Kids
           </Card.Text>
           <div className="login-form-btn-group">

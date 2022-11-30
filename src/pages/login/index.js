@@ -4,30 +4,12 @@ import { Card, Container, Row, Col } from "react-bootstrap";
 import BackgroundLogin from "../../svgs/BackgroundLogin";
 import StepOne from "../../component/form/StepOne";
 import StepTwo from "../../component/form/StepTwo";
-import Final from "../../component/form/Final";
+import Final from "../../component/form/StepCheck";
 import { useState } from "react";
 import ChildrenForm from "../../component/form/ChildrenForm";
+import StepCheck from "../../component/form/StepCheck";
 
 function Login() {
-  // return (
-  // <div className="login-wrapper">
-  //   <Card className="text-center login-form">
-  //     <Card.Body className="login-form-body">
-  //       <Card.Title className="login-form-img">
-  //         <BackgroundLogin />
-  //       </Card.Title>
-  //       <Card.Text className="login-form-text">
-  //         Hãy nhờ cha mẹ thiết lập YouTube Kids
-  //       </Card.Text>
-  //       <div className="login-form-btn-group">
-  //         <Button variant="primary">Tôi là trẻ em</Button>
-  //         <Button variant="primary">Tôi là cha mẹ</Button>
-  //       </div>
-  //     </Card.Body>
-  //   </Card>
-  // </div>
-  // );
-
   //state for steps
   const [step, setstep] = useState(2);
 
@@ -47,6 +29,10 @@ function Login() {
   // function for going to previous step by decreasing step state by 1
   const prevStep = () => {
     setstep(step - 1);
+  };
+
+  const jump2Step = () => {
+    setstep(step + 2);
   };
 
   // handling form input data by taking onchange value and updating our previous form data state
@@ -73,19 +59,13 @@ function Login() {
     case 2:
       return (
         <div className="login-wrapper">
-          {/* <Container>
+          <Container>
             <Row>
               <Col>
-                <StepOne
-                  nextStep={nextStep}
-                  handleFormData={handleInputData}
-                  values={formData}
-                />
+                <StepOne nextStep={nextStep} prevStep={prevStep} />
               </Col>
             </Row>
-          </Container> */}
-
-          <StepOne nextStep={nextStep} prevStep={prevStep} />
+          </Container>
         </div>
       );
     // case 2 to show stepTwo form passing nextStep, prevStep, and handleInputData as handleFormData method as prop and also formData as value to the fprm
@@ -113,7 +93,7 @@ function Login() {
           <Container>
             <Row>
               <Col>
-                <Final values={formData} />
+                <StepCheck values={formData} />
               </Col>
             </Row>
           </Container>

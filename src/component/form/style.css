@@ -1,0 +1,52 @@
+.login-form-text {
+  font-size: 20px;
+}
+
+/* ==============Group Year Input ================== */
+.year-input-group {
+  display: flex;
+  justify-content: center;
+  margin: 40px 0;
+}
+
+.year-input-group > input {
+  width: 28px;
+  height: 40px;
+  border: none;
+  margin-left: 11px;
+  font-size: 34px;
+  color: #000;
+  outline: none;
+  background: transparent;
+  border-bottom: 2px solid #008596;
+}
+
+.year-input-group > input::placeholder {
+  color: #757575;
+  text-align: center;
+}
+
+
+/* =============Calculate Group ============= */
+.calculate-input-group {
+  display: flex;
+  justify-content: center;
+  margin: 18px 0 26px;
+}
+
+.calculate-input-group > input {
+  width: 28px;
+  height: 40px;
+  border: none;
+  margin-left: 11px;
+  font-size: 34px;
+  color: #000;
+  outline: none;
+  background: transparent;
+  border-bottom: 2px solid #008596;
+}
+
+.calculate-input-group > input::placeholder {
+  color: #757575;
+  text-align: center;
+}

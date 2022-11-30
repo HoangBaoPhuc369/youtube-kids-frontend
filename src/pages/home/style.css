@@ -65,6 +65,7 @@
 .video-card:hover {
   cursor: pointer;
   transform: scale(1.08);
+  z-index: 999;
 }
 
 .dropdown-menu.show {

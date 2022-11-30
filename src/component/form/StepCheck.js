@@ -1,13 +1,13 @@
-import { slide as Menu } from "react-burger-menu";
-import { Link } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
-import "./style.css";
-import LockIcon from "../../svgs/LockIcon";
-import useClickOutside from "../../utils/clickOutside";
-import Button from "react-bootstrap/Button";
+import React, { useState, useRef, useEffect } from "react";
+import { Card, Button } from "react-bootstrap";
+import lottie from "lottie-web";
 
-export default function Sidebar() {
-  const [menuOpen, setMenuOpen] = useState(false);
+const StepCheck = ({ nextStep, prevStep }) => {
+  const container = useRef(null);
+  const input1Ref = useRef(null);
+  const input2Ref = useRef(null);
+  const textRef = useRef(null);
+
   const [value, setValue] = useState("");
   const [value1, setValue1] = useState("");
   const [num1, setNum1] = useState(0);
@@ -15,10 +15,15 @@ export default function Sidebar() {
   const [result, setResult] = useState(0);
   const [disableBtn, setDisableBtn] = useState(true);
 
-  const sidebarRef = useRef(null);
-  const input1Ref = useRef(null);
-  const input2Ref = useRef(null);
-  const textRef = useRef(null);
+  useEffect(() => {
+    lottie.loadAnimation({
+      container: container.current,
+      renderer: "svg",
+      loop: true,
+      autoplay: true,
+      animationData: require("../.././animation/53950-pet-lover.json"),
+    });
+  }, []);
 
   const randomNumber = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1) + min);
@@ -46,28 +51,6 @@ export default function Sidebar() {
     randomQuestion();
   }, []);
 
-  const handleStateChange = (state) => {
-    setMenuOpen(state.isOpen);
-  };
-
-  const closeMenu = () => {
-    setMenuOpen(false);
-  };
-
-  const resetInput = () => {
-    setValue("");
-    setValue1("");
-  };
-
-  useClickOutside(sidebarRef, () => {
-    setMenuOpen(false);
-    setTimeout(() => {
-      randomQuestion();
-      resetInput();
-      setDisableBtn(true);
-    }, 1000);
-  });
-
   const handleTypeInput = (e, ref) => {
     const re = /^[0-9\b]+$/;
     const checkInput = ref === "number1";
@@ -91,32 +74,34 @@ export default function Sidebar() {
     const userResult = value + value1;
     if (userResult === result.toString()) {
       alert("Correct!");
-      closeMenu();
     } else {
+      randomQuestion();
       textRef.current.innerHTML =
         "Câu trả lời chưa chính xác, vui lòng thử lại";
-      randomQuestion();
     }
   };
 
   return (
-    <div ref={sidebarRef}>
-      <Menu
-        isOpen={menuOpen}
-        onStateChange={(state) => handleStateChange(state)}
-        right
-        customBurgerIcon={<LockIcon />}
-        width={456}
-      >
-        <div className="sidebar-container">
-          <div className="sidebar-title">Chỉ dành cho cha mẹ</div>
-          <div className="sidebar-subtitle" ref={textRef}>
-            Vui lòng nhập câu trả lời chính xác để tiếp tục
-          </div>
+    <>
+      <Card className="text-center login-form">
+        <Card.Body className="login-form-body">
+          <div
+            className="login-form-img-item"
+            ref={container}
+            style={{ height: "200px" }}
+          ></div>
+          <Card.Title className="login-form-title">
+            Chỉ dành cho cha mẹ
+          </Card.Title>
+          <Card.Text className="login-form-text" ref={textRef}>
+            Vui lòng nhập câu trả chính xác lời để tiếp tục
+          </Card.Text>
+
           <div className="sidebar-calculate">
             {num1} X {num2} = ?
           </div>
-          <div className="sidebar-input">
+
+          <div className="calculate-input-group">
             <input
               value={value}
               name="number1"
@@ -135,20 +120,23 @@ export default function Sidebar() {
               onKeyDown={handleDelNumber}
             />
           </div>
+
           <div className="sidebar-button">
             <Button
               variant="primary"
+              disabled={disableBtn}
+              onClick={() => handleCheckResult()}
               className={
                 disableBtn ? "sidebar-button-disable" : "sidebar-button-active"
               }
-              onClick={handleCheckResult}
-              disabled={disableBtn}
             >
               Gửi
             </Button>
           </div>
-        </div>
-      </Menu>
-    </div>
+        </Card.Body>
+      </Card>
+    </>
   );
-}
+};
+
+export default StepCheck;
