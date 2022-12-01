@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { Card, Button } from "react-bootstrap";
 import lottie from "lottie-web";
 
-const StepCheck = ({ nextStep, prevStep }) => {
+const StepCheck = ({ nextStep }) => {
   const container = useRef(null);
   const input1Ref = useRef(null);
   const input2Ref = useRef(null);
@@ -73,11 +73,13 @@ const StepCheck = ({ nextStep, prevStep }) => {
   const handleCheckResult = () => {
     const userResult = value + value1;
     if (userResult === result.toString()) {
-      alert("Correct!");
+      nextStep();
     } else {
       randomQuestion();
       textRef.current.innerHTML =
         "Câu trả lời chưa chính xác, vui lòng thử lại";
+      setValue("");
+      setValue1("");
     }
   };
 

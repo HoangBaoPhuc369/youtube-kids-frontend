@@ -8,10 +8,13 @@ import Final from "../../component/form/StepCheck";
 import { useState } from "react";
 import ChildrenForm from "../../component/form/ChildrenForm";
 import StepCheck from "../../component/form/StepCheck";
+import LoginOauth2 from "../../component/form/LoginOauth2";
+import CreateProfile from "../../component/form/CreateProfile";
+import ChooseVideosByAges from "../../component/form/ChooseVideosByAges";
 
 function Login() {
   //state for steps
-  const [step, setstep] = useState(2);
+  const [step, setstep] = useState(6);
 
   //state for form data
   const [formData, setFormData] = useState({
@@ -35,19 +38,17 @@ function Login() {
     setstep(step + 2);
   };
 
-  // handling form input data by taking onchange value and updating our previous form data state
   const handleInputData = (input) => (e) => {
-    // input value from the form
     const { value } = e.target;
 
-    //updating for data state taking previous state and then adding new value to create new object
     setFormData((prevState) => ({
       ...prevState,
       [input]: value,
     }));
   };
 
-  // javascript switch case to show different form in each step
+  console.log(step);
+
   switch (step) {
     case 1:
       return (
@@ -55,7 +56,6 @@ function Login() {
           <ChildrenForm nextStep={nextStep} prevStep={prevStep} />
         </div>
       );
-    // case 1 to show stepOne form and passing nextStep, prevStep, and handleInputData as handleFormData method as prop and also formData as value to the fprm
     case 2:
       return (
         <div className="login-wrapper">
@@ -68,7 +68,6 @@ function Login() {
           </Container>
         </div>
       );
-    // case 2 to show stepTwo form passing nextStep, prevStep, and handleInputData as handleFormData method as prop and also formData as value to the fprm
     case 3:
       return (
         <div className="login-wrapper">
@@ -79,27 +78,61 @@ function Login() {
                   nextStep={nextStep}
                   prevStep={prevStep}
                   handleFormData={handleInputData}
-                  values={formData}
                 />
               </Col>
             </Row>
           </Container>
         </div>
       );
-    // Only formData is passed as prop to show the final value at form submit
     case 4:
       return (
         <div className="login-wrapper">
           <Container>
             <Row>
               <Col>
-                <StepCheck values={formData} />
+                <StepCheck nextStep={nextStep} />
               </Col>
             </Row>
           </Container>
         </div>
       );
-    // default case to show nothing
+    case 5:
+      return (
+        <div className="login-wrapper">
+          <Container>
+            <Row>
+              <Col>
+                <LoginOauth2 nextStep={nextStep} />
+              </Col>
+            </Row>
+          </Container>
+        </div>
+      );
+      case 6:
+        return (
+          <div className="login-wrapper">
+            <Container>
+              <Row>
+                <Col>
+                  <CreateProfile nextStep={nextStep} />
+                </Col>
+              </Row>
+            </Container>
+          </div>
+        );
+
+        case 7:
+        return (
+          <div className="login-wrapper">
+            <Container>
+              <Row>
+                <Col>
+                  <ChooseVideosByAges nextStep={nextStep} />
+                </Col>
+              </Row>
+            </Container>
+          </div>
+        );
     default:
       return <div className="login-wrapper"></div>;
   }
