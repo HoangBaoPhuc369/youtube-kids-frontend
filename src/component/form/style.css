@@ -205,7 +205,6 @@
   background-color: transparent !important;
 }
 
-
 .effect-2:focus ~ .focus-border {
   width: 100%;
   transition: 0.4s;
@@ -279,4 +278,164 @@
   text-align: left;
   font-size: 12px;
   color: red;
+}
+
+/* ==============choose age form =============== */
+.h-100 {
+  height: 100%;
+}
+
+.login-wrapper > .h-100 > .row {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-wrapper > .h-100 > .row > .col {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.choose-age-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 1002px;
+  background: transparent;
+  border: none;
+}
+
+.choose-age-form {
+  color: #fff;
+}
+
+.choose-age-form > .choose-age-form {
+  font-size: 16px;
+}
+
+.choose-age-form .group-login-btn-left button {
+  width: 100px;
+  height: 40px;
+  border: none;
+  outline: none;
+  color: #fff;
+  background: transparent;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.choose-age-btn-wrapper {
+  margin-top: 20px;
+  color: #000;
+}
+
+.choose-age-btn-wrapper .card-title {
+  font-size: 30px;
+  font-weight: 600;
+}
+
+.choose-age-btn-wrapper .card-text {
+  font-size: 18px;
+}
+
+.choose-age-btn-item {
+  height: 408px;
+  border-radius: 10px;
+  width: 304px;
+  box-shadow: 0 7px 7px 0 rgb(0 0 0 / 54%);
+  transition: all 0.1s ease-in;
+  cursor: pointer;
+}
+
+.choose-age-btn-item:hover {
+  transform: scale(1.08);
+}
+
+/* ================Info Profile ==================== */
+.login-form-profile-name {
+  display: flex;
+  font-size: 30px;
+  font-weight: 600;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.login-form-profile-age {
+  display: flex;
+  font-size: 18px;
+}
+
+.edit-icon-md {
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+}
+
+.login-form-info {
+  width: 200px;
+  margin-left: 40px;
+  display: flex;
+  flex-direction: column;
+}
+
+.login-form-text {
+  width: 732px;
+}
+
+/* =================List Profile ===================== */
+.list-profile-form-title {
+  font-size: 34px;
+  line-height: 40px;
+  padding: 20px 0 0;
+  font-weight: 600;
+}
+
+.list-profile-wrapper {
+  margin-top: 79px;
+}
+
+.list-profile-form {
+  overflow-y: scroll;
+}
+
+.mgt-10 {
+  margin-top: 10px;
+}
+
+.list-profile-btn > button {
+  width: 200px;
+}
+
+.list-profile-form-card {
+  width: 186px;
+  height: 242px;
+  border: none;
+  margin: 12px;
+}
+
+.list-profile-form-card:focus {
+  outline-style: solid;
+  outline-offset: 12px;
+}
+
+.mgbt-20 {
+  margin-bottom: 20px;
+}
+
+.list-profile-form-card-img {
+  width: 186px;
+  height: 186px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.list-profile-form-card-text {
+  font-size: 28px;
 }

@@ -11,10 +11,12 @@ import StepCheck from "../../component/form/StepCheck";
 import LoginOauth2 from "../../component/form/LoginOauth2";
 import CreateProfile from "../../component/form/CreateProfile";
 import ChooseVideosByAges from "../../component/form/ChooseVideosByAges";
+import InfoProfile from "../../component/form/InfoProfile";
+import ListProfileChildren from "../../component/form/ListProfileChildren";
 
 function Login() {
   //state for steps
-  const [step, setstep] = useState(6);
+  const [step, setstep] = useState(9);
 
   //state for form data
   const [formData, setFormData] = useState({
@@ -108,31 +110,57 @@ function Login() {
           </Container>
         </div>
       );
-      case 6:
-        return (
-          <div className="login-wrapper">
-            <Container>
-              <Row>
-                <Col>
-                  <CreateProfile nextStep={nextStep} />
-                </Col>
-              </Row>
-            </Container>
-          </div>
-        );
+    case 6:
+      return (
+        <div className="login-wrapper">
+          <Container>
+            <Row>
+              <Col>
+                <CreateProfile nextStep={nextStep} />
+              </Col>
+            </Row>
+          </Container>
+        </div>
+      );
 
-        case 7:
-        return (
-          <div className="login-wrapper">
-            <Container>
-              <Row>
-                <Col>
-                  <ChooseVideosByAges nextStep={nextStep} />
-                </Col>
-              </Row>
-            </Container>
-          </div>
-        );
+    case 7:
+      return (
+        <div className="login-wrapper">
+          <Container className="h-100">
+            <Row>
+              <Col>
+                <ChooseVideosByAges nextStep={nextStep} />
+              </Col>
+            </Row>
+          </Container>
+        </div>
+      );
+
+    case 8:
+      return (
+        <div className="login-wrapper">
+          <Container className="h-100">
+            <Row>
+              <Col>
+                <InfoProfile nextStep={nextStep} />
+              </Col>
+            </Row>
+          </Container>
+        </div>
+      );
+
+    case 9:
+      return (
+        <div className="login-wrapper">
+          <Container className="h-100">
+            <Row>
+              <Col>
+                <ListProfileChildren nextStep={nextStep} />
+              </Col>
+            </Row>
+          </Container>
+        </div>
+      );
     default:
       return <div className="login-wrapper"></div>;
   }

@@ -1,10 +1,11 @@
-function BopcornIcon() {
+function BopcornIcon({className}) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 312 312"
       width="312"
       height="312"
+      className={className}
       preserveAspectRatio="xMidYMid meet"
       style={{'width': '100%', 'height': '100%',}}
     >
