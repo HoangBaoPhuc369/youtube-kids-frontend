@@ -3,7 +3,7 @@ import { Card, Button } from "react-bootstrap";
 import lottie from "lottie-web";
 import "./style.css";
 
-const StepTwo = ({ nextStep, prevStep }) => {
+const StepTwo = ({ nextStep, prevStep, jump2Step }) => {
   const container = useRef(null);
   const input1Ref = useRef(null);
   const input2Ref = useRef(null);
@@ -16,15 +16,15 @@ const StepTwo = ({ nextStep, prevStep }) => {
   const [value3, setValue3] = useState("");
   const [disableBtn, setDisableBtn] = useState(true);
 
-  // useEffect(() => {
-  //   lottie.loadAnimation({
-  //     container: container.current,
-  //     renderer: "svg",
-  //     loop: true,
-  //     autoplay: true,
-  //     animationData: require("../.././animation/68687-cute-astronaut-in-space-mug-cartoon.json"),
-  //   });
-  // }, []);
+  useEffect(() => {
+    lottie.loadAnimation({
+      container: container.current,
+      renderer: "svg",
+      loop: true,
+      autoplay: true,
+      animationData: require("../.././animation/68687-cute-astronaut-in-space-mug-cartoon.json"),
+    });
+  }, []);
 
   const handleTypeInput = (e, ref) => {
     const re = /^[0-9\b]+$/;
@@ -81,7 +81,7 @@ const StepTwo = ({ nextStep, prevStep }) => {
     const currentYear = new Date().getFullYear();
     const userAge = currentYear - userYear;
     if (userAge >= 18 ) {
-      alert("You are parent!");
+      jump2Step();
 
     } else {
       nextStep();

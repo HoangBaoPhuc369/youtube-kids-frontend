@@ -6,12 +6,16 @@ import Details from "./pages/Details/index";
 import Channel from "./pages/Channel/index";
 import Home from "./pages/home/index";
 import Login from "./pages/login";
+import ProfileAccount from "./component/profileAcount";
+import LoginSuccess from "./pages/login/LoginSuccess";
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/login/success" element={<LoginSuccess />} />
       <Route path="/parent" element={<Parent />} />
+      <Route path="/profile-account" element={<ProfileAccount />} />
       <Route path="/video-detail/:id" element={<Details />} />
       <Route path="/channel/:id" element={<Channel />} />
     </Routes>

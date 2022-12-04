@@ -1,5 +1,27 @@
 import axios from "axios";
 
+// -------------------------- OAUTH 2 GOOGLE -----------------------------------
+// export const loginOauth2 = () =>
+//   axios.get(
+//     `${process.env.REACT_APP_YOUTUBE_BASE_URL}/auth/google`
+//     // {
+//     //   headers: {
+//     //     Authorization: `Bearer ${token}`,
+//     //   },
+//     // }
+//   );
+
+export const getUser = () =>
+  axios.get(
+    `${process.env.REACT_APP_BACKEND_URL}/auth/success`,
+    { withCredentials: true }
+    // {
+    //   headers: {
+    //     Authorization: `Bearer ${token}`,
+    //   },
+    // }
+  );
+
 // --------------------------VIDEO API-----------------------------------
 export const getVideoList = () =>
   axios.get(

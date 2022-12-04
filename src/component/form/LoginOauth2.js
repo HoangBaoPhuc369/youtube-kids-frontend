@@ -3,9 +3,13 @@ import { Card, Button } from "react-bootstrap";
 import lottie from "lottie-web";
 import "./style.css";
 import { FaAngleRight, FaUserCircle } from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import { getUser } from "../../redux/feature/authSlice";
 
 export default function LoginOauth2() {
   const container = useRef(null);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     lottie.loadAnimation({
@@ -16,6 +20,57 @@ export default function LoginOauth2() {
       animationData: require("../.././animation/127286-hello-world.json"),
     });
   }, []);
+
+  const Login = () => {
+    const w = 438;
+    const h = 600;
+    const dualScreenLeft =
+      window.screenLeft !== undefined ? window.screenLeft : window.screenX;
+    const dualScreenTop =
+      window.screenTop !== undefined ? window.screenTop : window.screenY;
+
+    const width = window.innerWidth
+      ? window.innerWidth
+      : document.documentElement.clientWidth
+      ? document.documentElement.clientWidth
+      : // eslint-disable-next-line no-restricted-globals
+        screen.width;
+    const height = window.innerHeight
+      ? window.innerHeight
+      : document.documentElement.clientHeight
+      ? document.documentElement.clientHeight
+      : // eslint-disable-next-line no-restricted-globals
+        screen.height;
+
+    const systemZoom = width / window.screen.availWidth;
+    const left = (width - w) / 2 / systemZoom + dualScreenLeft;
+    const top = (height - h) / 2 / systemZoom + dualScreenTop;
+    const newWindow = window.open(
+      "http://localhost:8000/auth/google",
+      "google_login",
+      `width=${w / systemZoom}, 
+      height=${h / systemZoom}, 
+      top=${top}, 
+      left=${left},
+      scrollbars=no, 
+      status=no, 
+      resizable=no
+      `
+    );
+    newWindow.focus();
+
+    let timer = null;
+
+    if (newWindow) {
+      timer = setInterval(() => {
+        if (newWindow.closed) {
+          console.log("Yay we're authenticated");
+          dispatch(getUser());
+          if (timer) clearInterval(timer);
+        }
+      }, 500);
+    }
+  };
 
   return (
     <>
@@ -36,7 +91,7 @@ export default function LoginOauth2() {
           </Card.Text>
 
           <div className="login-account-google">
-            <Button variant="primary" size="lg" active>
+            <Button variant="primary" size="lg" active onClick={Login}>
               <FaUserCircle className="login-account-google-avatar" />
               <div className="login-account-google-wraptext">
                 <span>Add a new account</span>
@@ -52,7 +107,9 @@ export default function LoginOauth2() {
             </div>
             <div className="group-login-btn-right">
               <Button variant="primary">Bỏ qua</Button>
-              <Button variant="primary">Đăng Nhập</Button>
+              <Button variant="primary" onClick={Login}>
+                Đăng Nhập
+              </Button>
             </div>
           </div>
         </Card.Body>
