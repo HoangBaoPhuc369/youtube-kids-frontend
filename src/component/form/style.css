@@ -1,0 +1,441 @@
+.login-form-text {
+  font-size: 20px;
+}
+
+.login-form-body {
+  height: 620px;
+}
+
+/* ==============Group Year Input ================== */
+.year-input-group {
+  display: flex;
+  justify-content: center;
+  margin: 40px 0;
+}
+
+.year-input-group > input {
+  width: 28px;
+  height: 40px;
+  border: none;
+  margin-left: 11px;
+  font-size: 34px;
+  color: #000;
+  outline: none;
+  background: transparent;
+  border-bottom: 2px solid #008596;
+}
+
+.year-input-group > input::placeholder {
+  color: #757575;
+  text-align: center;
+}
+
+/* =============Calculate Group ============= */
+.calculate-input-group {
+  display: flex;
+  justify-content: center;
+  margin: 18px 0 26px;
+}
+
+.calculate-input-group > input {
+  width: 28px;
+  height: 40px;
+  border: none;
+  margin-left: 11px;
+  font-size: 34px;
+  color: #000;
+  outline: none;
+  background: transparent;
+  border-bottom: 2px solid #008596;
+}
+
+.calculate-input-group > input::placeholder {
+  color: #757575;
+  text-align: center;
+}
+
+/* ================Group Btn Login ==================== */
+.group-login-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 106px;
+}
+
+.group-login-btn-right {
+}
+
+.group-login-btn-right > button {
+  margin: 0 5px;
+  text-transform: uppercase;
+  height: 48px;
+}
+
+.group-login-btn-right > button:last-child {
+  width: 140px;
+  font-size: 16px;
+  background: #008596;
+}
+
+.group-login-btn-right > button:first-child,
+.group-login-btn-left > button {
+  width: 100px;
+  height: 40px;
+  border: none;
+  outline: none;
+  color: #008596;
+  background: transparent;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.group-login-btn-left > button {
+  text-transform: uppercase;
+  height: 48px;
+}
+
+.group-login-btn-left > button:hover {
+  background: transparent;
+  color: #008596;
+}
+
+.login-account-google {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 50px 0;
+}
+
+.login-account-google > button {
+  background: transparent !important;
+  border: 1px solid rgba(0, 0, 0, 0.12) !important;
+  border-radius: 8px;
+  height: 76px;
+  outline: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-account-google-wraptext {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-account-google-wraptext > span:first-child {
+  color: rgba(0, 0, 0, 0.87);
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.login-account-google-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  margin-right: 10px;
+  color: #008596;
+  background: #fff;
+}
+
+.login-account-google-arrow {
+  height: 25px;
+  margin-left: 40px;
+  opacity: 0.5;
+  color: #1d1d1d;
+}
+
+/* ================LOGIN FORM PROFILE ===================== */
+.login-form-wrapper {
+  border-radius: 8px;
+  padding: 48px;
+  height: 322px;
+  width: 608px;
+  display: flex;
+  align-items: center;
+  margin: 20px auto;
+  border: 1px solid rgba(0, 0, 0, 0.12) !important;
+}
+
+.login-form-profile-info {
+  width: 246px;
+  margin-left: 40px;
+  display: flex;
+  flex-direction: column;
+}
+
+:focus {
+  outline: none;
+}
+
+.login-form-profile-info > .input-effect {
+  width: 100%;
+  float: left;
+  margin: 15px 3%;
+  position: relative;
+}
+
+.login-form-profile-info > input {
+  font: 15px/24px "Muli", sans-serif;
+  color: #333;
+  width: 100%;
+  box-sizing: border-box;
+  letter-spacing: 1px;
+}
+
+.effect-2 {
+  width: 100%;
+  border: 0;
+  padding: 7px 0;
+  border-bottom: 1px solid #ccc;
+}
+
+.effect-2 ~ .focus-border {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background-color: #008596;
+  transition: 0.4s;
+}
+
+.error-input ~ .focus-border {
+  background-color: transparent !important;
+}
+
+.effect-2:focus ~ .focus-border {
+  width: 100%;
+  transition: 0.4s;
+  left: 0;
+}
+
+.login-form-profile-img {
+  position: relative;
+  cursor: pointer;
+}
+
+.login-form-profile-img {
+  width: 224px;
+  height: 224px;
+  background: transparent;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.login-form-profile-img > img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.login-form-profile-img-edit {
+  background-color: rgba(0, 0, 0, 0.54);
+  bottom: 0;
+  left: 0;
+  height: 72px;
+  position: absolute;
+  text-align: center;
+  width: 100%;
+}
+
+.login-form-profile-img-edit > svg {
+  color: #fff;
+  width: 26px;
+  height: 27px;
+  margin-top: 15px;
+}
+
+.btn-right > .btn-next {
+  width: 140px;
+  height: 48px;
+  font-size: 18px;
+  background: #008596;
+}
+
+.btn-right > .btn-next[disabled] {
+  background-color: #ccc;
+  border-color: #ccc;
+  color: rgba(0, 0, 0, 0.24);
+}
+
+.btn-right,
+.btn-next:hover[disabled] {
+  cursor: no-drop;
+}
+
+.error-input {
+  border-bottom: 1px solid red !important;
+}
+
+.input-effect-error {
+  position: absolute;
+  bottom: -22px;
+  left: 0;
+  width: 100%;
+  height: 20px;
+  text-align: left;
+  font-size: 12px;
+  color: red;
+}
+
+/* ==============choose age form =============== */
+.h-100 {
+  height: 100%;
+}
+
+.login-wrapper > .h-100 > .row {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-wrapper > .h-100 > .row > .col {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.choose-age-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 1002px;
+  background: transparent;
+  border: none;
+}
+
+.choose-age-form {
+  color: #fff;
+}
+
+.choose-age-form > .choose-age-form {
+  font-size: 16px;
+}
+
+.choose-age-form .group-login-btn-left button {
+  width: 100px;
+  height: 40px;
+  border: none;
+  outline: none;
+  color: #fff;
+  background: transparent;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.choose-age-btn-wrapper {
+  margin-top: 20px;
+  color: #000;
+}
+
+.choose-age-btn-wrapper .card-title {
+  font-size: 30px;
+  font-weight: 600;
+}
+
+.choose-age-btn-wrapper .card-text {
+  font-size: 18px;
+}
+
+.choose-age-btn-item {
+  height: 408px;
+  border-radius: 10px;
+  width: 304px;
+  box-shadow: 0 7px 7px 0 rgb(0 0 0 / 54%);
+  transition: all 0.1s ease-in;
+  cursor: pointer;
+}
+
+.choose-age-btn-item:hover {
+  transform: scale(1.08);
+}
+
+/* ================Info Profile ==================== */
+.login-form-profile-name {
+  display: flex;
+  font-size: 30px;
+  font-weight: 600;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.login-form-profile-age {
+  display: flex;
+  font-size: 18px;
+}
+
+.edit-icon-md {
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+}
+
+.login-form-info {
+  width: 200px;
+  margin-left: 40px;
+  display: flex;
+  flex-direction: column;
+}
+
+.login-form-text {
+  width: 732px;
+}
+
+/* =================List Profile ===================== */
+.list-profile-form-title {
+  font-size: 34px;
+  line-height: 40px;
+  padding: 20px 0 0;
+  font-weight: 600;
+}
+
+.list-profile-wrapper {
+  margin-top: 79px;
+}
+
+.list-profile-form {
+  overflow-y: scroll;
+}
+
+.mgt-10 {
+  margin-top: 10px;
+}
+
+.list-profile-btn > button {
+  width: 200px;
+}
+
+.list-profile-form-card {
+  width: 186px;
+  height: 242px;
+  border: none;
+  margin: 12px;
+}
+
+.list-profile-form-card:focus {
+  outline-style: solid;
+  outline-offset: 12px;
+}
+
+.mgbt-20 {
+  margin-bottom: 20px;
+}
+
+.list-profile-form-card-img {
+  width: 186px;
+  height: 186px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.list-profile-form-card-text {
+  font-size: 28px;
+}

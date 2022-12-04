@@ -1,7 +1,5 @@
 .home-container {
-  /* width: 1248px;
-  height: 50px;
-  margin: 0 auto; */
+  margin-top: 255px;
 }
 
 .video-title {
@@ -65,6 +63,7 @@
 .video-card:hover {
   cursor: pointer;
   transform: scale(1.08);
+  z-index: 999;
 }
 
 .dropdown-menu.show {

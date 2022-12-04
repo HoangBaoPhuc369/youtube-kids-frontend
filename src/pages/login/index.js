@@ -4,32 +4,19 @@ import { Card, Container, Row, Col } from "react-bootstrap";
 import BackgroundLogin from "../../svgs/BackgroundLogin";
 import StepOne from "../../component/form/StepOne";
 import StepTwo from "../../component/form/StepTwo";
-import Final from "../../component/form/Final";
+import Final from "../../component/form/StepCheck";
 import { useState } from "react";
 import ChildrenForm from "../../component/form/ChildrenForm";
+import StepCheck from "../../component/form/StepCheck";
+import LoginOauth2 from "../../component/form/LoginOauth2";
+import CreateProfile from "../../component/form/CreateProfile";
+import ChooseVideosByAges from "../../component/form/ChooseVideosByAges";
+import InfoProfile from "../../component/form/InfoProfile";
+import ListProfileChildren from "../../component/form/ListProfileChildren";
 
 function Login() {
-  // return (
-  // <div className="login-wrapper">
-  //   <Card className="text-center login-form">
-  //     <Card.Body className="login-form-body">
-  //       <Card.Title className="login-form-img">
-  //         <BackgroundLogin />
-  //       </Card.Title>
-  //       <Card.Text className="login-form-text">
-  //         Hãy nhờ cha mẹ thiết lập YouTube Kids
-  //       </Card.Text>
-  //       <div className="login-form-btn-group">
-  //         <Button variant="primary">Tôi là trẻ em</Button>
-  //         <Button variant="primary">Tôi là cha mẹ</Button>
-  //       </div>
-  //     </Card.Body>
-  //   </Card>
-  // </div>
-  // );
-
   //state for steps
-  const [step, setstep] = useState(2);
+  const [step, setstep] = useState(9);
 
   //state for form data
   const [formData, setFormData] = useState({
@@ -49,19 +36,21 @@ function Login() {
     setstep(step - 1);
   };
 
-  // handling form input data by taking onchange value and updating our previous form data state
+  const jump2Step = () => {
+    setstep(step + 2);
+  };
+
   const handleInputData = (input) => (e) => {
-    // input value from the form
     const { value } = e.target;
 
-    //updating for data state taking previous state and then adding new value to create new object
     setFormData((prevState) => ({
       ...prevState,
       [input]: value,
     }));
   };
 
-  // javascript switch case to show different form in each step
+  console.log(step);
+
   switch (step) {
     case 1:
       return (
@@ -69,26 +58,18 @@ function Login() {
           <ChildrenForm nextStep={nextStep} prevStep={prevStep} />
         </div>
       );
-    // case 1 to show stepOne form and passing nextStep, prevStep, and handleInputData as handleFormData method as prop and also formData as value to the fprm
     case 2:
       return (
         <div className="login-wrapper">
-          {/* <Container>
+          <Container>
             <Row>
               <Col>
-                <StepOne
-                  nextStep={nextStep}
-                  handleFormData={handleInputData}
-                  values={formData}
-                />
+                <StepOne nextStep={nextStep} prevStep={prevStep} />
               </Col>
             </Row>
-          </Container> */}
-
-          <StepOne nextStep={nextStep} prevStep={prevStep} />
+          </Container>
         </div>
       );
-    // case 2 to show stepTwo form passing nextStep, prevStep, and handleInputData as handleFormData method as prop and also formData as value to the fprm
     case 3:
       return (
         <div className="login-wrapper">
@@ -99,27 +80,87 @@ function Login() {
                   nextStep={nextStep}
                   prevStep={prevStep}
                   handleFormData={handleInputData}
-                  values={formData}
                 />
               </Col>
             </Row>
           </Container>
         </div>
       );
-    // Only formData is passed as prop to show the final value at form submit
     case 4:
       return (
         <div className="login-wrapper">
           <Container>
             <Row>
               <Col>
-                <Final values={formData} />
+                <StepCheck nextStep={nextStep} />
               </Col>
             </Row>
           </Container>
         </div>
       );
-    // default case to show nothing
+    case 5:
+      return (
+        <div className="login-wrapper">
+          <Container>
+            <Row>
+              <Col>
+                <LoginOauth2 nextStep={nextStep} />
+              </Col>
+            </Row>
+          </Container>
+        </div>
+      );
+    case 6:
+      return (
+        <div className="login-wrapper">
+          <Container>
+            <Row>
+              <Col>
+                <CreateProfile nextStep={nextStep} />
+              </Col>
+            </Row>
+          </Container>
+        </div>
+      );
+
+    case 7:
+      return (
+        <div className="login-wrapper">
+          <Container className="h-100">
+            <Row>
+              <Col>
+                <ChooseVideosByAges nextStep={nextStep} />
+              </Col>
+            </Row>
+          </Container>
+        </div>
+      );
+
+    case 8:
+      return (
+        <div className="login-wrapper">
+          <Container className="h-100">
+            <Row>
+              <Col>
+                <InfoProfile nextStep={nextStep} />
+              </Col>
+            </Row>
+          </Container>
+        </div>
+      );
+
+    case 9:
+      return (
+        <div className="login-wrapper">
+          <Container className="h-100">
+            <Row>
+              <Col>
+                <ListProfileChildren nextStep={nextStep} />
+              </Col>
+            </Row>
+          </Container>
+        </div>
+      );
     default:
       return <div className="login-wrapper"></div>;
   }

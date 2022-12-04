@@ -12,7 +12,7 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/parent" element={<Parent />} />
-      <Route path="/details/:id" element={<Details />} />
+      <Route path="/video-detail/:id" element={<Details />} />
       <Route path="/channel/:id" element={<Channel />} />
     </Routes>
   );

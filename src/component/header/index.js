@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
@@ -11,10 +12,22 @@ import SearchIcon from "../../svgs/SearchIcon";
 import Sidebar from "../sidebar";
 import "./style.css";
 
-export default function Header() {
+export default function Header({ page }) {
+  const [navbar, setNavbar] = useState(false);
+
+  const changeBackground = () => {
+    if (window.scrollY >= 150) {
+      setNavbar(true);
+    } else {
+      setNavbar(false);
+    }
+  };
+
+  window.addEventListener("scroll", changeBackground);
+
   return (
     <>
-      <div className="header">
+      <div className={page === "video-detail" ? "header-detail" : "header"}>
         <div className="header-wrap">
           <div className="header-left">
             <img
@@ -23,30 +36,57 @@ export default function Header() {
             />
           </div>
           <div className="header-center">
-            <div className="header-center-search">
-              <input type="text" placeholder="Tìm kiếm trên Youtube Kids" />
-              <button>
-                <SearchIcon />
-              </button>
-            </div>
-            <div className="header-center-category">
-              <div className="header-center-category-item">
-                <BopcornIcon />
-                <span>CHƯƠNG TRÌNH</span>
-              </div>
-              <div className="header-center-category-item">
-                <BopcornIcon />
-                <span></span>
-              </div>
-              <div className="header-center-category-item">
-                <BopcornIcon />
-                <span></span>
-              </div>
-              <div className="header-center-category-item">
-                <BopcornIcon />
-                <span></span>
-              </div>
-            </div>
+            {page === "video-detail" ? (
+              <>
+                {/* <div className="header-center-search">
+                  <input type="text" placeholder="Tìm kiếm trên Youtube Kids" />
+                  <button>
+                    <SearchIcon />
+                  </button>
+                </div> */}
+                <div className="header-center-category-video-detail">
+                  <div className="header-center-category-item">
+                    <BopcornIcon className="category-item-icon" />
+                  </div>
+                  <div className="header-center-category-item">
+                    <BopcornIcon className="category-item-icon" />
+                  </div>
+                  <div className="header-center-category-item">
+                    <BopcornIcon className="category-item-icon" />
+                  </div>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="header-center-search">
+                  <input type="text" placeholder="Tìm kiếm trên Youtube Kids" />
+                  <button>
+                    <SearchIcon />
+                  </button>
+                </div>
+                <div
+                  className={
+                    navbar
+                      ? "header-center-category-fix"
+                      : "header-center-category"
+                  }
+                >
+                  <div className="header-center-category-item">
+                    <BopcornIcon className="category-item-icon" />
+                    {/* <img src="../../../image/bopcorn-disable.png" className="category-item-icon" alt="" /> */}
+                    <span>Sáng tạo</span>
+                  </div>
+                  <div className="header-center-category-item">
+                    <BopcornIcon className="category-item-icon" />
+                    <span></span>
+                  </div>
+                  <div className="header-center-category-item">
+                    <BopcornIcon className="category-item-icon" />
+                    <span></span>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
           <div className="header-right">
             <div className="header-right-icon">

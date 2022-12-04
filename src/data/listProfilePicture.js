@@ -1,0 +1,86 @@
+export const listProfilePicture = [
+  {
+    id: 1,
+    src: "https://www.gstatic.com/ytkids/avatars/bck_avatar_kids_optimisticgiraffe_800_20170929.png",
+    alt: "profile picture 1",
+    active: true,
+  },
+  {
+    id: 2,
+    src: "https://www.gstatic.com/ytkids/avatars/bck_avatar_kids_mrmarshmellow_800_20170929.png",
+    alt: "profile picture 2",
+    active: false,
+  },
+  {
+    id: 3,
+    src: "https://www.gstatic.com/ytkids/avatars/bck_avatar_kids_gumi_800_20170929.png",
+    alt: "profile picture 3",
+    active: false,
+  },
+  {
+    id: 4,
+    src: "https://www.gstatic.com/ytkids/avatars/bck_avatar_kids_crunchy_800_20170929.png",
+    alt: "profile picture 4",
+    active: false,
+  },
+  {
+    id: 5,
+    src: "https://www.gstatic.com/ytkids/avatars/bck_avatar_kids_shypanda_800_20170929.png",
+    alt: "profile picture 5",
+    active: false,
+  },
+  {
+    id: 6,
+    src: "https://www.gstatic.com/ytkids/avatars/bck_avatar_kids_ninjamarble_800_20170929.png",
+    alt: "profile picture 6",
+    active: false,
+  },
+  {
+    id: 7,
+    src: "https://www.gstatic.com/ytkids/avatars/bck_avatar_kids_failnana_800_20170929.png",
+    alt: "profile picture 7",
+    active: false,
+  },
+  {
+    id: 8,
+    src: "https://www.gstatic.com/ytkids/avatars/bck_avatar_kids_emohorse_800_20170929.png",
+    alt: "profile picture 8",
+    active: false,
+  },
+  {
+    id: 10,
+    src: "https://www.gstatic.com/ytkids/avatars/bck_avatar_kids_burnedtoast_800_20170929.png",
+    alt: "profile picture 10",
+    active: false,
+  },
+  {
+    id: 11,
+    src: "https://www.gstatic.com/ytkids/avatars/bck_avatar_kids_nicecreams_800_20170929.png",
+    alt: "profile picture 11",
+    active: false,
+  },
+  {
+    id: 12,
+    src: "https://www.gstatic.com/ytkids/avatars/bck_avatar_kids_bobble_800_20170929.png",
+    alt: "profile picture 12",
+    active: false,
+  },
+  {
+    id: 13,
+    src: "https://www.gstatic.com/ytkids/avatars/bck_avatar_kids_flashmeow_800_20170929.png",
+    alt: "profile picture 13",
+    active: false,
+  },
+  {
+    id: 14,
+    src: "https://www.gstatic.com/ytkids/avatars/bck_avatar_kids_kevin_800_20170929.png",
+    alt: "profile picture 14",
+    active: false,
+  },
+  {
+    id: 15,
+    src: "https://www.gstatic.com/ytkids/avatars/bck_avatar_kids_mia_800_20170929.png",
+    alt: "profile picture 15",
+    active: false,
+  },
+];
