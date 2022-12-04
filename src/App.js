@@ -9,6 +9,7 @@ import Login from "./pages/login";
 import ProfileAccount from "./component/profileAcount";
 import LoginSuccess from "./pages/login/LoginSuccess";
 import Admin from "./pages/Admin";
+import History from "./pages/History";
 function App() {
   return (
     <Routes>
@@ -20,6 +21,7 @@ function App() {
       <Route path="/video-detail/:id" element={<Details />} />
       <Route path="/channel/:id" element={<Channel />} />
       <Route path="/admin" element={<Admin />} />
+      <Route path="/history" element={<History />} />
     </Routes>
   );
 }

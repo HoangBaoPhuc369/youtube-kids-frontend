@@ -6,7 +6,10 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Offcanvas from "react-bootstrap/Offcanvas";
+import { useNavigate } from "react-router-dom";
 import BopcornIcon from "../../svgs/BopcornIcon";
+import Discovery from "../../svgs/Discovery";
+import HeartIcon from "../../svgs/HeartIcon";
 import LockIcon from "../../svgs/LockIcon";
 import SearchIcon from "../../svgs/SearchIcon";
 import Sidebar from "../sidebar";
@@ -24,6 +27,10 @@ export default function Header({ page }) {
   };
 
   window.addEventListener("scroll", changeBackground);
+  const navigate = useNavigate();
+  const handleHistory = () => {
+    navigate("/history");
+  };
 
   return (
     <>
@@ -33,6 +40,7 @@ export default function Header({ page }) {
             <img
               src="https://res.cloudinary.com/da2c2nw4m/image/upload/v1667266412/facebook-clone/PhucHoang_Ns8BbJoJo/profile_pictures/hkutn8wxbqdhh47nsg2c.jpg"
               alt=""
+              onClick={handleHistory}
             />
           </div>
           <div className="header-center">
@@ -46,7 +54,7 @@ export default function Header({ page }) {
                 </div> */}
                 <div className="header-center-category-video-detail">
                   <div className="header-center-category-item">
-                    <BopcornIcon className="category-item-icon" />
+                    <HeartIcon className="category-item-icon" />
                   </div>
                   <div className="header-center-category-item">
                     <BopcornIcon className="category-item-icon" />
@@ -72,8 +80,9 @@ export default function Header({ page }) {
                   }
                 >
                   <div className="header-center-category-item">
-                    <BopcornIcon className="category-item-icon" />
+                    {/* <BopcornIcon className="category-item-icon" /> */}
                     {/* <img src="../../../image/bopcorn-disable.png" className="category-item-icon" alt="" /> */}
+                    <HeartIcon className="category-item-icon" />
                     <span>Sáng tạo</span>
                   </div>
                   <div className="header-center-category-item">
@@ -81,8 +90,8 @@ export default function Header({ page }) {
                     <span></span>
                   </div>
                   <div className="header-center-category-item">
-                    <BopcornIcon className="category-item-icon" />
-                    <span></span>
+                    <Discovery className="category-item-icon" />
+                    <span>Định hướng</span>
                   </div>
                 </div>
               </>

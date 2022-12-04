@@ -1,0 +1,24 @@
+.background-history {
+  background-color: black;
+}
+.header-history {
+  color: #fff;
+  font-size: 34px;
+  text-align: center;
+  margin-top: 40px;
+  padding: 10px;
+}
+
+.avatar-resize-history {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.avatar-resize {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  margin-right: 10px;
+}

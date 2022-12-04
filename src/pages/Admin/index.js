@@ -100,7 +100,7 @@ export default function Admin() {
                         <div className="d-flex">
                           <div className="w-100 me-5">
                             <label
-                              for="exampleFormControlInput1"
+                              htmlFor="exampleFormControlInput1"
                               className="form-label"
                             >
                               Nhập mật mã
@@ -114,7 +114,7 @@ export default function Admin() {
                           </div>
                           <div className="w-100 me-5">
                             <label
-                              for="exampleFormControlTextarea1"
+                              htmlFor="exampleFormControlTextarea1"
                               className="form-label"
                             >
                               Nhập lại mật mã
