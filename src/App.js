@@ -1,11 +1,12 @@
 import "./App.css";
-import 'bootstrap/dist/css/bootstrap.css';
+import "bootstrap/dist/css/bootstrap.css";
 import { Routes, Route } from "react-router-dom";
 import Parent from "./pages/Parent/index";
 import Details from "./pages/Details/index";
 import Channel from "./pages/Channel/index";
 import Home from "./pages/home/index";
 import Login from "./pages/login";
+import Admin from "./pages/Admin";
 function App() {
   return (
     <Routes>
@@ -14,6 +15,7 @@ function App() {
       <Route path="/parent" element={<Parent />} />
       <Route path="/video-detail/:id" element={<Details />} />
       <Route path="/channel/:id" element={<Channel />} />
+      <Route path="/admin" element={<Admin />} />
     </Routes>
   );
 }
