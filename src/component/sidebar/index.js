@@ -1,5 +1,5 @@
 import { slide as Menu } from "react-burger-menu";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import "./style.css";
 import LockIcon from "../../svgs/LockIcon";
@@ -7,6 +7,7 @@ import useClickOutside from "../../utils/clickOutside";
 import Button from "react-bootstrap/Button";
 
 export default function Sidebar() {
+  const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
   const [value, setValue] = useState("");
   const [value1, setValue1] = useState("");
@@ -90,7 +91,7 @@ export default function Sidebar() {
   const handleCheckResult = () => {
     const userResult = value + value1;
     if (userResult === result.toString()) {
-      alert("Correct!");
+      navigate("/admin");
       closeMenu();
     } else {
       textRef.current.innerHTML =
