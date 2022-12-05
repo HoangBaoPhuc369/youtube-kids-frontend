@@ -3,13 +3,19 @@ import { Card, Button } from "react-bootstrap";
 import lottie from "lottie-web";
 import "./style.css";
 import { FaAngleRight, FaUserCircle } from "react-icons/fa";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../../redux/feature/authSlice";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginOauth2() {
   const container = useRef(null);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const { user } = useSelector((state) => state.auth);
+
+  console.log(user);
 
   useEffect(() => {
     lottie.loadAnimation({
@@ -66,6 +72,7 @@ export default function LoginOauth2() {
         if (newWindow.closed) {
           console.log("Yay we're authenticated");
           dispatch(getUser());
+          navigate("/profile-account");
           if (timer) clearInterval(timer);
         }
       }, 500);
@@ -92,10 +99,14 @@ export default function LoginOauth2() {
 
           <div className="login-account-google">
             <Button variant="primary" size="lg" active onClick={Login}>
-              <FaUserCircle className="login-account-google-avatar" />
+              {user ? (
+                <img src={user.picture} alt="" />
+              ) : (
+                <FaUserCircle className="login-account-google-avatar" />
+              )}
+
               <div className="login-account-google-wraptext">
                 <span>Add a new account</span>
-                {/* <span>Primary button</span> */}
               </div>
               <FaAngleRight className="login-account-google-arrow" />
             </Button>
