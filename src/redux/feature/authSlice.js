@@ -11,14 +11,20 @@ import * as api from "../api";
 //   }
 // });
 
-export const getUser = createAsyncThunk("auth/getUser", async () => {
-  try {
-    const {data} = await api.getUser();
-    return data.user;
-  } catch (err) {
-    return err.response.data;
+export const getUser = createAsyncThunk(
+  "auth/getUser",
+  async ({ navigate }, { rejectWithValue }) => {
+    try {
+      const { data } = await api.getUser();
+      if (data.user) {
+        navigate("/profile-account");
+      }
+      return data.user;
+    } catch (err) {
+      return err.response.data;
+    }
   }
-});
+);
 
 const initialState = {
   user: Cookies.get("user") ? JSON.parse(Cookies.get("user")) : null,

@@ -124,10 +124,18 @@
   flex-direction: column;
 }
 
-.login-account-google-wraptext > span:first-child {
+.login-account-google-wraptext > span {
+  text-align: left;
   color: rgba(0, 0, 0, 0.87);
-  font-size: 16px;
   font-weight: 500;
+}
+
+.login-account-google-wraptext > span:first-child {
+  font-size: 16px;
+}
+
+.login-account-google-wraptext > span:last-child {
+  font-size: 12px;
 }
 
 .login-account-google-avatar {
@@ -306,6 +314,7 @@
   width: 1002px;
   background: transparent;
   border: none;
+  z-index: 99;
 }
 
 .choose-age-form {
@@ -418,9 +427,10 @@
   height: 242px;
   border: none;
   margin: 12px;
+  cursor: pointer;
 }
 
-.list-profile-form-card:focus {
+.active-card-profile {
   outline-style: solid;
   outline-offset: 12px;
 }
@@ -438,4 +448,44 @@
 
 .list-profile-form-card-text {
   font-size: 28px;
+}
+
+.h-130 {
+  height: 130px;
+}
+
+.active-setting {
+  background-color: rgba(145, 213, 255, 1);
+  border: 5px solid rgba(0, 133, 150, 1);
+}
+
+/* =====================Loading Animation ======================= */
+.loading-background-right {
+  background-repeat: no-repeat;
+  background-size: auto 684px;
+  height: 100%;
+  position: absolute;
+  width: 100%;
+  background-image: url(https://www.gstatic.com/ytkids/web/onboarding/background/onboarding_bg_red_right_2.png);
+  background-position: bottom right;
+}
+
+.loading-background-left {
+  background-repeat: no-repeat;
+  background-size: auto 684px;
+  height: 100%;
+  position: absolute;
+  width: 100%;
+  background-image: url(https://www.gstatic.com/ytkids/web/onboarding/background/onboarding_bg_red_left_2.png);
+  background-position: bottom left;
+}
+
+.loading-animation {
+  width: 300px;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

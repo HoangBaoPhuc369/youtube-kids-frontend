@@ -12,10 +12,12 @@ function ProfileAccount() {
 
   //state for form data
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
+    kid_name: "",
     age: "",
-    email: "",
+    picture:
+      "https://www.gstatic.com/ytkids/avatars/bck_avatar_kids_optimisticgiraffe_800_20170929.png",
+    bMonth: "",
+    content_settings: "",
   });
 
   // function for going to next step by increasing step state by 1
@@ -42,14 +44,18 @@ function ProfileAccount() {
   };
 
   switch (step) {
-    
     case 6:
       return (
         <div className="login-wrapper">
           <Container>
             <Row>
               <Col>
-                <CreateProfile nextStep={nextStep} />
+                <CreateProfile
+                  formData={formData}
+                  setFormData={setFormData}
+                  nextStep={nextStep}
+                  handleInputData={handleInputData}
+                />
               </Col>
             </Row>
           </Container>
@@ -62,33 +68,12 @@ function ProfileAccount() {
           <Container className="h-100">
             <Row>
               <Col>
-                <ChooseVideosByAges nextStep={nextStep} />
-              </Col>
-            </Row>
-          </Container>
-        </div>
-      );
-
-    case 8:
-      return (
-        <div className="login-wrapper">
-          <Container className="h-100">
-            <Row>
-              <Col>
-                <InfoProfile nextStep={nextStep} />
-              </Col>
-            </Row>
-          </Container>
-        </div>
-      );
-
-    case 9:
-      return (
-        <div className="login-wrapper">
-          <Container className="h-100">
-            <Row>
-              <Col>
-                <ListProfileChildren nextStep={nextStep} />
+                <ChooseVideosByAges
+                  formData={formData}
+                  setFormData={setFormData}
+                  prevStep={prevStep}
+                  nextStep={nextStep}
+                />
               </Col>
             </Row>
           </Container>

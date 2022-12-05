@@ -11,6 +11,7 @@ import BopcornIcon from "../../svgs/BopcornIcon";
 import Discovery from "../../svgs/Discovery";
 import HeartIcon from "../../svgs/HeartIcon";
 import LockIcon from "../../svgs/LockIcon";
+import LightIcon from "../../svgs/LightIcon";
 import SearchIcon from "../../svgs/SearchIcon";
 import Sidebar from "../sidebar";
 import "./style.css";
@@ -54,13 +55,13 @@ export default function Header({ page }) {
                 </div> */}
                 <div className="header-center-category-video-detail">
                   <div className="header-center-category-item">
+                    <BopcornIcon className="category-item-icon" />
+                  </div>
+                  <div className="header-center-category-item">
                     <HeartIcon className="category-item-icon" />
                   </div>
                   <div className="header-center-category-item">
-                    <BopcornIcon className="category-item-icon" />
-                  </div>
-                  <div className="header-center-category-item">
-                    <BopcornIcon className="category-item-icon" />
+                    <LightIcon className="category-item-icon" />
                   </div>
                 </div>
               </>
@@ -80,18 +81,16 @@ export default function Header({ page }) {
                   }
                 >
                   <div className="header-center-category-item">
-                    {/* <BopcornIcon className="category-item-icon" /> */}
-                    {/* <img src="../../../image/bopcorn-disable.png" className="category-item-icon" alt="" /> */}
-                    <HeartIcon className="category-item-icon" />
+                    <BopcornIcon className="category-item-icon" />
                     <span>Sáng tạo</span>
                   </div>
                   <div className="header-center-category-item">
-                    <BopcornIcon className="category-item-icon" />
+                    <HeartIcon className="category-item-icon" />
                     <span></span>
                   </div>
                   <div className="header-center-category-item">
-                    <Discovery className="category-item-icon" />
-                    <span>Định hướng</span>
+                    <LightIcon className="category-item-icon" />
+                    <span></span>
                   </div>
                 </div>
               </>

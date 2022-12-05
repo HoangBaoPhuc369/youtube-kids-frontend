@@ -120,6 +120,10 @@
 .header-center-category-item {
   width: 104px;
   height: 136px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .header-center-category-item:hover > .category-item-icon {
@@ -135,6 +139,7 @@
   position: relative;
   text-transform: uppercase;
   white-space: nowrap;
+  height: 28px;
 }
 
 .header-center-category-item > .category-item-icon {

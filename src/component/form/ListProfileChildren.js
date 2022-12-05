@@ -5,17 +5,20 @@ import { MdModeEdit } from "react-icons/md";
 import { listProfilePicture } from "../../data/listProfilePicture";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
+import { useSelector } from "react-redux";
+import { useNavigate } from 'react-router-dom';
+
 
 export default function ListProfileChildren({ nextStep }) {
-  const [profilePictures, setProfilePictures] = useState(listProfilePicture);
-  const [pictureActive, setpictureActive] = useState("");
+  const { user } = useSelector((state) => state.auth);
+  const { listChildrens } = useSelector((state) => state.children);
+  const cardRef = useRef(null);
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    const activePicture = profilePictures.find(
-      (picture) => picture.active === true
-    );
-    setpictureActive(activePicture.src);
-  }, [profilePictures]);
+  const handleClickCard = () => {
+    cardRef.current.classList.add("active-card-profile");
+    navigate('/');
+  }
 
   return (
     <>
@@ -23,23 +26,30 @@ export default function ListProfileChildren({ nextStep }) {
         <Card.Body className="login-form-body list-profile-form">
           <Form className="list-profile-wrapper">
             <Form.Label className="list-profile-form-title">
-              Bạn đã hoàn tất! Chúc mừng 1377- Hoàng Bảo Phúc!
+              Bạn đã hoàn tất! Chúc mừng {user?.name}!
             </Form.Label>
             <Form.Label className="login-form-text mgbt-20">
               Ai đang dùng YouTube Kids?
             </Form.Label>
 
-            <Row xs={1} md={2} lg={4} className="g-4">
-              {Array.from({ length: 10 }).map((_, idx) => (
-                <Col>
-                  <Card className="list-profile-form-card">
+            <Row
+              xs={1}
+              md={2}
+              lg={4}
+              className={listChildrens.length < 4 ? "g-4 flex-center" : "g-4"}
+            >
+              {listChildrens.map((children, idx) => (
+                <Col key={children?._id} onClick={handleClickCard}>
+                  <Card className="list-profile-form-card" ref={cardRef}>
                     <Card.Img
                       variant="top"
                       className="list-profile-form-card-img"
-                      src="https://www.gstatic.com/ytkids/avatars/bck_avatar_kids_optimisticgiraffe_800_20170929.png"
+                      src={children.picture}
                     />
                     <Card.Body>
-                      <Card.Title className="list-profile-form-card-text">Card title</Card.Title>
+                      <Card.Title className="list-profile-form-card-text">
+                        {children.name}
+                      </Card.Title>
                     </Card.Body>
                   </Card>
                 </Col>

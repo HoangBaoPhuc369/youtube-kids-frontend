@@ -111,57 +111,57 @@ function Login() {
           </Container>
         </div>
       );
-    case 6:
-      return (
-        <div className="login-wrapper">
-          <Container>
-            <Row>
-              <Col>
-                <CreateProfile nextStep={nextStep} />
-              </Col>
-            </Row>
-          </Container>
-        </div>
-      );
+    // case 6:
+    //   return (
+    //     <div className="login-wrapper">
+    //       <Container>
+    //         <Row>
+    //           <Col>
+    //             <CreateProfile nextStep={nextStep} />
+    //           </Col>
+    //         </Row>
+    //       </Container>
+    //     </div>
+    //   );
 
-    case 7:
-      return (
-        <div className="login-wrapper">
-          <Container className="h-100">
-            <Row>
-              <Col>
-                <ChooseVideosByAges nextStep={nextStep} />
-              </Col>
-            </Row>
-          </Container>
-        </div>
-      );
+    // case 7:
+    //   return (
+    //     <div className="login-wrapper">
+    //       <Container className="h-100">
+    //         <Row>
+    //           <Col>
+    //             <ChooseVideosByAges nextStep={nextStep} />
+    //           </Col>
+    //         </Row>
+    //       </Container>
+    //     </div>
+    //   );
 
-    case 8:
-      return (
-        <div className="login-wrapper">
-          <Container className="h-100">
-            <Row>
-              <Col>
-                <InfoProfile nextStep={nextStep} />
-              </Col>
-            </Row>
-          </Container>
-        </div>
-      );
+    // case 8:
+    //   return (
+    //     <div className="login-wrapper">
+    //       <Container className="h-100">
+    //         <Row>
+    //           <Col>
+    //             <InfoProfile nextStep={nextStep} />
+    //           </Col>
+    //         </Row>
+    //       </Container>
+    //     </div>
+    //   );
 
-    case 9:
-      return (
-        <div className="login-wrapper">
-          <Container className="h-100">
-            <Row>
-              <Col>
-                <ListProfileChildren nextStep={nextStep} />
-              </Col>
-            </Row>
-          </Container>
-        </div>
-      );
+    // case 9:
+    //   return (
+    //     <div className="login-wrapper">
+    //       <Container className="h-100">
+    //         <Row>
+    //           <Col>
+    //             <ListProfileChildren nextStep={nextStep} />
+    //           </Col>
+    //         </Row>
+    //       </Container>
+    //     </div>
+    //   );
     default:
       return <div className="login-wrapper"></div>;
   }

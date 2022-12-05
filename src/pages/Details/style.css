@@ -11,6 +11,8 @@
 .video-list-suggest {
   padding: 0 24px;
   height: 614px;
+  background: #ebeae4;
+  z-index: 9999;
 }
 
 .video-list-suggest-row {
@@ -45,15 +47,18 @@
 
 .video-play {
   padding: 0;
+  z-index: 8;
 }
 
 .video-play-row {
   background: #eee;
+  width: 100%;
+  margin: 0;
+  position: relative;
 }
 
 .video-chat-live {
   height: 99.5%;
-  width: 390px;
   border: none;
   border-radius: 0;
 }
@@ -71,9 +76,10 @@
   align-items: center;
 }
 
-.video-chat-header > svg {
-    font-size: 24px;
-    color: #333;
+.video-chat-header > div > svg {
+  font-size: 24px;
+  color: #333;
+  cursor: pointer;
 }
 
 .video-chat-body {
@@ -86,4 +92,29 @@
   height: 100px;
   border-top: 1px solid #ccc;
   background: #fff;
+}
+
+.video-chat-zoom-out {
+  width: 50px;
+  height: 99.2%;
+  position: absolute;
+  right: 0;
+  background: #e2b99b;
+  z-index: 5;
+}
+
+.video-chat-zoom-out > div > svg {
+  font-size: 24px;
+  margin: 10px 0;
+  color: #fff;
+  cursor: pointer;
+}
+
+.video-chat-zoom-out-text {
+  writing-mode: vertical-lr;
+  transform: rotate(360deg);
+  min-width: 20px;
+  font-size: 17px;
+  font-weight: 600;
+  color: #fff;
 }

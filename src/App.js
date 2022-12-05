@@ -10,6 +10,7 @@ import ProfileAccount from "./component/profileAcount";
 import LoginSuccess from "./pages/login/LoginSuccess";
 import Admin from "./pages/Admin";
 import History from "./pages/History";
+import ProfileCreated from "./component/profileAcount/ProfileCreated";
 function App() {
   return (
     <Routes>
@@ -22,6 +23,7 @@ function App() {
       <Route path="/channel/:id" element={<Channel />} />
       <Route path="/admin" element={<Admin />} />
       <Route path="/history" element={<History />} />
+      <Route path="/profile-created" element={<ProfileCreated />} />
     </Routes>
   );
 }
