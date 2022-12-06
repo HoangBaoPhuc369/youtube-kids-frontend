@@ -43,7 +43,7 @@ export const authSlice = createSlice({
     [getUser.fulfilled]: (state, action) => {
       state.loading = false;
       state.user = action.payload;
-      Cookies.set("user", JSON.stringify(action.payload));
+      Cookies.set("user", JSON.stringify(action.payload), { expires: 7 });
       state.error = "";
     },
     [getUser.rejected]: (state, action) => {

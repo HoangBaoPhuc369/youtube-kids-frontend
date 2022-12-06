@@ -32,7 +32,7 @@ export default function Details() {
   const dispatch = useDispatch();
 
   const [videoPlay, setVideoPlay] = useState(null);
-  const [chatShow, setChatShow] = useState(true);
+  const [chatShow, setChatShow] = useState(false);
 
   const chatRef = useRef(null);
 
@@ -52,27 +52,20 @@ export default function Details() {
   }, [videos]);
 
   const handleOffChat = () => {
-    // chatRef.current.classList.add(
-    //   "animate__animated",
-    //   "animate__slideOutRight"
-    // );
-    chatRef.current.className = "video-play col-lg-4 animate__animated animate__slideOutRight"
-    setChatShow(false);
+    setChatShow(prev => !prev);
   };
-
-  const handleShowChat = () => {
-    chatRef.current.className = "video-play col-lg-4 animate__animated animate__slideInRight"
-    setChatShow(false);
-  };
+ 
 
   return (
-    <>
+    <div className="video-detail-wrapper">
       <Header page="video-detail" />
 
       <Row className="video-wrapper">
         <Col sm={9} className="video-play-wrap">
-          <Row className="video-play-row">
-            <Col lg={8} className="video-play">
+          <div className="video-play-row">
+            <div className={
+                chatShow ? "video-play-left" : "video-play-left transform-video"
+              }>
               <iframe
                 width="100%"
                 height="475"
@@ -82,13 +75,17 @@ export default function Details() {
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
               ></iframe>
-            </Col>
-            {/* animate__animated animate__fadeInRight */}
-            <Col lg={4} className="video-play" ref={chatRef}>
+            </div>
+            {/* animate__animated animate__fadeInRight ref={chatRef} */}
+            <div
+              className={
+                chatShow ? "video-play-right" : "video-play-right show-chat"
+              }
+            >
               <div className="video-chat-live">
                 <div className="video-chat-header">
                   <h5>Live chat</h5>
-                  <div onClick={handleOffChat}>
+                  <div className="video-chat-header-icon" onClick={handleOffChat}>
                     <HiOutlineArrowRightCircle />
                   </div>
                 </div>
@@ -122,16 +119,9 @@ export default function Details() {
                   </div>
                 </div>
               </div>
-            </Col>
-
-            <div className="video-chat-zoom-out">
-              <div onClick={handleShowChat}>
-                <HiOutlineArrowLeftCircle />
-              </div>
-              <div className="video-chat-zoom-out-text">Live chat</div>
             </div>
-          </Row>
-          <Row>
+          </div>
+          <Row className="video-play-bottom">
             <Col sm={12} className="video-info">
               <img
                 className="video-info-avatar"
@@ -158,6 +148,6 @@ export default function Details() {
           </Row>
         </Col>
       </Row>
-    </>
+    </div>
   );
 }

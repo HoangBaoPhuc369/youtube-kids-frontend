@@ -4,11 +4,11 @@ import * as api from "../api";
 
 export const createChildren = createAsyncThunk(
   "children/createChildren",
-  async ({ formData, userOauthId, nextStep }, { rejectWithValue }) => {
+  async ({ formData, userOauthId, navigate }, { rejectWithValue }) => {
     try {
       const { data } = await api.createChildren(formData, userOauthId);
       if (data) {
-        nextStep();
+        navigate("/profile-created");
       }
       return data;
     } catch (err) {
