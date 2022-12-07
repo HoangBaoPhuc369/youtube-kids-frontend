@@ -18,7 +18,30 @@ export const getChannelVideo = createAsyncThunk(
   async ({ idChannel }, { rejectWithValue }) => {
     try {
       const { data } = await api.getChannelVideo(idChannel);
-      console.log(data);
+      return data;
+    } catch (err) {
+      return err.response?.data;
+    }
+  }
+);
+
+export const createOrGetChatVideo = createAsyncThunk(
+  "videos/createOrGetChatVideo",
+  async ({ videoId }, { rejectWithValue }) => {
+    try {
+      const { data } = await api.createOrGetChatVideo(videoId);
+      return data;
+    } catch (err) {
+      return err.response?.data;
+    }
+  }
+);
+
+export const sendMessage = createAsyncThunk(
+  "videos/sendMessage",
+  async ({ chatId, name, picture, text }, { rejectWithValue }) => {
+    try {
+      const { data } = await api.sendMessage(chatId, name, picture, text);
       return data;
     } catch (err) {
       return err.response?.data;
@@ -29,6 +52,7 @@ export const getChannelVideo = createAsyncThunk(
 const initialState = {
   videos: null,
   channelVideo: null,
+  chatVideo: null,
   error: "",
   loading: false,
 };
@@ -60,6 +84,22 @@ export const videolistSlice = createSlice({
       state.error = "";
     },
     [getChannelVideo.rejected]: (state, action) => {
+      state.error = action.payload?.message;
+    },
+
+    [createOrGetChatVideo.fulfilled]: (state, action) => {
+      state.chatVideo = action.payload;
+      state.error = "";
+    },
+    [createOrGetChatVideo.rejected]: (state, action) => {
+      state.error = action.payload?.message;
+    },
+
+    [sendMessage.fulfilled]: (state, action) => {
+      state.chatVideo = action.payload;
+      state.error = "";
+    },
+    [sendMessage.rejected]: (state, action) => {
       state.error = action.payload?.message;
     },
   },

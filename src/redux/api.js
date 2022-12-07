@@ -34,6 +34,22 @@ export const getChannelVideo = (idChannel) =>
     // }
   );
 
+export const addVideoHistory = (childrenID, videoId, thumbnail, title) =>
+  axios.patch(
+    `${process.env.REACT_APP_BACKEND_URL}/children/add-video-history`,
+    {
+      childrenID,
+      videoId,
+      thumbnail,
+      title,
+    }
+    // {
+    //   headers: {
+    //     Authorization: `Bearer ${token}`,
+    //   },
+    // }
+  );
+
 // --------------------------Children API-----------------------------------
 export const createChildren = (formData, userOauthId) =>
   axios.post(`${process.env.REACT_APP_BACKEND_URL}/children/create-children`, {
@@ -48,4 +64,46 @@ export const createChildren = (formData, userOauthId) =>
 export const listChildrens = (userOauthId) =>
   axios.get(
     `${process.env.REACT_APP_BACKEND_URL}/children/list-childrens/${userOauthId}`
+  );
+
+// --------------------------CHAT API-----------------------------------
+export const createOrGetChatVideo = (videoId) =>
+  axios.post(
+    `${process.env.REACT_APP_BACKEND_URL}/chat/create-chat`,
+    {
+      videoId,
+    }
+    // {
+    //   headers: {
+    //     Authorization: `Bearer ${token}`,
+    //   },
+    // }
+  );
+
+export const sendMessage = (chatId, name, picture, text) =>
+  axios.patch(
+    `${process.env.REACT_APP_BACKEND_URL}/chat/add-message-chat`,
+    {
+      chatId,
+      name,
+      picture,
+      text,
+    }
+    // {
+    //   headers: {
+    //     Authorization: `Bearer ${token}`,
+    //   },
+    // }
+  );
+
+// --------------------------CHILDREN API-----------------------------------
+export const getChildren = (id) =>
+  axios.get(
+    `${process.env.REACT_APP_BACKEND_URL}/children/${id}`
+
+    // {
+    //   headers: {
+    //     Authorization: `Bearer ${token}`,
+    //   },
+    // }
   );

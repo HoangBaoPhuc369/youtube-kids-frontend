@@ -395,7 +395,7 @@
 }
 
 .login-form-text {
-  width: 732px;
+  padding: 0 30px;
 }
 
 /* =================List Profile ===================== */
@@ -463,21 +463,23 @@
 .loading-background-right {
   background-repeat: no-repeat;
   background-size: auto 684px;
-  height: 100%;
+  height: calc(100% - 128px);
   position: absolute;
   width: 100%;
   background-image: url(https://www.gstatic.com/ytkids/web/onboarding/background/onboarding_bg_red_right_2.png);
   background-position: bottom right;
+  z-index: 1;
 }
 
 .loading-background-left {
   background-repeat: no-repeat;
   background-size: auto 684px;
-  height: 100%;
+  height: calc(100% - 128px);
   position: absolute;
   width: 100%;
   background-image: url(https://www.gstatic.com/ytkids/web/onboarding/background/onboarding_bg_red_left_2.png);
   background-position: bottom left;
+  z-index: 1;
 }
 
 .loading-animation {

@@ -15,17 +15,15 @@ export default function LoginOauth2() {
 
   const { user } = useSelector((state) => state.auth);
 
-  console.log(user);
-
-  // useEffect(() => {
-  //   lottie.loadAnimation({
-  //     container: container.current,
-  //     renderer: "svg",
-  //     loop: true,
-  //     autoplay: true,
-  //     animationData: require("../.././animation/127286-hello-world.json"),
-  //   });
-  // }, []);
+  useEffect(() => {
+    lottie.loadAnimation({
+      container: container.current,
+      renderer: "svg",
+      loop: true,
+      autoplay: true,
+      animationData: require("../.././animation/127286-hello-world.json"),
+    });
+  }, []);
 
   const Login = () => {
     const w = 438;
@@ -70,9 +68,7 @@ export default function LoginOauth2() {
     if (newWindow) {
       timer = setInterval(() => {
         if (newWindow.closed) {
-          if (!user) {
-            dispatch(getUser({ navigate }));
-          }
+          dispatch(getUser({ navigate }));
           if (timer) clearInterval(timer);
         }
       }, 500);

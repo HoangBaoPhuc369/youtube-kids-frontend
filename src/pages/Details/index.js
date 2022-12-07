@@ -10,35 +10,39 @@ import VideoCard from "../../component/video/VideoCard";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import {
+  createOrGetChatVideo,
   getChannelVideo,
   getVideoList,
+  sendMessage,
 } from "../../redux/feature/videolistSlice";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Message from "../../component/video/Message";
 import { IoSendSharp } from "react-icons/io5";
 import { BiSmile } from "react-icons/bi";
-import {
-  HiOutlineArrowRightCircle,
-  HiOutlineArrowLeftCircle,
-} from "react-icons/hi2";
+import { HiOutlineArrowRightCircle } from "react-icons/hi2";
 import "animate.css/animate.min.css";
 import { useRef } from "react";
+import { addVideoHistory } from "../../redux/feature/childrenSlice";
 
 export default function Details() {
   const param = useParams();
-  const { videos } = useSelector((state) => state.video);
-  const { channelVideo } = useSelector((state) => state.video);
+  const { videos, channelVideo, chatVideo } = useSelector(
+    (state) => state.video
+  );
+  const { childrenActive } = useSelector((state) => state.children);
   const dispatch = useDispatch();
 
   const [videoPlay, setVideoPlay] = useState(null);
   const [chatShow, setChatShow] = useState(false);
+  const [valueMessage, setValueMessage] = useState("");
 
   const chatRef = useRef(null);
 
   useEffect(() => {
     dispatch(getVideoList());
-    dispatch(getChannelVideo());
+    // dispatch(getChannelVideo());
+    dispatch(createOrGetChatVideo({ videoId: param.id }));
   }, []);
 
   useEffect(() => {
@@ -52,23 +56,48 @@ export default function Details() {
   }, [videos]);
 
   const handleOffChat = () => {
-    setChatShow(prev => !prev);
+    setChatShow((prev) => !prev);
   };
- 
+
+  const handleStoreVideo = () => {
+    dispatch(
+      addVideoHistory({
+        childrenId: childrenActive?._id,
+        videoId: param.id,
+        thumbnail: channelVideo[0]?.snippet?.thumbnails?.default?.url,
+        title: videoPlay?.snippet.title,
+      })
+    );
+  };
+
+  const handleSend = () => {
+    dispatch(
+      sendMessage({
+        chatId: chatVideo?._id,
+        name: childrenActive?.name,
+        picture: childrenActive?.picture,
+        text: valueMessage,
+      })
+    );
+    setValueMessage("");
+  };
 
   return (
     <div className="video-detail-wrapper">
       <Header page="video-detail" />
 
-      <Row className="video-wrapper">
+      <Row className="video-play-wrapper">
         <Col sm={9} className="video-play-wrap">
           <div className="video-play-row">
-            <div className={
+            <div
+              className={
                 chatShow ? "video-play-left" : "video-play-left transform-video"
-              }>
+              }
+            >
               <iframe
                 width="100%"
                 height="475"
+                onClick={handleStoreVideo}
                 src={`https://www.youtube.com/embed/${param.id}`}
                 title="YouTube video player"
                 frameBorder="0"
@@ -85,27 +114,39 @@ export default function Details() {
               <div className="video-chat-live">
                 <div className="video-chat-header">
                   <h5>Live chat</h5>
-                  <div className="video-chat-header-icon" onClick={handleOffChat}>
+                  <div
+                    className="video-chat-header-icon"
+                    onClick={handleOffChat}
+                  >
                     <HiOutlineArrowRightCircle />
                   </div>
                 </div>
                 <div className="video-chat-body">
-                  {Array.from({ length: 20 }).map((_, index) => (
-                    <Message key={index} />
+                  {chatVideo?.messages.map((m, index) => (
+                    <Message
+                      key={index}
+                      picture={m.picture}
+                      name={m.name}
+                      text={m.text}
+                    />
                   ))}
                 </div>
                 <div className="video-chat-footer">
                   <div className="video-chat-input-wrap">
                     <img
-                      src="https://res.cloudinary.com/da2c2nw4m/image/upload/v1667266412/facebook-clone/PhucHoang_Ns8BbJoJo/profile_pictures/hkutn8wxbqdhh47nsg2c.jpg"
+                      src={childrenActive?.picture}
                       className="message-img"
                       alt=""
                     />
                     <div className="video-chat-input">
-                      <div className="message-user-name">Phuc Hoang</div>
+                      <div className="message-user-name">
+                        {childrenActive.name}
+                      </div>
                       <div className="video-chat-input-effect">
                         <input
                           className="effect-2"
+                          value={valueMessage}
+                          onChange={(e) => setValueMessage(e.target.value)}
                           type="text"
                           placeholder="Nói gì đó..."
                         />
@@ -114,8 +155,12 @@ export default function Details() {
                     </div>
                   </div>
                   <div className="video-chat-btn-wrap">
-                    <BiSmile />
-                    <IoSendSharp />
+                    <div className="video-chat-btn-react">
+                      <BiSmile />
+                    </div>
+                    <div className="video-chat-btn-send" onClick={handleSend}>
+                      <IoSendSharp />
+                    </div>
                   </div>
                 </div>
               </div>

@@ -13,7 +13,7 @@ export default function InfoProfile({ nextStep }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(listChildrensUser({ userOauthId: user.google_id, nextStep }));
+    dispatch(listChildrensUser({ userOauthId: user.google_id, nextStep, profileCreated: true }));
   };
 
   return (

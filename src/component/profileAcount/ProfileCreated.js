@@ -1,4 +1,3 @@
-
 import "./style.css";
 import { Container, Row, Col } from "react-bootstrap";
 import { useState } from "react";
@@ -31,17 +30,7 @@ function ProfileCreated() {
       );
 
     case 9:
-      return (
-        <div className="login-wrapper">
-          <Container className="h-100">
-            <Row>
-              <Col>
-                <ListProfileChildren nextStep={nextStep} />
-              </Col>
-            </Row>
-          </Container>
-        </div>
-      );
+      return <ListProfileChildren nextStep={nextStep} />;
     default:
       return <div className="login-wrapper"></div>;
   }

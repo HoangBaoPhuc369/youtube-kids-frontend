@@ -1,5 +1,12 @@
 .bm-menu-wrap {
-  top: 0;
+  position: fixed;
+  top: -17px;
+  right: -33px !important;
+  z-index: 1100;
+  width: 456px;
+  height: 100vh !important;
+  transition: all 0.5s ease 0s;
+  border-left: 6px solid #565656;
 }
 
 .bm-item {
@@ -21,10 +28,8 @@
 }
 
 .bm-burger-button {
-  position: fixed;
   width: 32px;
   height: 32px;
-  /* top: 36px; */
 }
 
 .bm-burger-bars {
