@@ -1,6 +1,13 @@
-.video-wrapper {
+.video-detail-wrapper {
+  height: 100vh;
+  width: 100vw;
+}
+
+.video-play-wrapper {
   width: 100%;
-  margin: 2px 0 0 0;
+  min-height: 615px;
+  height: calc(100vh - 128px);
+  margin: 0;
 }
 
 .video-play-wrap {
@@ -10,7 +17,9 @@
 
 .video-list-suggest {
   padding: 0 24px;
-  height: 614px;
+  height: 100%;
+  background: #ebeae4;
+  z-index: 999;
 }
 
 .video-list-suggest-row {
@@ -28,7 +37,7 @@
 .video-info {
   display: flex;
   align-items: center;
-  height: 134px;
+  height: 100%;
   padding: 0 32px;
   box-shadow: 0 1px 1px 0 rgb(0 0 0 / 24%);
 }
@@ -45,20 +54,40 @@
 
 .video-play {
   padding: 0;
+  z-index: 8;
 }
 
 .video-play-row {
   background: #eee;
+  width: 100%;
+  height: 82%;
+  margin: 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.video-play-left {
+  flex: 1;
+  height: 100%;
+}
+
+.video-play-left iframe {
+  padding: 15px;
+  height: 100%;
+  transition: all 0.5s cubic-bezier(0.39, 0.58, 0.57, 1);
+}
+
+.video-play-right {
+  height: 100%;
+  width: 400px;
+  transition: all 0.5s ease;
 }
 
 .video-chat-live {
-  height: 99.5%;
-  width: 390px;
+  height: 100%;
   border: none;
   border-radius: 0;
-}
-
-.video-chat-live {
 }
 
 .video-chat-header {
@@ -71,13 +100,14 @@
   align-items: center;
 }
 
-.video-chat-header > svg {
-    font-size: 24px;
-    color: #333;
+.video-chat-header > div > svg {
+  font-size: 24px;
+  color: #333;
+  cursor: pointer;
 }
 
 .video-chat-body {
-  height: 328px;
+  height: calc(100% - 48px - 100px);
   overflow-y: scroll;
   background: #fff;
 }
@@ -86,4 +116,85 @@
   height: 100px;
   border-top: 1px solid #ccc;
   background: #fff;
+}
+
+.video-chat-zoom-out {
+  width: 50px;
+  height: 99.2%;
+  position: absolute;
+  right: 0;
+  background: #e2b99b;
+  z-index: 5;
+}
+
+.video-chat-zoom-out > div > svg {
+  font-size: 24px;
+  margin: 10px 0;
+  color: #fff;
+  cursor: pointer;
+}
+
+.video-chat-zoom-out-text {
+  writing-mode: vertical-lr;
+  transform: rotate(360deg);
+  min-width: 20px;
+  font-size: 17px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.video-play-bottom {
+  height: 18%;
+  width: 100%;
+  margin: 0;
+}
+
+/* ================Transition Chat================= */
+.video-play-right.show-chat {
+  width: 64px;
+  height: 100%;
+  background: #e2b99b;
+}
+
+.video-play-right.show-chat .video-chat-header {
+  justify-content: center;
+  border-bottom: 0;
+  background: transparent;
+  position: relative;
+}
+
+.video-play-right.show-chat .video-chat-header h5 {
+  position: absolute;
+  bottom: -73px;
+  writing-mode: vertical-lr;
+  transform: rotate(360deg);
+  min-width: 20px;
+  font-size: 17px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.video-play-right.show-chat .video-chat-header .video-chat-header-icon {
+  transform: rotate(180deg);
+}
+
+.video-play-right.show-chat .video-chat-header .video-chat-header-icon svg {
+  color: #fff;
+}
+
+.video-play-right.show-chat .video-chat-body {
+  visibility: hidden;
+}
+
+.video-play-right.show-chat .video-chat-footer {
+  visibility: hidden;
+}
+
+.video-play-left.transform-video iframe {
+  height: 100%;
+  padding: 15px;
+}
+
+.video-chat-btn-send {
+  cursor: pointer;
 }

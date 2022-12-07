@@ -2,22 +2,29 @@
   padding: 40px 16px 0;
   height: 244px;
   background-color: #fff;
-  position: fixed;
-  top: 0;
-  left: 0;
   width: 100%;
-  margin: 0 auto;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  z-index: 9999;
 }
 
 .header-wrap {
   width: 100%;
+  height: 95px;
+  position: fixed;
+  left: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  z-index: 9999;
+}
+
+.header-detail-wrap {
+  height: 127px;
+  width: 100%;
+  padding: 32px 16px 0;
+  box-shadow: 0 2px 4px 0 rgb(0 0 0 / 24%);
+  border-bottom: 1px solid #eee;
+  position: fixed;
+  z-index: 999999;
+  background: #fff;
 }
 
 .header-center-hidden {
@@ -26,14 +33,14 @@
 
 .header-left {
   display: flex;
-  align-items: center;
+  height: 100%;
+  margin-left: 32px;
 }
 
 .header-left > img {
   height: 64px;
   width: 64px;
   border-radius: 50%;
-  margin-left: 32px;
   transition: all 0.1s ease-in;
 }
 
@@ -44,20 +51,35 @@
 
 .header-center {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  width: 100%;
+  height: 100%;
+}
+
+.header-center-search-wrap {
+  max-width: 756px;
+  min-width: 434px;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
   position: relative;
-  width: 756px;
-  height: 64px;
+  z-index: 999999;
 }
 
 .header-center-search {
   display: flex;
   align-items: center;
-  width: 100%;
-  height: 100%;
+  height: 64px;
   border-radius: 32px;
   background-color: #f4f4f4;
   transition: all 0.1s ease-in;
+  z-index: 99999999;
+}
+
+.header-center-search.active {
+  cursor: pointer;
+  transform: scale(1.05);
+  box-shadow: 0 0 2px 0 rgb(0 0 0 / 12%), 0 8px 13px 0 rgb(0 0 0 / 24%);
 }
 
 .header-center-search:hover {
@@ -120,6 +142,12 @@
 .header-center-category-item {
   width: 104px;
   height: 136px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: unset;
+  text-decoration: unset;
 }
 
 .header-center-category-item:hover > .category-item-icon {
@@ -135,6 +163,7 @@
   position: relative;
   text-transform: uppercase;
   white-space: nowrap;
+  height: 28px;
 }
 
 .header-center-category-item > .category-item-icon {
@@ -145,17 +174,16 @@
 
 .header-right {
   display: flex;
-  align-items: center;
+  height: 100%;
+  margin-right: 32px;
 }
 
 .header-right-icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  height: 100%;
   border-radius: 20px;
-  margin-right: 32px;
   transition: all 0.1s ease-in;
 }
 
@@ -166,15 +194,85 @@
 /* =============Header details================ */
 .header-detail {
   height: 128px;
-  box-shadow: 0 2px 4px 0 rgb(0 0 0 / 24%);
+  /* box-shadow: 0 2px 4px 0 rgb(0 0 0 / 24%);
+  border-bottom: 1px solid #eee; */
 }
 
 .header-center-category-video-detail {
   position: absolute;
-  top: -25px;
+  top: -42px;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 724px;
   height: 126px;
+}
+
+.w-210 {
+  width: 210px;
+}
+
+.header-center-category-wrapper {
+  display: flex;
+  position: absolute;
+  top: -50px;
+  width: 100%;
+  justify-content: center;
+}
+
+.header-left-icon {
+  margin: 17px 24px 0 0;
+}
+
+.header-left-icon-wrap > svg {
+  width: 32px !important;
+  height: 32px !important;
+  transition: all 0.1s ease-in;
+}
+
+.header-left-icon-wrap {
+  height: 48px;
+  width: 48px;
+  cursor: pointer;
+  transition: all 0.1s ease-in;
+}
+
+.header-left-icon-wrap > svg:hover {
+  transform: scale(1.1);
+}
+
+.header-right-lock-icon-wrap {
+  height: 100%;
+  width: 64px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: translateY(-16%);
+  position: relative;
+}
+
+.header-right-search-icon-wrap {
+  height: 100%;
+  width: 70px;
+}
+
+.header-right-search-icon {
+  width: 64px;
+  height: 64px;
+  background: #cc0000;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.1s ease-in;
+  cursor: pointer;
+}
+
+.header-right-search-icon:hover {
+  transform: scale(1.1);
+}
+
+.header-right-search-icon > svg {
+  width: 32px !important;
+  height: 32px !important;
 }

@@ -1,12 +1,11 @@
 import { useEffect } from "react";
 
-
 export default function LoginSuccess() {
-    useEffect(() => {
-        setTimeout(() => {
-          window.close();
-        }, 1000);
-      }, []);
-    
-      return <div>Thanks for loggin in!</div>;
+  useEffect(() => {
+    setTimeout(() => {
+      window.close();
+    }, 1000);
+  }, []);
+
+  return <div></div>;
 }

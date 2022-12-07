@@ -2,95 +2,43 @@ import React, { useState, useRef, useEffect } from "react";
 import { Form, Card, Button } from "react-bootstrap";
 import "./style.css";
 import { MdModeEdit } from "react-icons/md";
-import { listProfilePicture } from "../../data/listProfilePicture";
-import validator from "validator";
+import { useSelector, useDispatch } from "react-redux";
+import { listChildrensUser } from "../../redux/feature/childrenSlice";
 
 export default function InfoProfile({ nextStep }) {
-  const [modalShow, setModalShow] = useState(false);
-  const [profilePictures, setProfilePictures] = useState(listProfilePicture);
-  const [pictureActive, setpictureActive] = useState("");
-  const [error, setError] = useState(false);
-  const [disableBtn, setDisableBtn] = useState(true);
+  const { user } = useSelector((state) => state.auth);
+  const { children } = useSelector((state) => state.children);
 
-  const [formData, setFormData] = useState({
-    kid_name: "",
-    age: null,
-    picture:
-      "https://www.gstatic.com/ytkids/avatars/bck_avatar_kids_optimisticgiraffe_800_20170929.png",
-    bMonth: "",
-  });
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    const activePicture = profilePictures.find(
-      (picture) => picture.active === true
-    );
-    setpictureActive(activePicture.src);
-
-    setFormData((prevState) => ({
-      ...prevState,
-      picture: activePicture.src,
-    }));
-  }, [profilePictures]);
-
-  useEffect(() => {
-    if (
-      formData.kid_name === "" ||
-      formData.age === null ||
-      formData.age === ""
-    ) {
-      setDisableBtn(true);
-    } else {
-      setDisableBtn(false);
-    }
-  }, [formData]);
-
-  const handleInputData = (input) => (e) => {
-    const { value } = e.target;
-
-    setFormData((prevState) => ({
-      ...prevState,
-      [input]: value,
-    }));
-  };
-
-  const submitFormData = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-
-    // checking if value of first name and last name is empty show error else take to step 2
-    if (
-      validator.isEmpty(formData.kid_name) ||
-      validator.isEmpty(formData.age)
-    ) {
-      setDisableBtn(true);
-    } else if (formData.age > 100 || formData.age <= 0) {
-      setError(true);
-    } else {
-      nextStep();
-      setDisableBtn(false);
-    }
+    dispatch(listChildrensUser({ userOauthId: user.google_id, nextStep, profileCreated: true }));
   };
+
   return (
     <>
+      <div className="loading-background-left"></div>
       <Card className="text-center login-form">
         <Card.Body className="login-form-body">
-          <Form onSubmit={submitFormData}>
+          <Form onSubmit={handleSubmit}>
             <Form.Label className="login-form-title">Đã tạo hồ sơ!</Form.Label>
             <Form.Label className="login-form-text">
               Hãy chuyển đến phần "Chỉnh sửa hồ sơ" để thiết lập mã bí mật cho
-              qweqsdeas. Mã này sẽ ngăn những trẻ khác trên thiết bị này truy
-              cập vào hồ sơ đó. Bạn có thể đặt lại mã này bất cứ lúc nào.
+              {children?.name}. Mã này sẽ ngăn những trẻ khác trên thiết bị này
+              truy cập vào hồ sơ đó. Bạn có thể đặt lại mã này bất cứ lúc nào.
             </Form.Label>
 
             <div className="login-form-wrapper">
               <div className="login-form-profile-img">
-                <img src={pictureActive} alt="" />
+                <img src={children?.picture} alt="" />
               </div>
               <div className="login-form-info">
                 <Form.Label className="login-form-profile-name">
-                    phuc hoang
+                  {children?.name}
                 </Form.Label>
                 <Form.Label className="login-form-profile-age">
-                    21 tuổi
+                  {children?.year} tuổi
                 </Form.Label>
               </div>
               <MdModeEdit className="edit-icon-md" />
@@ -109,6 +57,7 @@ export default function InfoProfile({ nextStep }) {
           </Form>
         </Card.Body>
       </Card>
+      <div className="loading-background-right"></div>
     </>
   );
 }

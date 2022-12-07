@@ -6,20 +6,18 @@ import ChooseProfilePicture from "../modals/ChooseProfilePicture";
 import { listProfilePicture } from "../../data/listProfilePicture";
 import validator from "validator";
 
-export default function CreateProfile({nextStep}) {
+export default function CreateProfile({
+  nextStep,
+  handleInputData,
+  formData,
+  setFormData,
+}) {
   const [modalShow, setModalShow] = useState(false);
   const [profilePictures, setProfilePictures] = useState(listProfilePicture);
   const [pictureActive, setpictureActive] = useState("");
   const [error, setError] = useState(false);
+  const [error2, setError2] = useState(false);
   const [disableBtn, setDisableBtn] = useState(true);
-
-  const [formData, setFormData] = useState({
-    kid_name: "",
-    age: null,
-    picture:
-      "https://www.gstatic.com/ytkids/avatars/bck_avatar_kids_optimisticgiraffe_800_20170929.png",
-    bMonth: "",
-  });
 
   useEffect(() => {
     const activePicture = profilePictures.find(
@@ -45,15 +43,6 @@ export default function CreateProfile({nextStep}) {
     }
   }, [formData]);
 
-  const handleInputData = (input) => (e) => {
-    const { value } = e.target;
-
-    setFormData((prevState) => ({
-      ...prevState,
-      [input]: value,
-    }));
-  };
-
   const submitFormData = (e) => {
     e.preventDefault();
 
@@ -63,10 +52,26 @@ export default function CreateProfile({nextStep}) {
       validator.isEmpty(formData.age)
     ) {
       setDisableBtn(true);
-    } else if (formData.age > 100 || formData.age <= 0) {
+    } else if (
+      (formData.age > 100 || formData.age <= 0) &&
+      !validator.matches(formData.kid_name, /^[a-zA-Z ]+$/)
+    ) {
       setError(true);
+      setError2(true);
+    } else if (
+      (formData.age > 100 || formData.age <= 0) &&
+      validator.matches(formData.kid_name, /^[a-zA-Z ]+$/)
+    ) {
+      setError(true);
+      setError2(false);
+    } else if (
+      (formData.age <= 100 || formData.age > 0) &&
+      !validator.matches(formData.kid_name, /^[a-zA-Z ]+$/)
+    ) {
+      setError(false);
+      setError2(true);
     } else {
-        nextStep();
+      nextStep();
       setDisableBtn(false);
     }
   };
@@ -96,30 +101,41 @@ export default function CreateProfile({nextStep}) {
               <div className="login-form-profile-info">
                 <div className="input-effect">
                   <input
-                    className="effect-2"
+                    className={error2 ? "effect-2 error-input" : "effect-2"}
                     type="text"
+                    value={formData.kid_name}
                     placeholder="Kid's firstname*"
                     onChange={handleInputData("kid_name")}
                   />
                   <span className="focus-border"></span>
+                  {error2 && (
+                    <span className="input-effect-error">
+                      Enter a valid name
+                    </span>
+                  )}
                 </div>
 
                 <div className="input-effect">
                   <input
                     className={error ? "effect-2 error-input" : "effect-2"}
-                    type="number"
+                    type="text"
+                    value={formData.age}
                     onChange={handleInputData("age")}
                     placeholder="Age*"
                   />
                   <span className="focus-border"></span>
-                  {error && <span className="input-effect-error">Enter a valid age</span>}
-                  
+                  {error && (
+                    <span className="input-effect-error">
+                      Enter a valid age
+                    </span>
+                  )}
                 </div>
 
                 <div className="input-effect">
                   <input
                     className="effect-2"
                     type="text"
+                    value={formData.bMonth}
                     placeholder="Birth month"
                     onChange={handleInputData("bMonth")}
                   />

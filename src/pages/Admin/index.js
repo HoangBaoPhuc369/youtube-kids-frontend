@@ -5,19 +5,35 @@ import Video from "../../component/video";
 import "./style.css";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { BsPlus } from "react-icons/bs";
+import { useDispatch, useSelector } from "react-redux";
+import { Logout } from "../../redux/feature/authSlice";
+import { resetChildren } from "../../redux/feature/childrenSlice";
+import { useState } from "react";
 
 export default function Admin() {
-  return (
-    <div className="background-admin">
-      <div className="background-layer">
-        <Header />
+  const { user } = useSelector((state) => state.auth);
+  const { listChildrens } = useSelector((state) => state.children);
+  const dispatch = useDispatch();
 
-        <Container className="container-center">
+  const [childrens, setChildrens] = useState(listChildrens);
+
+  const handleLogout = () => {
+    window.open("http://localhost:8000/auth/logout", "_self");
+    dispatch(Logout());
+    dispatch(resetChildren());
+  };
+
+  return (
+    <>
+      <div className="background-layer"></div>
+      <div className="background-admin">
+        <Header />
+        <Container className="container-center container-admin">
           <div className="d-flex flex-column align-items-center">
             <div className="home-container text-center">
               <h3 className="header-admin">Cài đặt dành cho cha mẹ</h3>
             </div>
-            <Card className="my-5 w-50">
+            <Card className="my-2 w-50">
               <Card.Header>Tài khoản</Card.Header>
               <Card.Body>
                 <div className="d-flex justify-content-between align-items-center">
@@ -26,45 +42,53 @@ export default function Admin() {
                       <img
                         className="avatar-resize"
                         alt="avatar-user"
-                        src="https://yt3.ggpht.com/ytc/AMLnZu9tKOrTGMgeYTGqcjBguuQF5Ed405syDL-FXjUtjl6mh4SiXxmlvYOEbJzo9Zc7=s108-c-k-c0x00ffffff-no-rj"
+                        src={user?.picture}
                       />
                     </div>
                     <div>
-                      <Card.Title>Huy Le Minh</Card.Title>
-                      <Card.Text>ongconoizzz@gmail.com</Card.Text>
+                      <Card.Title>{user?.name}</Card.Title>
+                      <Card.Text>{user?.email}</Card.Text>
                     </div>
                   </div>
                   <div>
-                    <Button variant="primary" className="text-end">
+                    <Button
+                      variant="primary"
+                      onClick={handleLogout}
+                      className="text-end"
+                    >
                       Đăng xuất
                     </Button>
                   </div>
                 </div>
               </Card.Body>
             </Card>
-            <Card className="my-5 w-50">
+            <Card className="my-2 w-50">
               <Card.Header>Con của tôi</Card.Header>
               <Card.Body>
-                <div className="d-flex justify-content-between align-items-center">
-                  <div className="d-flex align-items-center">
-                    <div>
-                      <img
-                        className="avatar-resize"
-                        alt="avatar-user"
-                        src="https://www.gstatic.com/ytkids/avatars/bck_avatar_kids_optimisticgiraffe_400_20170929.png"
-                      />
+                {childrens?.map((children, index) => (
+                  <div
+                    key={children._id}
+                    className="d-flex justify-content-between align-items-center admin-children-item"
+                  >
+                    <div className="d-flex align-items-center">
+                      <div>
+                        <img
+                          className="avatar-resize"
+                          alt="avatar-user"
+                          src={children.picture}
+                        />
+                      </div>
+                      <div>
+                        <Card.Title>{children.name}</Card.Title>
+                      </div>
                     </div>
                     <div>
-                      <Card.Title>Huy Le Minh</Card.Title>
+                      <Button variant="light" className="text-end">
+                        <AiOutlineArrowRight />
+                      </Button>
                     </div>
                   </div>
-                  <div>
-                    <Button variant="light" className="text-end">
-                      <AiOutlineArrowRight />
-                    </Button>
-                  </div>
-                </div>
-                <hr className="" />
+                ))}
                 <div className="mt-2 d-flex ml-2 justify-content-between align-items-center">
                   <div className="mt-2 d-flex align-items-center">
                     <div className="card-divider">
@@ -80,7 +104,7 @@ export default function Admin() {
                 </div>
               </Card.Body>
             </Card>
-            <Card className="my-5 w-50">
+            <Card className="my-2 w-50">
               <Card.Header>Bước xác minh dành cho cha mẹ</Card.Header>
               <Card.Body>
                 <Accordion>
@@ -142,6 +166,6 @@ export default function Admin() {
           </div>
         </Container>
       </div>
-    </div>
+    </>
   );
 }

@@ -1,6 +1,6 @@
 import React from "react";
 
-function HeartIcon() {
+function HeartIcon({ className }) {
   return (
     <>
       <svg
@@ -8,6 +8,7 @@ function HeartIcon() {
         viewBox="0 0 312 312"
         width="312"
         height="312"
+        className={className}
         preserveAspectRatio="xMidYMid meet"
         style={{ width: "100%", height: "100%" }}
       >
@@ -16,7 +17,7 @@ function HeartIcon() {
             <rect width="312" height="312" x="0" y="0"></rect>
           </clipPath>
         </defs>
-        <g clip-path="url(#__lottie_element_215)">
+        <g clipPath="url(#__lottie_element_215)">
           <g
             transform="matrix(0.5040000081062317,0,0,0.5040000081062317,59.055686950683594,99.96035766601562)"
             opacity="1"

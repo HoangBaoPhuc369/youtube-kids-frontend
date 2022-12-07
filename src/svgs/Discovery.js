@@ -1,11 +1,12 @@
 import React from "react";
 
-function Discovery() {
+function Discovery({className}) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="312"
       height="312"
+      className={className}
       viewBox="0 0 312 312"
       style={{ width: "100%", height: "100%" }}
     >

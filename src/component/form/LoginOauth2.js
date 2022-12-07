@@ -15,8 +15,6 @@ export default function LoginOauth2() {
 
   const { user } = useSelector((state) => state.auth);
 
-  console.log(user);
-
   useEffect(() => {
     lottie.loadAnimation({
       container: container.current,
@@ -70,12 +68,18 @@ export default function LoginOauth2() {
     if (newWindow) {
       timer = setInterval(() => {
         if (newWindow.closed) {
-          console.log("Yay we're authenticated");
-          dispatch(getUser());
-          navigate("/profile-account");
+          dispatch(getUser({ navigate }));
           if (timer) clearInterval(timer);
         }
       }, 500);
+    }
+  };
+
+  const handleLogin = () => {
+    if (!user) {
+      Login();
+    } else {
+      navigate("/profile-account");
     }
   };
 
@@ -100,14 +104,26 @@ export default function LoginOauth2() {
           <div className="login-account-google">
             <Button variant="primary" size="lg" active onClick={Login}>
               {user ? (
-                <img src={user.picture} alt="" />
+                <>
+                  <img
+                    className="login-account-google-avatar"
+                    src={user.picture}
+                    alt=""
+                  />
+                  <div className="login-account-google-wraptext">
+                    <span>{user.name}</span>
+                    <span>{user.email}</span>
+                  </div>
+                </>
               ) : (
-                <FaUserCircle className="login-account-google-avatar" />
+                <>
+                  <FaUserCircle className="login-account-google-avatar" />
+                  <div className="login-account-google-wraptext">
+                    <span>Add a new account</span>
+                  </div>
+                </>
               )}
 
-              <div className="login-account-google-wraptext">
-                <span>Add a new account</span>
-              </div>
               <FaAngleRight className="login-account-google-arrow" />
             </Button>
           </div>
@@ -118,7 +134,7 @@ export default function LoginOauth2() {
             </div>
             <div className="group-login-btn-right">
               <Button variant="primary">Bỏ qua</Button>
-              <Button variant="primary" onClick={Login}>
+              <Button variant="primary" onClick={handleLogin}>
                 Đăng Nhập
               </Button>
             </div>
