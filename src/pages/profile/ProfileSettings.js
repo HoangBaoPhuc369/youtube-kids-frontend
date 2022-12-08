@@ -19,6 +19,11 @@ export default function ProfileSettings() {
 
   const dispatch = useDispatch();
 
+  const [formData, setFormData] = useState({
+    name: "",
+    picture: "",
+  });
+
   const handleSubmit = (e) => {
     e.preventDefault();
   };

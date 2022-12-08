@@ -15,25 +15,34 @@ import LoggedInRoutes from "./routes/LoggedInRoutes";
 import NotLoggedInRoutes from "./routes/NotLoggedInRoutes";
 import ListProfileChildren from "./component/form/ListProfileChildren";
 import ProfileSettings from "./pages/profile/ProfileSettings";
+import { useSelector } from "react-redux";
 function App() {
+  const { user } = useSelector((state) => state.auth);
+  const { childrenActive } = useSelector((state) => state.children);
+
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/parent" element={<Parent />} />
-      <Route path="/profile-account" element={<ProfileAccount />} />
-      <Route path="/video-detail/:id" element={<Details />} />
-      <Route path="/channel/:id" element={<Channel />} />
-      <Route path="/admin" element={<Admin />} />
-      <Route path="/history" element={<History />} />
-      <Route path="/profile-created" element={<ProfileCreated />} />
-      <Route path="/list-profile/:id" element={<ListProfileChildren />} />
-      <Route path="/profile-settings" element={<ProfileSettings />} />
+      <Route element={<LoggedInRoutes />}>
+        <Route path="/" element={<Home />} />
+        <Route path="/parent" element={<Parent />} />
+        <Route path="/profile-account" element={<ProfileAccount />} />
+        <Route path="/video-detail/:id" element={<Details />} />
+        <Route path="/channel/:id" element={<Channel />} />
+        <Route path="/admin" element={<Admin />} />
+        <Route path="/history" element={<History />} />
+        <Route path="/profile-created" element={<ProfileCreated />} />
+        <Route path="/list-profile/:id" element={<ListProfileChildren />} />
+        <Route path="/profile-settings" element={<ProfileSettings />} />
+        <Route
+          path="/admin/profile-settings/:id"
+          element={<ProfileSettings />}
+        />
+      </Route>
 
-      
-      <Route path="/admin/profile-settings/:id" element={<ProfileSettings />} />
-
-      <Route path="/login" element={<Login />} />
-      <Route path="/login/success" element={<LoginSuccess />} />
+      <Route element={<NotLoggedInRoutes />}>
+        <Route path="/login" element={<Login />} />
+        <Route path="/login/success" element={<LoginSuccess />} />
+      </Route>
     </Routes>
   );
 }
