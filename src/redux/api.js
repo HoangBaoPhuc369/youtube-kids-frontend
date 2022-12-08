@@ -107,3 +107,31 @@ export const getChildren = (id) =>
     //   },
     // }
   );
+
+export const updateChildrenProfileForChildren = (name, picture, id) =>
+  axios.put(
+    `${process.env.REACT_APP_BACKEND_URL}/children/${id}/update-children-for-children`,
+    {
+      name,
+      picture,
+    }
+
+    // {
+    //   headers: {
+    //     Authorization: `Bearer ${token}`,
+    //   },
+    // }
+  );
+
+export const clearHistoryVideo = (id) =>
+  axios.patch(
+    `${process.env.REACT_APP_BACKEND_URL}/children/clear-videos-history`, 
+    {
+      childrenID: id,
+    }
+    // {
+    //   headers: {
+    //     Authorization: `Bearer ${token}`,
+    //   },
+    // }
+  );
