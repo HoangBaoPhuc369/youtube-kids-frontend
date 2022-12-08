@@ -11,7 +11,7 @@ import { resetChildren } from "../../redux/feature/childrenSlice";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function Admin() {
+export default function ParentProfile() {
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
   const { picture } = user;
@@ -37,7 +37,9 @@ export default function Admin() {
           <Container className="container-center container-admin">
             <div className="d-flex flex-column align-items-center">
               <div className="home-container text-center">
-                <h3 className="header-admin">Cài đặt dành cho cha mẹ</h3>
+                <h3 className="header-admin">
+                  Chỉnh sửa các tùy chọn cài đặt cho HUY DZ
+                </h3>
               </div>
               <Card className="my-2 w-50">
                 <Card.Header>Tài khoản</Card.Header>
@@ -46,30 +48,64 @@ export default function Admin() {
                     <div className="d-flex align-items-center">
                       <div>
                         <img
-                          className="avatar-resize"
+                          className="avatar-resize-setting-parent"
                           alt="avatar-user"
                           src={picture}
                         />
                       </div>
                       <div>
-                        <Card.Title>{user?.name}</Card.Title>
-                        <Card.Text>{user?.email}</Card.Text>
+                        <Card.Title>HUY DZ</Card.Title>
+                        <Card.Text>12 tuổi</Card.Text>
+                        {/* <Card.Title>{user?.name}</Card.Title>
+                        <Card.Text>{user?.email}</Card.Text> */}
                       </div>
                     </div>
                     <div>
                       <Button
-                        variant="primary"
-                        onClick={handleLogout}
-                        className="text-end"
+                        variant="light"
+                        // onClick={handleLogout}
+                        className="text-end text-color-edit"
                       >
-                        Đăng xuất
+                        Chỉnh sửa
                       </Button>
                     </div>
                   </div>
                 </Card.Body>
               </Card>
               <Card className="my-2 w-50">
-                <Card.Header>Con của tôi</Card.Header>
+                <Card.Header>Bước xác minh dành cho cha mẹ</Card.Header>
+                <Card.Body>
+                  <div className="d-flex justify-content-between">
+                    <div>
+                      Trẻ nhỏ tuổi
+                      <br />
+                      <span className="font-size-accordion">
+                        Nội dung đề xuất cho trẻ em từ 5 – 8 tuổi
+                      </span>
+                    </div>
+                    <Button
+                      variant="light"
+                      // onClick={handleLogout}
+                      className="text-end text-color-edit"
+                    >
+                      Chỉnh sửa
+                    </Button>
+                  </div>
+                  <hr />
+                  <div className="d-flex justify-content-between">
+                    <div>Xóa hồ sơ này</div>
+                    <Button
+                      variant="light"
+                      // onClick={handleLogout}
+                      className="text-end text-color-edit"
+                    >
+                      Xóa
+                    </Button>
+                  </div>
+                </Card.Body>
+              </Card>
+              <Card className="my-2 w-50">
+                <Card.Header>Hồ sơ</Card.Header>
                 <Card.Body>
                   {childrens?.map((children, index) => (
                     <div
@@ -114,65 +150,6 @@ export default function Admin() {
                       </Button>
                     </div>
                   </div>
-                </Card.Body>
-              </Card>
-              <Card className="my-2 w-50">
-                <Card.Header>Bước xác minh dành cho cha mẹ</Card.Header>
-                <Card.Body>
-                  <Accordion>
-                    <Accordion.Item eventKey="0">
-                      <Accordion.Header>
-                        <div>
-                          Tạo mật mã tùy chỉnh
-                          <br />
-                          <span className="font-size-accordion">
-                            Mật mã này dùng để truy cập vào phần cài đặt dành
-                            cho cha mẹ
-                          </span>
-                        </div>
-                      </Accordion.Header>
-                      <Accordion.Body className="">
-                        <form className="mb-3">
-                          <div className="d-flex">
-                            <div className="w-100 me-5">
-                              <label
-                                htmlFor="exampleFormControlInput1"
-                                className="form-label"
-                              >
-                                Nhập mật mã
-                              </label>
-                              <input
-                                type="email"
-                                className="form-control"
-                                id="exampleFormControlInput1"
-                                placeholder="Nhập mật mã"
-                              />
-                            </div>
-                            <div className="w-100 me-5">
-                              <label
-                                htmlFor="exampleFormControlTextarea1"
-                                className="form-label"
-                              >
-                                Nhập lại mật mã
-                              </label>
-                              <input
-                                className="form-control"
-                                id="exampleFormControlTextarea1"
-                                rows="3"
-                                placeholder="Nhập lại mật mã"
-                              />
-                            </div>
-                          </div>
-                          <button
-                            type="submit"
-                            className="mt-2 color-button-submit"
-                          >
-                            Gửi
-                          </button>
-                        </form>
-                      </Accordion.Body>
-                    </Accordion.Item>
-                  </Accordion>
                 </Card.Body>
               </Card>
             </div>
