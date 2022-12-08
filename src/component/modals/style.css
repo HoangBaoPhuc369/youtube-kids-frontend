@@ -45,3 +45,7 @@
 .pad-10 {
     padding: 0 10px;
 }
+
+.modal-delete {
+  transform: translateY(38%);
+}

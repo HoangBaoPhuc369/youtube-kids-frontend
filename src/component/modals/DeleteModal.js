@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
+import React, { useState } from "react";
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
 
-function DeleteModal({show, handleClose, handleShow }) {
- 
-
+function DeleteModal({ show, handleClose, handleShow }) {
   return (
     <>
       {/* <Button variant="primary" onClick={handleShow}>
@@ -13,15 +11,17 @@ function DeleteModal({show, handleClose, handleShow }) {
 
       <Modal show={show} onHide={handleClose} className="modal-delete">
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>Xóa nhật ký hoạt động</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+        <Modal.Body>
+          Bạn có chắc chắn muốn xóa toàn bộ lịch sử của mình không?
+        </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            Close
+            Hủy
           </Button>
           <Button variant="primary" onClick={handleClose}>
-            Save Changes
+            OK
           </Button>
         </Modal.Footer>
       </Modal>

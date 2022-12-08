@@ -50,8 +50,12 @@ export default function Header({ page }) {
 
   const handleShowSearch = () => {
     setSearch(true);
-    inputSearchRef.current.focus();
+    inputSearchRef.current?.focus();
   };
+
+  const handleSearch = () => {
+    navigate(`/search/${inputSearchRef.current.value}`);
+  }
 
   return (
     <>
@@ -104,7 +108,7 @@ export default function Header({ page }) {
                       ref={inputSearchRef}
                       placeholder="Tìm kiếm trên Youtube Kids"
                     />
-                    <button>
+                    <button onClick={handleSearch}>
                       <SearchIcon />
                     </button>
                   </div>
@@ -174,7 +178,7 @@ export default function Header({ page }) {
                       ref={inputSearchRef}
                       placeholder="Tìm kiếm trên Youtube Kids"
                     />
-                    <button>
+                    <button onClick={handleSearch}>
                       <SearchIcon />
                     </button>
                   </div>

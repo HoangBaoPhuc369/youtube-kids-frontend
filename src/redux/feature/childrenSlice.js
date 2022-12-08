@@ -173,6 +173,7 @@ export const childrenSlice = createSlice({
 
     [updateChildrenProfileForChildren.fulfilled]: (state, action) => {
       state.childrenActive = action.payload;
+      Cookies.set("childrenActive", JSON.stringify(action.payload));
       state.errorChildren = "";
     },
     [updateChildrenProfileForChildren.rejected]: (state, action) => {

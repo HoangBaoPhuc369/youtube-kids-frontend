@@ -12,7 +12,10 @@ import ChooseProfilePictureSettings from "../../component/modals/ChooseProfilePi
 import { listProfilePicture } from "./../../data/listProfilePicture";
 import { getChannelVideo } from "./../../redux/api";
 import validator from "validator";
-import { updateChildrenProfileForChildren } from "./../../redux/feature/childrenSlice";
+import {
+  updateChildrenProfileForChildren,
+  clearHistoryVideo,
+} from "./../../redux/feature/childrenSlice";
 import DeleteModal from "./../../component/modals/DeleteModal";
 
 export default function ProfileSettings() {
@@ -25,7 +28,10 @@ export default function ProfileSettings() {
 
   const [show, setShow] = useState(false);
 
-  const handleClose = () => setShow(false);
+  const handleClose = () => {
+    setShow(false);
+    handleClearHistory();
+  };
   const handleShow = () => setShow(true);
 
   const [name, setName] = useState("");
@@ -59,7 +65,9 @@ export default function ProfileSettings() {
     }
   };
 
-  const handleClearHistory = () => {};
+  const handleClearHistory = () => {
+    dispatch(clearHistoryVideo({ id: childrenActive?._id }));
+  };
 
   return (
     <>

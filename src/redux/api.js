@@ -34,6 +34,23 @@ export const getChannelVideo = (idChannel) =>
     // }
   );
 
+export const searchVideo = (key) =>
+  // search?part=snippet&order=date&q=video cho tre em&safeSearch=strict&maxResults=32&key=AIzaSyAkCm5boRgvBXioONTHkoxomRa538S5zUg&regionCode=VN
+  axios.get(
+    `${process.env.REACT_APP_YOUTUBE_BASE_URL}search?part=snippet&order=date&q=${key}&safeSearch=strict&maxResults=32&key=${process.env.REACT_APP_YOUTUBE_API_KEY}&regionCode=VN`
+    // {
+    //   headers: {
+    //     Authorization: `Bearer ${token}`,
+    //   },
+    // }
+  );
+
+export const checkVideoForChildren = (videosId) =>
+  // search?part=snippet&order=date&q=video cho tre em&safeSearch=strict&maxResults=32&key=AIzaSyAkCm5boRgvBXioONTHkoxomRa538S5zUg&regionCode=VN
+  axios.get(
+    `${process.env.REACT_APP_YOUTUBE_BASE_URL}videos?part=snippet%2CcontentDetails%2Cstatistics%2C%20status&id=${videosId}&maxResults=50&regionCode=VN&key=${process.env.REACT_APP_YOUTUBE_API_KEY}`
+  );
+
 export const addVideoHistory = (childrenID, videoId, thumbnail, title) =>
   axios.patch(
     `${process.env.REACT_APP_BACKEND_URL}/children/add-video-history`,
@@ -125,7 +142,7 @@ export const updateChildrenProfileForChildren = (name, picture, id) =>
 
 export const clearHistoryVideo = (id) =>
   axios.patch(
-    `${process.env.REACT_APP_BACKEND_URL}/children/clear-videos-history`, 
+    `${process.env.REACT_APP_BACKEND_URL}/children/clear-videos-history`,
     {
       childrenID: id,
     }
