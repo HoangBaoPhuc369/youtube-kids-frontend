@@ -9,7 +9,8 @@ import ListProfileChildren from "../../component/form/ListProfileChildren";
 function ProfileAccount() {
   //state for steps
   const [step, setstep] = useState(6);
-
+  //create name page
+  const namePage = "Tạo hồ sơ";
   //state for form data
   const [formData, setFormData] = useState({
     kid_name: "",
@@ -55,6 +56,7 @@ function ProfileAccount() {
                   setFormData={setFormData}
                   nextStep={nextStep}
                   handleInputData={handleInputData}
+                  namePage={namePage}
                 />
               </Col>
             </Row>

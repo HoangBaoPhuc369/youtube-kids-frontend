@@ -17,6 +17,8 @@ import ListProfileChildren from "./component/form/ListProfileChildren";
 import ProfileSettings from "./pages/profile/ProfileSettings";
 import { useSelector } from "react-redux";
 import ParentProfile from "./pages/ParentProfile";
+import SettingProfile from "./pages/SettingProfile";
+import SettingAge from "./pages/SettingAge";
 function App() {
   const { user } = useSelector((state) => state.auth);
   const { childrenActive } = useSelector((state) => state.children);
@@ -42,6 +44,8 @@ function App() {
           path="/admin/parentprofilesettings/:id"
           element={<ParentProfile />}
         />
+        <Route path="/admin/setting-profile/:id" element={<SettingProfile />} />
+        <Route path="/admin/setting-age/:id" element={<SettingAge />} />
       </Route>
 
       <Route element={<NotLoggedInRoutes />}>
