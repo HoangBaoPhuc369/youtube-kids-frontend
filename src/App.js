@@ -20,6 +20,7 @@ import ParentProfile from "./pages/ParentProfile";
 import Search from "./pages/search";
 import SettingProfile from "./pages/SettingProfile";
 import SettingAge from "./pages/SettingAge";
+import SecretKey from "./pages/SecretKey";
 function App() {
   const { user } = useSelector((state) => state.auth);
   const { childrenActive } = useSelector((state) => state.children);
@@ -49,6 +50,7 @@ function App() {
         <Route path="/search/:key" element={<Search />} />
         <Route path="/admin/setting-profile/:id" element={<SettingProfile />} />
         <Route path="/admin/setting-age/:id" element={<SettingAge />} />
+        <Route path="/admin/secret-key" element={<SecretKey />} />
       </Route>
 
       <Route element={<NotLoggedInRoutes />}>
