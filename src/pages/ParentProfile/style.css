@@ -75,3 +75,13 @@
 .text-color-edit {
     color: #008596;
 }
+
+
+.admin-children-item-admin {
+  padding: 20px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.text-color-edit-admin {
+    color: #008596;
+}
