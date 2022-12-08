@@ -54,13 +54,18 @@ export const searchVideos = createAsyncThunk(
   async ({ key }) => {
     try {
       const { data } = await api.searchVideo(key);
-      return data;
+      const videosSearch = data.items.map((x) => x.id.videoId).join("%2C");
+      const videoList = await api.checkVideoForChildren(videosSearch);
+      const videoForChildren = videoList.data.items.filter(
+        (video) => video.status.madeForKids === true
+      );
+      // console.log(videoForChildren)
+      return videoForChildren;
     } catch (err) {
       return err.response.data;
     }
   }
 );
-
 
 const initialState = {
   videos: null,
@@ -121,7 +126,7 @@ export const videolistSlice = createSlice({
     },
     [searchVideos.fulfilled]: (state, action) => {
       state.loading = false;
-      state.videos = action.payload.items;
+      state.videos = action.payload;
       state.error = "";
     },
     [searchVideos.rejected]: (state, action) => {
