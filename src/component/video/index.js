@@ -7,6 +7,7 @@ import VideoCard from "./VideoCard";
 
 export default function Video({ videos}) {
   // const { videos } = useSelector((state) => state.video);
+  console.log(videos);
   return (
     <>
       <div className="video-wrapper">

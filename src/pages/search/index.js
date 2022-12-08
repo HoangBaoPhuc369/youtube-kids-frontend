@@ -6,6 +6,7 @@ import Header from "../../component/header";
 import Video from "../../component/video";
 import { useSelector } from "react-redux";
 import { searchVideos } from "./../../redux/feature/videolistSlice";
+import "./style.css";
 
 export default function Search() {
   const { key } = useParams();
@@ -19,7 +20,14 @@ export default function Search() {
       <div className="search-wrapper">
         <Header />
         <div className="search-content">
-          <Video videos={videos} />
+          {videos?.length > 0 ? (
+            <Video videos={videos} />
+          ) : (
+            <>
+              <div className="search-not-found"></div>
+              <h3 style={{textAlign: 'center'}}>Hãy thử tìm kiếm nội dung khác!</h3>
+            </>
+          )}
         </div>
         <Footer />
       </div>
