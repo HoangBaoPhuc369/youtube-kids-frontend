@@ -152,3 +152,18 @@ export const clearHistoryVideo = (id) =>
     //   },
     // }
   );
+
+// --------------------------PARENT API-----------------------------------
+export const createSecretPassword = (userId, secretPassword) =>
+  axios.patch(
+    `${process.env.REACT_APP_BACKEND_URL}/user/update-secret-password`,
+    {
+      userId,
+      secretPassword,
+    }
+    // {
+    //   headers: {
+    //     Authorization: `Bearer ${token}`,
+    //   },
+    // }
+  );

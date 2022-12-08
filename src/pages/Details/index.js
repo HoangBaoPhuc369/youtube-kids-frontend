@@ -39,6 +39,8 @@ export default function Details() {
   const [valueMessage, setValueMessage] = useState("");
 
   const chatRef = useRef(null);
+  const videoRef = useRef(null);
+  const playRef = useRef(null);
 
   useEffect(() => {
     dispatch(createOrGetChatVideo({ videoId: param.id }));
@@ -61,7 +63,7 @@ export default function Details() {
   const handleStoreVideo = () => {
     dispatch(
       addVideoHistory({
-        childrenId: childrenActive?._id,
+        childrenID: childrenActive?._id,
         videoId: param.id,
         thumbnail: channelVideo[0]?.snippet?.thumbnails?.default?.url,
         title: videoPlay?.snippet.title,
@@ -80,7 +82,7 @@ export default function Details() {
     );
     setValueMessage("");
   };
-  
+
   const handleChannel = (id) => {
     navigate(`/channel/${id}`);
   };
@@ -100,7 +102,9 @@ export default function Details() {
               <iframe
                 width="100%"
                 height="475"
-                onClick={handleStoreVideo}
+                id="video-play"
+                ref={videoRef}
+                // onClick={handleStoreVideo}
                 src={`https://www.youtube.com/embed/${param.id}`}
                 title="YouTube video player"
                 frameBorder="0"
@@ -187,6 +191,12 @@ export default function Details() {
                 >
                   {videoPlay?.snippet.channelTitle}
                 </p>
+              </div>
+
+              <div className="video-info-btn-wrap">
+                <Button variant="primary" onClick={handleStoreVideo}>
+                  Save
+                </Button>
               </div>
             </Col>
           </Row>

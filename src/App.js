@@ -20,6 +20,8 @@ import ParentProfile from "./pages/ParentProfile";
 import Search from "./pages/search";
 import SettingProfile from "./pages/SettingProfile";
 import SettingAge from "./pages/SettingAge";
+import Ability from "./pages/ability";
+import Education from "./pages/education";
 import SecretKey from "./pages/SecretKey";
 function App() {
   const { user } = useSelector((state) => state.auth);
@@ -29,6 +31,8 @@ function App() {
     <Routes>
       <Route element={<LoggedInRoutes />}>
         <Route path="/" element={<Home />} />
+        <Route path="/ability" element={<Ability />} />
+        <Route path="/education" element={<Education />} />
         <Route path="/parent" element={<Parent />} />
         <Route path="/profile-account" element={<ProfileAccount />} />
         <Route path="/video-detail/:id" element={<Details />} />

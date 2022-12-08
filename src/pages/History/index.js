@@ -7,8 +7,9 @@ import "./style.css";
 import { getVideoList } from "../../redux/feature/videolistSlice";
 import { Button, Container } from "react-bootstrap";
 import HeartIcon from "../../svgs/HeartIcon";
-import { useNavigate } from 'react-router-dom';
-
+import { useNavigate } from "react-router-dom";
+import VideoCardHistory from "../../component/video/VideoCardHistory";
+import VideoHistory from "../../component/video/videoHistory";
 
 export default function History() {
   const dispatch = useDispatch();
@@ -23,8 +24,10 @@ export default function History() {
   );
 
   const handleSettings = () => {
-    navigate('/profile-settings');
+    navigate("/profile-settings");
   };
+
+  console.log();
 
   return (
     <div className="home-wrapper background-history">
@@ -64,7 +67,9 @@ export default function History() {
             </div>
           </div>
         </Container>
-        <Video />
+        {childrenActive.historyWatchVideo.length > 0 ? (
+          <VideoHistory videos={childrenActive.historyWatchVideo} />
+        ) : null}
       </div>
       <Footer />
     </div>

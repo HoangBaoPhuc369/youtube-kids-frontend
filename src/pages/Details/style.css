@@ -198,3 +198,10 @@
 .video-chat-btn-send {
   cursor: pointer;
 }
+
+.video-info-btn-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
