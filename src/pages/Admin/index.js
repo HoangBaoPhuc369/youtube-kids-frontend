@@ -19,6 +19,8 @@ export default function Admin() {
   const dispatch = useDispatch();
 
   const [childrens, setChildrens] = useState(listChildrens);
+  const [password, setPassword] = useState(listChildrens);
+  const [password2, setPassword2] = useState(listChildrens);
 
   const handleLogout = () => {
     window.open("http://localhost:8000/auth/logout", "_self");
@@ -28,6 +30,12 @@ export default function Admin() {
   const handleParentProfileSettings = (_id) => {
     navigate(`/admin/parentprofilesettings/${_id}`);
   };
+
+  const handlePassword = () => {
+    if (password === password2) {
+      console.log("ok");
+    }
+  }
 
   return (
     <>
@@ -132,7 +140,7 @@ export default function Admin() {
                         </div>
                       </Accordion.Header>
                       <Accordion.Body className="">
-                        <form className="mb-3">
+                        <form className="mb-3" onSubmit={handlePassword}>
                           <div className="d-flex">
                             <div className="w-100 me-5">
                               <label
@@ -142,8 +150,10 @@ export default function Admin() {
                                 Nhập mật mã
                               </label>
                               <input
-                                type="email"
+                                type="password"
                                 className="form-control"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
                                 id="exampleFormControlInput1"
                                 placeholder="Nhập mật mã"
                               />
@@ -156,8 +166,11 @@ export default function Admin() {
                                 Nhập lại mật mã
                               </label>
                               <input
+                               type="password"
                                 className="form-control"
                                 id="exampleFormControlTextarea1"
+                                value={password2}
+                                onChange={(e) => setPassword2(e.target.value)}
                                 rows="3"
                                 placeholder="Nhập lại mật mã"
                               />

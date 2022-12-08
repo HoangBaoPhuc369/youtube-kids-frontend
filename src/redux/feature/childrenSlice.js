@@ -35,6 +35,7 @@ export const listChildrensUser = createAsyncThunk(
 export const addVideoHistory = createAsyncThunk(
   "children/addVideoHistory",
   async ({ childrenID, videoId, thumbnail, title }, { rejectWithValue }) => {
+    console.log(childrenID, videoId, thumbnail, title)
     try {
       const { data } = await api.addVideoHistory(
         childrenID,
@@ -150,6 +151,7 @@ export const childrenSlice = createSlice({
     [addVideoHistory.fulfilled]: (state, action) => {
       state.loading = false;
       state.childrenActive.historyWatchVideo = action.payload;
+      Cookies.set("childrenActive", JSON.stringify(state.childrenActive));
       state.error = "";
     },
     [addVideoHistory.rejected]: (state, action) => {

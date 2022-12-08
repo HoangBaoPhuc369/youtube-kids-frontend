@@ -19,7 +19,7 @@ import ArrowLeftIcon from "../../svgs/ArrowLeftIcon";
 import useClickOutside from "../../utils/clickOutside";
 import { useSelector } from "react-redux";
 
-export default function Header({ page }) {
+export default function Header({ page, category }) {
   const [navbar, setNavbar] = useState(false);
   const [search, setSearch] = useState(false);
 
@@ -55,7 +55,7 @@ export default function Header({ page }) {
 
   const handleSearch = () => {
     navigate(`/search/${inputSearchRef.current.value}`);
-  }
+  };
 
   return (
     <>
@@ -187,16 +187,22 @@ export default function Header({ page }) {
                   <div className="header-center-category-wrapper">
                     <Link to={"/"} className="header-center-category-item">
                       <BopcornIcon className="category-item-icon" />
-                      <span>Sáng tạo</span>
+                      <span>{category === "Sáng tạo" ? category : ""}</span>
                     </Link>
-                    <div className="header-center-category-item">
+                    <Link
+                      to={"/ability"}
+                      className="header-center-category-item"
+                    >
                       <HeartIcon className="category-item-icon" />
-                      <span></span>
-                    </div>
-                    <div className="header-center-category-item">
+                      <span>{category === "Kỹ năng" ? category : ""}</span>
+                    </Link>
+                    <Link
+                      to={"/education"}
+                      className="header-center-category-item"
+                    >
                       <LightIcon className="category-item-icon" />
-                      <span></span>
-                    </div>
+                      <span>{category === "Học tập" ? category : ""}</span>
+                    </Link>
                   </div>
                 ) : null}
               </div>

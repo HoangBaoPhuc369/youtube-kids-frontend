@@ -23,6 +23,18 @@ export const getUser = createAsyncThunk(
   }
 );
 
+export const createSecretPassword = createAsyncThunk(
+  "auth/createSecretPassword",
+  async ({ userId, secretPassword }, { rejectWithValue }) => {
+    try {
+      const { data } = await api.createSecretPassword(userId, secretPassword);
+      return data;
+    } catch (err) {
+      return err.response.data;
+    }
+  }
+);
+
 const initialState = {
   user: Cookies.get("user") ? JSON.parse(Cookies.get("user")) : null,
   error: "",
@@ -49,6 +61,17 @@ export const authSlice = createSlice({
       state.error = "";
     },
     [getUser.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload.message;
+    },
+
+    [createSecretPassword.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.user = action.payload;
+      Cookies.set("user", JSON.stringify(action.payload), { expires: 7 });
+      state.error = "";
+    },
+    [createSecretPassword.rejected]: (state, action) => {
       state.loading = false;
       state.error = action.payload.message;
     },

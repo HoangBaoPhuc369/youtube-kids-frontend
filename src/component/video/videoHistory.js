@@ -4,16 +4,16 @@ import Row from "react-bootstrap/Row";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import VideoCard from "./VideoCard";
+import VideoCardHistory from "./VideoCardHistory";
 
-export default function Video({ videos}) {
-  // const { videos } = useSelector((state) => state.video);
+export default function VideoHistory({ videos }) {
   return (
     <>
       <div className="video-wrapper">
         <Container>
           <Row xs={1} md={2} lg={4} className="g-4">
             {videos?.map((video, idx) => (
-              <VideoCard video={video} key={idx}  />
+              <VideoCardHistory video={video} key={idx} />
             ))}
           </Row>
         </Container>
