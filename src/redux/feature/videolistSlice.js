@@ -49,6 +49,19 @@ export const sendMessage = createAsyncThunk(
   }
 );
 
+export const searchVideos = createAsyncThunk(
+  "search/searchVideos",
+  async ({ key }) => {
+    try {
+      const { data } = await api.searchVideo(key);
+      return data;
+    } catch (err) {
+      return err.response.data;
+    }
+  }
+);
+
+
 const initialState = {
   videos: null,
   channelVideo: null,
@@ -101,6 +114,19 @@ export const videolistSlice = createSlice({
     },
     [sendMessage.rejected]: (state, action) => {
       state.error = action.payload?.message;
+    },
+
+    [searchVideos.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [searchVideos.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.videos = action.payload.items;
+      state.error = "";
+    },
+    [searchVideos.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload.message;
     },
   },
 });

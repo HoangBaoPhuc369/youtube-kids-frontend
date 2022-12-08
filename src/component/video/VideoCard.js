@@ -40,7 +40,7 @@ export default function VideoCard({ video }) {
       return timeString;
     }
   }
-  console.log(video.id.videoId);
+  // console.log(video);
   return (
     <>
       <Col>

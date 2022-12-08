@@ -40,20 +40,18 @@ export default function Details() {
   const chatRef = useRef(null);
 
   useEffect(() => {
-    dispatch(getVideoList());
-    // dispatch(getChannelVideo());
     dispatch(createOrGetChatVideo({ videoId: param.id }));
   }, []);
 
   useEffect(() => {
     if (videos) {
-      const findVideo = videos.find((v) => v.id === param.id);
+      const findVideo = videos.find((v) => v.id.videoId === param.id);
       if (findVideo) {
         setVideoPlay(findVideo);
         dispatch(getChannelVideo({ idChannel: findVideo.snippet.channelId }));
       }
     }
-  }, [videos]);
+  }, []);
 
   const handleOffChat = () => {
     setChatShow((prev) => !prev);
