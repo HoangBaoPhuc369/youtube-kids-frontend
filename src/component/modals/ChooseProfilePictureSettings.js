@@ -5,30 +5,23 @@ import Row from "react-bootstrap/Row";
 import "./style.css";
 import { ImCheckmark } from "react-icons/im";
 
-export default function ChooseProfilePicture({
+export default function ChooseProfilePictureSettings({
   show,
   onHide,
-  profilePictures,
-  setProfilePictures,
+  listProfilePicture,
   setpictureActive,
 }) {
   const handleChooseProfilePicture = (id) => {
-    const newProfilePictures = profilePictures.map((picture) => {
-      if (picture.id === id) {
-        return {
-          ...picture,
-          active: true,
-        };
-      } else {
-        return {
-          ...picture,
-          active: false,
-        };
-      }
+    const newProfilePictures = listProfilePicture.map((picture) => {
+        if (picture.id === id) {
+            setpictureActive(picture.src);
+            return picture.src;
+        } else {
+            return "";
+        }
     });
 
-    setpictureActive(newProfilePictures);
-    setProfilePictures(newProfilePictures);
+    
     onHide();
   };
 
@@ -47,9 +40,12 @@ export default function ChooseProfilePicture({
       </Modal.Header>
       <Modal.Body>
         <Row xs={1} md={4} className="g-4">
-          {profilePictures.map((p, idx) => (
+          {listProfilePicture.map((p, idx) => (
             <Col key={p.id}>
-              <Card className="profile-picture-wrapper" onClick={() => handleChooseProfilePicture(p.id)}>
+              <Card
+                className="profile-picture-wrapper"
+                onClick={() => handleChooseProfilePicture(p.id)}
+              >
                 <Card.Img className="profile-picture-img" src={p.src} />
                 {p.active && (
                   <div className="profile-picture-overplay">

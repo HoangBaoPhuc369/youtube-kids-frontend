@@ -6,27 +6,60 @@ import { useSelector, useDispatch } from "react-redux";
 import { Container, Row, Col } from "react-bootstrap";
 import Header from "../../component/header";
 import ChooseProfilePicture from "../../component/modals/ChooseProfilePicture";
-import { listProfilePicture } from "../../data/listProfilePicture";
 import { BiKey } from "react-icons/bi";
 import { FaRegTrashAlt } from "react-icons/fa";
+import ChooseProfilePictureSettings from "../../component/modals/ChooseProfilePictureSettings";
+import { listProfilePicture } from "./../../data/listProfilePicture";
+import { getChannelVideo } from "./../../redux/api";
+import validator from "validator";
+import { updateChildrenProfileForChildren } from "./../../redux/feature/childrenSlice";
+import DeleteModal from "./../../component/modals/DeleteModal";
 
 export default function ProfileSettings() {
   const { user } = useSelector((state) => state.auth);
   const { childrenActive } = useSelector((state) => state.children);
-
   const [modalShow, setModalShow] = useState(false);
-  const [profilePictures, setProfilePictures] = useState(listProfilePicture);
+  const [disableBtn, setDisableBtn] = useState(true);
 
   const dispatch = useDispatch();
 
-  const [formData, setFormData] = useState({
-    name: "",
-    picture: "",
-  });
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const [name, setName] = useState("");
+  const [pictureActive, setpictureActive] = useState(childrenActive?.picture);
+
+  useEffect(() => {
+    if (name === "" || pictureActive === "") {
+      setDisableBtn(true);
+    } else {
+      setDisableBtn(false);
+    }
+  }, [name, pictureActive]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (validator.isEmpty(name) || validator.isEmpty(pictureActive)) {
+      setDisableBtn(true);
+    } else if (!validator.matches(name, /^[a-zA-Z ]+$/)) {
+      setDisableBtn(true);
+    } else {
+      console.log(name, pictureActive);
+      dispatch(
+        updateChildrenProfileForChildren({
+          name: name,
+          picture: pictureActive,
+          id: childrenActive._id,
+        })
+      );
+      setDisableBtn(false);
+    }
   };
+
+  const handleClearHistory = () => {};
 
   return (
     <>
@@ -51,7 +84,7 @@ export default function ProfileSettings() {
                       className="profile-setting-img"
                       onClick={() => setModalShow(true)}
                     >
-                      <img src={childrenActive?.picture} alt="" />
+                      <img src={pictureActive} alt="" />
                       <span className="profile-setting-img-edit">
                         <MdModeEdit />
                       </span>
@@ -62,12 +95,20 @@ export default function ProfileSettings() {
                         className="effect-2"
                         type="text"
                         placeholder="Tên"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
                       />
                       <span className="focus-border"></span>
                     </div>
                   </Card.Body>
                   <div className="profile-setting-btn-save">
-                    <Button variant="info">Save</Button>
+                    <Button
+                      variant="info"
+                      onClick={handleSubmit}
+                      disabled={disableBtn}
+                    >
+                      Save
+                    </Button>
                   </div>
                 </Card>
                 <br />
@@ -115,7 +156,9 @@ export default function ProfileSettings() {
                         </div>
                       </div>
                       <div className="settings-card-right-btn">
-                        <Button variant="info">Xóa</Button>
+                        <Button variant="info" onClick={handleShow}>
+                          Xóa
+                        </Button>
                       </div>
                     </div>
                   </Card.Body>
@@ -128,11 +171,17 @@ export default function ProfileSettings() {
         </Container>
       </div>
 
-      <ChooseProfilePicture
+      <ChooseProfilePictureSettings
         show={modalShow}
         onHide={() => setModalShow(false)}
-        profilePictures={profilePictures}
-        setProfilePictures={setProfilePictures}
+        listProfilePicture={listProfilePicture}
+        setpictureActive={setpictureActive}
+      />
+
+      <DeleteModal
+        show={show}
+        handleClose={handleClose}
+        handleShow={handleShow}
       />
     </>
   );

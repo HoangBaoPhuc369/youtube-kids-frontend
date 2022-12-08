@@ -64,6 +64,34 @@ export const getChildren = createAsyncThunk(
   }
 );
 
+export const updateChildrenProfileForChildren = createAsyncThunk(
+  "children/updateChildrenProfileForChildren",
+  async ({ name, picture, id }, { rejectWithValue }) => {
+    try {
+      const { data } = await api.updateChildrenProfileForChildren(
+        name,
+        picture,
+        id
+      );
+      return data;
+    } catch (err) {
+      return err.response.data;
+    }
+  }
+);
+
+export const clearHistoryVideo = createAsyncThunk(
+  "children/clearHistoryVideo",
+  async ({ id }, { rejectWithValue }) => {
+    try {
+      const { data } = await api.clearHistoryVideo(id);
+      return data;
+    } catch (err) {
+      return err.response.data;
+    }
+  }
+);
+
 const initialState = {
   children: Cookies.get("children")
     ? JSON.parse(Cookies.get("children"))
@@ -84,14 +112,14 @@ export const childrenSlice = createSlice({
   name: "children",
   initialState,
   reducers: {
-   resetChildren: (state) => {
+    resetChildren: (state) => {
       state.children = null;
       state.listChildrens = null;
       state.childrenActive = null;
       Cookies.remove("children");
       Cookies.remove("childrenActive");
       Cookies.remove("listChildrens");
-    }
+    },
   },
   extraReducers: {
     [createChildren.pending]: (state, action) => {
@@ -140,6 +168,22 @@ export const childrenSlice = createSlice({
     },
     [getChildren.rejected]: (state, action) => {
       state.loadingChildren = false;
+      state.errorChildren = action.payload.message;
+    },
+
+    [updateChildrenProfileForChildren.fulfilled]: (state, action) => {
+      state.childrenActive = action.payload;
+      state.errorChildren = "";
+    },
+    [updateChildrenProfileForChildren.rejected]: (state, action) => {
+      state.errorChildren = action.payload.message;
+    },
+
+    [clearHistoryVideo.fulfilled]: (state, action) => {
+      console.log(action.payload);
+      state.errorChildren = "";
+    },
+    [clearHistoryVideo.rejected]: (state, action) => {
       state.errorChildren = action.payload.message;
     },
   },
