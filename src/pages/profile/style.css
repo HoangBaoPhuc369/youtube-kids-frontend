@@ -12,7 +12,15 @@
 }
 
 .profile-settings-container {
-  height: calc(100% - 128px) !important;
+  /* height: calc(100% - 128px) !important; */
+  background-color: #d90a17;
+  height: 100%;
+}
+
+.bg-profile-setting {
+  background-color: #d90a17;
+  height: 869px;
+  overflow: hidden;
 }
 
 .profile-settings-container > .row {
@@ -142,9 +150,9 @@
   margin-bottom: 16px;
 }
 
-.settings-card-right-btn >  button {
-    width: 128px;
-    height: 48px;
-    font-size: 18px;
-    color: #fff;
+.settings-card-right-btn > button {
+  width: 128px;
+  height: 48px;
+  font-size: 18px;
+  color: #fff;
 }

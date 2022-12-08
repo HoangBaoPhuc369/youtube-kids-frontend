@@ -20,8 +20,12 @@ import ParentProfile from "./pages/ParentProfile";
 import Search from "./pages/search";
 import SettingProfile from "./pages/SettingProfile";
 import SettingAge from "./pages/SettingAge";
+<<<<<<< HEAD
 import Ability from "./pages/ability";
 import Education from "./pages/education";
+=======
+import SecretKey from "./pages/SecretKey";
+>>>>>>> 34710bac3c6a9a215ce8ec5d9e6c9c2e49a388d6
 function App() {
   const { user } = useSelector((state) => state.auth);
   const { childrenActive } = useSelector((state) => state.children);
@@ -53,6 +57,7 @@ function App() {
         <Route path="/search/:key" element={<Search />} />
         <Route path="/admin/setting-profile/:id" element={<SettingProfile />} />
         <Route path="/admin/setting-age/:id" element={<SettingAge />} />
+        <Route path="/admin/secret-key" element={<SecretKey />} />
       </Route>
 
       <Route element={<NotLoggedInRoutes />}>
