@@ -46,7 +46,7 @@ export default function Details() {
 
   useEffect(() => {
     if (videos) {
-      const findVideo = videos.find((v) => v.id.videoId === param.id);
+      const findVideo = videos.find((v) => v.id === param.id);
       if (findVideo) {
         setVideoPlay(findVideo);
         dispatch(getChannelVideo({ idChannel: findVideo.snippet.channelId }));

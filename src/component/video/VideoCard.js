@@ -40,11 +40,10 @@ export default function VideoCard({ video }) {
       return timeString;
     }
   }
-  // console.log(video);
   return (
     <>
       <Col>
-        <Link className="video-link" to={`/video-detail/${video.id.videoId}`}>
+        <Link className="video-link" to={`/video-detail/${video.id}`}>
           <Card className="video-card">
             <Card.Img variant="top" src={video.snippet.thumbnails.medium.url} />
             {video.contentDetails?.duration ? (
