@@ -1,0 +1,29 @@
+.background-history {
+  background-color: black;
+}
+.header-history {
+  color: #fff;
+  font-size: 34px;
+  text-align: center;
+  margin-top: 40px;
+  padding: 10px;
+}
+
+.avatar-resize-channel {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.avatar-resize {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+.bg-btn-sub {
+  background-color: #d90a17;
+  border-radius: 5px;
+  padding: 1px 6px 1px 0;
+}

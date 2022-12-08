@@ -14,19 +14,21 @@ import { useNavigate } from "react-router-dom";
 export default function ParentProfile() {
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
-  const { picture } = user;
+  const { picture, _id } = user;
   const { listChildrens } = useSelector((state) => state.children);
   const dispatch = useDispatch();
 
   const [childrens, setChildrens] = useState(listChildrens);
 
-  const handleLogout = () => {
-    window.open("http://localhost:8000/auth/logout", "_self");
-    dispatch(Logout());
-    dispatch(resetChildren());
-  };
   const handleParentProfileSettings = (_id) => {
     navigate(`/admin/parentprofilesettings/${_id}`);
+  };
+
+  const handleParentSettings = (_id) => {
+    navigate(`/admin/setting-profile/${_id}`);
+  };
+  const handleParentSettingAge = (_id) => {
+    navigate(`/admin/setting-age/${_id}`);
   };
 
   return (
@@ -63,7 +65,7 @@ export default function ParentProfile() {
                     <div>
                       <Button
                         variant="light"
-                        // onClick={handleLogout}
+                        onClick={() => handleParentSettings(_id)}
                         className="text-end text-color-edit"
                       >
                         Chỉnh sửa
@@ -85,7 +87,7 @@ export default function ParentProfile() {
                     </div>
                     <Button
                       variant="light"
-                      // onClick={handleLogout}
+                      onClick={() => handleParentSettingAge(_id)}
                       className="text-end text-color-edit"
                     >
                       Chỉnh sửa

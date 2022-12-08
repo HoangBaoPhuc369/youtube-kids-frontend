@@ -26,6 +26,7 @@ import { useRef } from "react";
 import { addVideoHistory } from "../../redux/feature/childrenSlice";
 
 export default function Details() {
+  const navigate = useNavigate();
   const param = useParams();
   const { videos, channelVideo, chatVideo } = useSelector(
     (state) => state.video
@@ -78,6 +79,10 @@ export default function Details() {
       })
     );
     setValueMessage("");
+  };
+  
+  const handleChannel = (id) => {
+    navigate(`/channel/${id}`);
   };
 
   return (
@@ -176,7 +181,10 @@ export default function Details() {
               />
               <div className="video-info-title">
                 <span>{videoPlay?.snippet.title}</span>
-                <p className="video-info-description">
+                <p
+                  className="video-info-description"
+                  onClick={() => handleChannel(channelVideo[0]?.id)}
+                >
                   {videoPlay?.snippet.channelTitle}
                 </p>
               </div>

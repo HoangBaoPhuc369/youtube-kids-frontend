@@ -11,6 +11,7 @@ export default function CreateProfile({
   handleInputData,
   formData,
   setFormData,
+  namePage,
 }) {
   const [modalShow, setModalShow] = useState(false);
   const [profilePictures, setProfilePictures] = useState(listProfilePicture);
@@ -81,7 +82,8 @@ export default function CreateProfile({
       <Card className="text-center login-form">
         <Card.Body className="login-form-body">
           <Form onSubmit={submitFormData}>
-            <Form.Label className="login-form-title">Tạo hồ sơ</Form.Label>
+            {/* <Form.Label className="login-form-title">Tạo hồ sơ</Form.Label> */}
+            <Form.Label className="login-form-title">{namePage}</Form.Label>
             <Form.Label className="login-form-text">
               Chúng tôi sẽ cố gắng điều chỉnh YouTube Kids cho phù hợp với độ
               tuổi của con bạn. Chỉ bạn và con bạn mới có thể nhìn thấy thông
