@@ -465,6 +465,7 @@
   background-size: auto 684px;
   height: calc(100% - 128px);
   position: absolute;
+  bottom: 0;
   width: 100%;
   background-image: url(https://www.gstatic.com/ytkids/web/onboarding/background/onboarding_bg_red_right_2.png);
   background-position: bottom right;
@@ -476,6 +477,7 @@
   background-size: auto 684px;
   height: calc(100% - 128px);
   position: absolute;
+  bottom: 0;
   width: 100%;
   background-image: url(https://www.gstatic.com/ytkids/web/onboarding/background/onboarding_bg_red_left_2.png);
   background-position: bottom left;

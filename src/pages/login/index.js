@@ -61,7 +61,7 @@ function Login() {
     case 2:
       return (
         <div className="login-wrapper">
-          <Container>
+          <Container className="h-100">
             <Row>
               <Col>
                 <StepOne nextStep={nextStep} prevStep={prevStep} />

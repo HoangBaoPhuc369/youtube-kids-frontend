@@ -6,8 +6,9 @@ import BackgroundLogin from "../../svgs/BackgroundLogin";
 const StepOne = ({ nextStep, prevStep }) => {
   return (
     <>
-      {/* <div className="loading-background-left"></div> */}
+      <div className="loading-background-left"></div>
       <Card className="text-center login-form">
+        <div className="login-form-header"></div>
         <Card.Body className="login-form-body">
           <Card.Title className="login-form-img">
             <BackgroundLogin />
@@ -25,7 +26,7 @@ const StepOne = ({ nextStep, prevStep }) => {
           </div>
         </Card.Body>
       </Card>
-      {/* <div className="loading-background-right"></div> */}
+      <div className="loading-background-right"></div>
     </>
   );
 };

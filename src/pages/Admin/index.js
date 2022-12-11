@@ -6,7 +6,7 @@ import "./style.css";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { BsPlus } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
-import { Logout } from "../../redux/feature/authSlice";
+import { createSecretPassword, Logout } from "../../redux/feature/authSlice";
 import { resetChildren } from "../../redux/feature/childrenSlice";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -31,11 +31,16 @@ export default function Admin() {
     navigate(`/admin/parentprofilesettings/${_id}`);
   };
 
-  const handlePassword = () => {
-    if (password === password2) {
-      console.log("ok");
+  const handlePassword = (e) => {
+    e.preventDefault();
+    if (password !== "" || password2 !== "") {
+      if (password === password2) {
+        dispatch(
+          createSecretPassword({ userId: user?._id, secretPassword: password2 })
+        );
+      }
     }
-  }
+  };
 
   return (
     <>
@@ -166,7 +171,7 @@ export default function Admin() {
                                 Nhập lại mật mã
                               </label>
                               <input
-                               type="password"
+                                type="password"
                                 className="form-control"
                                 id="exampleFormControlTextarea1"
                                 value={password2}

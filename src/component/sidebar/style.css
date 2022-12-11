@@ -6,7 +6,6 @@
   width: 456px;
   height: 100vh !important;
   transition: all 0.5s ease 0s;
-  
 }
 
 .bm-item {
@@ -159,4 +158,20 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 input[type="number"] {
   -moz-appearance: textfield;
+}
+
+/* =============Offcanvas============== */
+.offcanvas {
+  width: 456px !important;
+  border-left: 8px solid #565656 !important;
+}
+
+.offcanvas-body {
+  background: #d90a17;
+  padding: 2.5em 1.5em 0;
+  color: #fff;
+}
+
+.offcanvas-body > .sidebar-container {
+  margin-top: 100px;
 }
