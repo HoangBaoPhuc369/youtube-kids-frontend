@@ -22,14 +22,16 @@ import SettingProfile from "./pages/SettingProfile";
 import SettingAge from "./pages/SettingAge";
 import Ability from "./pages/ability";
 import Education from "./pages/education";
-import SecretKey from "./pages/SecretKey";
+import SecretKey from "./pages/SecretKey/ProfileSecretKey";
+import ProfileOptions from "./component/profile-options";
+import ProfileSecretKey from "./pages/SecretKey/ProfileSecretKey";
 function App() {
-  const { user } = useSelector((state) => state.auth);
-  const { childrenActive } = useSelector((state) => state.children);
+  // const { user } = useSelector((state) => state.auth);
+  // const { childrenActive } = useSelector((state) => state.children);
 
   return (
     <Routes>
-      <Route element={<LoggedInRoutes />}>
+      {/* <Route element={<LoggedInRoutes />}> */}
         <Route path="/" element={<Home />} />
         <Route path="/ability" element={<Ability />} />
         <Route path="/education" element={<Education />} />
@@ -42,6 +44,11 @@ function App() {
         <Route path="/profile-created" element={<ProfileCreated />} />
         <Route path="/list-profile/:id" element={<ListProfileChildren />} />
         <Route path="/profile-settings" element={<ProfileSettings />} />
+        <Route path="/search/:key" element={<Search />} />
+        <Route path="/profile-options" element={<ProfileOptions />} />
+        <Route path="/profile-settings/secret-key" element={<ProfileSecretKey />} />
+
+        {/* Admin route */}
         <Route
           path="/admin/profile-settings/:id"
           element={<ProfileSettings />}
@@ -51,16 +58,14 @@ function App() {
           element={<ParentProfile />}
         />
 
-        <Route path="/search/:key" element={<Search />} />
         <Route path="/admin/setting-profile/:id" element={<SettingProfile />} />
         <Route path="/admin/setting-age/:id" element={<SettingAge />} />
-        <Route path="/admin/secret-key" element={<SecretKey />} />
-      </Route>
+      {/* </Route> */}
 
-      <Route element={<NotLoggedInRoutes />}>
+      {/* <Route element={<NotLoggedInRoutes />}> */}
         <Route path="/login" element={<Login />} />
         <Route path="/login/success" element={<LoginSuccess />} />
-      </Route>
+      {/* </Route> */}
     </Routes>
   );
 }

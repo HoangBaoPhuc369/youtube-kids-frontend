@@ -6,7 +6,6 @@
   width: 456px;
   height: 100vh !important;
   transition: all 0.5s ease 0s;
-  
 }
 
 .bm-item {
@@ -85,6 +84,16 @@
   font-weight: 600;
 }
 
+.sidebar-title.title-profile-secret {
+  max-width: 552px;
+  padding: 20px 60px 0;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
 .sidebar-subtitle {
   text-align: center;
   font-size: 16px;
@@ -115,8 +124,19 @@
   border-bottom: 2px solid #fff;
 }
 
+.sidebar-input.profile-secret-key > input {
+  border-bottom: 2px solid rgba(0, 0, 0, 0.87);
+  color: #000;
+  text-align: center;
+}
+
 .sidebar-input > input::placeholder {
   color: #fff;
+}
+
+.sidebar-input.profile-secret-key > input::placeholder {
+  color: #757575;
+  text-align: center;
 }
 
 .sidebar-button {
@@ -132,6 +152,7 @@
   border: 3px solid #008596;
   color: #fff;
   transition: all 0.1s ease-in;
+  text-transform: uppercase;
 }
 
 .sidebar-button > .sidebar-button-active:hover {
@@ -160,3 +181,21 @@ input[type="number"]::-webkit-inner-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
 }
+
+/* =============Offcanvas============== */
+.offcanvas {
+  width: 456px !important;
+  border-left: 8px solid #565656 !important;
+}
+
+.offcanvas-body {
+  background: #d90a17;
+  padding: 2.5em 1.5em 0;
+  color: #fff;
+}
+
+.offcanvas-body > .sidebar-container {
+  margin-top: 100px;
+}
+
+

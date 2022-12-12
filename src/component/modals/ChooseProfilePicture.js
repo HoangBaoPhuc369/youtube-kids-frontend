@@ -10,9 +10,9 @@ export default function ChooseProfilePicture({
   onHide,
   profilePictures,
   setProfilePictures,
-  setpictureActive,
 }) {
   const handleChooseProfilePicture = (id) => {
+    console.log("loi o day");
     const newProfilePictures = profilePictures.map((picture) => {
       if (picture.id === id) {
         return {
@@ -27,7 +27,6 @@ export default function ChooseProfilePicture({
       }
     });
 
-    setpictureActive(newProfilePictures);
     setProfilePictures(newProfilePictures);
     onHide();
   };
@@ -49,7 +48,10 @@ export default function ChooseProfilePicture({
         <Row xs={1} md={4} className="g-4">
           {profilePictures.map((p, idx) => (
             <Col key={p.id}>
-              <Card className="profile-picture-wrapper" onClick={() => handleChooseProfilePicture(p.id)}>
+              <Card
+                className="profile-picture-wrapper"
+                onClick={() => handleChooseProfilePicture(p.id)}
+              >
                 <Card.Img className="profile-picture-img" src={p.src} />
                 {p.active && (
                   <div className="profile-picture-overplay">

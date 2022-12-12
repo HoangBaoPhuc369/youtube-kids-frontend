@@ -22,19 +22,27 @@ const ChildrenForm = ({ nextStep, prevStep }) => {
 
   return (
     <div>
+      <div className="loading-background-left"></div>
       <Card className="text-center login-form">
         <Card.Body className="login-form-body">
           <Card.Title className="login-form-img">
-            <div className="login-form-img-item" ref={container} style={{height: '340px'}}></div>
+            <div
+              className="login-form-img-item"
+              ref={container}
+              style={{ height: "340px" }}
+            ></div>
           </Card.Title>
           <Card.Text className="login-form-title">
             Hãy nhờ cha mẹ thiết lập YouTube Kids
           </Card.Text>
           <div className="login-form-btn-group">
-            <Button variant="primary" onClick={submitFormData}>Tôi hiểu rồi</Button>
+            <Button variant="primary" onClick={submitFormData}>
+              Tôi hiểu rồi
+            </Button>
           </div>
         </Card.Body>
       </Card>
+      <div className="loading-background-right"></div>
     </div>
   );
 };
