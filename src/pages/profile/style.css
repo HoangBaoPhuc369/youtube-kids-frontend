@@ -19,8 +19,9 @@
 
 .bg-profile-setting {
   background-color: #d90a17;
-  height: 869px;
+  min-height: 620px;
   overflow: hidden;
+  position: relative;
 }
 
 .profile-settings-container > .row {
@@ -37,13 +38,16 @@
 }
 
 .settings-card-first {
-  height: 206px;
+  /* height: 206px; */
   position: relative;
   padding: 32px 24px 20px;
 }
 
+.settings-card-first > .card-body {
+  margin-top: 50px;
+}
+
 .settings-card {
-  height: 180px;
 }
 
 .profile-setting-img {
@@ -93,7 +97,7 @@
 }
 
 .profile-setting-input-wrap {
-  width: 312px;
+  width: 350px;
   float: left;
   position: relative;
 }
@@ -137,6 +141,7 @@
 
 .profile-settings-card-right {
   height: 100%;
+  flex: 1;
 }
 
 .settings-card-right-text > div:first-child {
@@ -155,4 +160,38 @@
   height: 48px;
   font-size: 18px;
   color: #fff;
+}
+
+.profile-settings-card-left.trash-icon > svg {
+  width: 25px;
+}
+
+.btn-profile-setting {
+  background-color: #fff !important;
+  color: #008596 !important;
+  border: 3px solid #008596 !important;
+  border-radius: 6px;
+  font-size: 18px;
+  font-weight: 500;
+  height: 48px;
+  transition: all 0.1s ease-in;
+}
+
+.btn-profile-setting:hover {
+  background-color: #fff !important;
+  color: #008596 !important;
+  border: 3px solid #008596 !important;
+  transform: scale(1.1);
+}
+
+.mg-t-50 {
+  margin-top: 50px;
+}
+
+.bg-profile-setting > .loading-background-left {
+  height: 100% !important;
+}
+
+.bg-profile-setting > .loading-background-right {
+  height: 100% !important;
 }
