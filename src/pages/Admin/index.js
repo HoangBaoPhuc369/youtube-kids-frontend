@@ -19,8 +19,8 @@ export default function Admin() {
   const dispatch = useDispatch();
 
   const [childrens, setChildrens] = useState(listChildrens);
-  const [password, setPassword] = useState(listChildrens);
-  const [password2, setPassword2] = useState(listChildrens);
+  const [password, setPassword] = useState("");
+  const [password2, setPassword2] = useState("");
 
   const handleLogout = () => {
     window.open("http://localhost:8000/auth/logout", "_self");
@@ -44,9 +44,10 @@ export default function Admin() {
 
   return (
     <>
-      <div className="background-layer">
-        <div className="background-admin background-layer">
-          <Header />
+      <div className="admin-wrapper">
+        <Header />
+        <div>
+          <div className="background-layer-left"></div>
           <Container className="container-center container-admin">
             <div className="d-flex flex-column align-items-center">
               <div className="home-container text-center">
@@ -64,7 +65,7 @@ export default function Admin() {
                           src={picture}
                         />
                       </div>
-                      <div>
+                      <div className="admin-account-wrapper">
                         <Card.Title>{user?.name}</Card.Title>
                         <Card.Text>{user?.email}</Card.Text>
                       </div>
@@ -73,7 +74,7 @@ export default function Admin() {
                       <Button
                         variant="primary"
                         onClick={handleLogout}
-                        className="text-end"
+                        className="text-end admin-btn-logout"
                       >
                         Đăng xuất
                       </Button>
@@ -195,6 +196,7 @@ export default function Admin() {
               </Card>
             </div>
           </Container>
+          <div className="background-layer-right"></div>
         </div>
       </div>
     </>
