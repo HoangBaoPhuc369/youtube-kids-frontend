@@ -35,7 +35,7 @@ export const listChildrensUser = createAsyncThunk(
 export const addVideoHistory = createAsyncThunk(
   "children/addVideoHistory",
   async ({ childrenID, videoId, thumbnail, title }, { rejectWithValue }) => {
-    console.log(childrenID, videoId, thumbnail, title)
+    console.log(childrenID, videoId, thumbnail, title);
     try {
       const { data } = await api.addVideoHistory(
         childrenID,
@@ -86,6 +86,33 @@ export const clearHistoryVideo = createAsyncThunk(
   async ({ id }, { rejectWithValue }) => {
     try {
       const { data } = await api.clearHistoryVideo(id);
+      return data;
+    } catch (err) {
+      return err.response.data;
+    }
+  }
+);
+
+export const createSecretPasswordChildren = createAsyncThunk(
+  "children/createSecretPasswordChildren",
+  async ({ childrenID, secretPassword }, { rejectWithValue }) => {
+    try {
+      const { data } = await api.createSecretPasswordChildren(
+        childrenID,
+        secretPassword
+      );
+      return data;
+    } catch (err) {
+      return err.response.data;
+    }
+  }
+);
+
+export const deleteSecretPasswordChildren = createAsyncThunk(
+  "children/deleteSecretPasswordChildren",
+  async ({ childrenID }, { rejectWithValue }) => {
+    try {
+      const { data } = await api.deleteSecretPasswordChildren(childrenID);
       return data;
     } catch (err) {
       return err.response.data;
@@ -187,6 +214,27 @@ export const childrenSlice = createSlice({
       state.errorChildren = "";
     },
     [clearHistoryVideo.rejected]: (state, action) => {
+      state.errorChildren = action.payload.message;
+    },
+
+    [createSecretPasswordChildren.fulfilled]: (state, action) => {
+      state.childrenActive = action.payload;
+      Cookies.set("childrenActive", JSON.stringify(action.payload));
+      state.errorChildren = "";
+    },
+    [createSecretPasswordChildren.rejected]: (state, action) => {
+      state.errorChildren = action.payload.message;
+    },
+
+    [deleteSecretPasswordChildren.fulfilled]: (state, action) => {
+      console.log(action.payload);
+      if (action.payload === "ok") {
+        state.childrenActive.secret_password = "";
+        Cookies.set("childrenActive", JSON.stringify(state.childrenActive));
+      }
+      state.errorChildren = "";
+    },
+    [deleteSecretPasswordChildren.rejected]: (state, action) => {
       state.errorChildren = action.payload.message;
     },
   },

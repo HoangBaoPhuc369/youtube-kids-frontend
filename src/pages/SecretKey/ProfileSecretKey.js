@@ -5,6 +5,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import Header from "../../component/header";
 import CreateSecretKey from "./CreateSecretKey";
+import CheckSecretPassword from "./CheckSecretPassword";
+import SecretPasswordCreated from "./SecretPasswordCreated";
 
 export default function ProfileSecretKey() {
   //state for steps
@@ -32,10 +34,16 @@ export default function ProfileSecretKey() {
       );
     case 2:
       return (
-        <CreateSecretKey
+        <CheckSecretPassword
           nextStep={nextStep}
           prevStep={prevStep}
           formData={formData}
+        />
+      );
+    case 3:
+      return (
+        <SecretPasswordCreated
+          nextStep={nextStep}
         />
       );
     default:

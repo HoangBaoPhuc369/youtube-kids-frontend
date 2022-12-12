@@ -94,6 +94,16 @@
   -webkit-line-clamp: 2;
 }
 
+.sidebar-title.title-check-key-secret {
+  max-width: 552px;
+  padding: 20px 20px 0;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
 .sidebar-subtitle {
   text-align: center;
   font-size: 16px;
@@ -110,6 +120,11 @@
   display: flex;
   justify-content: center;
   margin: 40px 0;
+}
+
+.sidebar-input.secret-key-created {
+  color: rgba(0, 0, 0, 0.87);
+  font-size: 28px;
 }
 
 .sidebar-input > input {
@@ -167,7 +182,6 @@
   color: rgba(0, 0, 0, 0.24);
 }
 
-.sidebar-button,
 .sidebar-button-disable:hover:disabled,
 .sidebar-button-disable:hover[disabled] {
   cursor: no-drop;
@@ -197,5 +211,3 @@ input[type="number"] {
 .offcanvas-body > .sidebar-container {
   margin-top: 100px;
 }
-
-

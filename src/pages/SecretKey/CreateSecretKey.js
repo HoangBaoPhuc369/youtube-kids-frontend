@@ -97,7 +97,9 @@ export default function CreateSecretKey({ nextStep, prevStep, setFormData }) {
 
                     <div className="sidebar-container">
                       <div className="sidebar-title title-profile-secret">
-                        {childrenActive?.name} ơi, hãy tạo mã bí mật của bạn đi
+                        {childrenActive?.secret_password
+                          ? `${childrenActive?.name} ơi, hãy thay đổi mã bí mật của bạn`
+                          : `${childrenActive?.name} ơi, hãy tạo mã bí mật của bạn đi`}
                       </div>
                       <div className="sidebar-input profile-secret-key">
                         <input

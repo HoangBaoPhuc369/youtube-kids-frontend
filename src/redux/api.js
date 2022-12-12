@@ -153,6 +153,33 @@ export const clearHistoryVideo = (id) =>
     // }
   );
 
+export const createSecretPasswordChildren = (childrenID, secretPassword) =>
+  axios.patch(
+    `${process.env.REACT_APP_BACKEND_URL}/children/modify-secret-password-children`,
+    {
+      childrenID,
+      secretPassword,
+    }
+    // {
+    //   headers: {
+    //     Authorization: `Bearer ${token}`,
+    //   },
+    // }
+  );
+
+export const deleteSecretPasswordChildren = (childrenID) =>
+  axios.patch(
+    `${process.env.REACT_APP_BACKEND_URL}/children/delete-secret-password-children`,
+    {
+      childrenID,
+    }
+    // {
+    //   headers: {
+    //     Authorization: `Bearer ${token}`,
+    //   },
+    // }
+  );
+
 // --------------------------PARENT API-----------------------------------
 export const createSecretPassword = (userId, secretPassword) =>
   axios.patch(

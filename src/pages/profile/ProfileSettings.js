@@ -15,15 +15,18 @@ import validator from "validator";
 import {
   updateChildrenProfileForChildren,
   clearHistoryVideo,
+  deleteSecretPasswordChildren,
 } from "./../../redux/feature/childrenSlice";
 import DeleteModal from "./../../component/modals/DeleteModal";
 import { useNavigate } from "react-router-dom";
 
 export default function ProfileSettings() {
-  const { user } = useSelector((state) => state.auth);
   const { childrenActive } = useSelector((state) => state.children);
   const [modalShow, setModalShow] = useState(false);
   const [disableBtn, setDisableBtn] = useState(true);
+  const [title, setTitle] = useState("");
+  const [subtitle, setSubtitle] = useState("");
+  const [typeBtn, setTypeBtn] = useState("");
 
   const dispatch = useDispatch();
 
@@ -31,11 +34,33 @@ export default function ProfileSettings() {
 
   const handleClose = () => {
     setShow(false);
-    handleClearHistory();
   };
-  const handleShow = () => setShow(true);
 
-  const [name, setName] = useState("");
+  const handleClear = (type) => {
+    if (type === "history") {
+      dispatch(clearHistoryVideo({ id: childrenActive?._id }));
+      handleClose();
+    } else if (type === "secretKey") {
+      dispatch(deleteSecretPasswordChildren({ id: childrenActive?._id }));
+      handleClose();
+    }
+  };
+
+  const handleShowDeleteHistory = () => {
+    setTitle("Xóa nhật ký hoạt động");
+    setSubtitle("Bạn có chắc chắn muốn xóa toàn bộ lịch sử của mình không?");
+    setTypeBtn("history");
+    setShow(true);
+  };
+
+  const handleShowDeleteSecretKey = () => {
+    setTitle("Bạn có chắc không?");
+    setSubtitle("Thao tác này sẽ xóa mã bí mật của bạn.");
+    setTypeBtn("secretKey");
+    setShow(true);
+  };
+
+  const [name, setName] = useState(childrenActive ? childrenActive.name : "");
   const [pictureActive, setpictureActive] = useState(childrenActive?.picture);
 
   useEffect(() => {
@@ -64,10 +89,6 @@ export default function ProfileSettings() {
       );
       setDisableBtn(false);
     }
-  };
-
-  const handleClearHistory = () => {
-    dispatch(clearHistoryVideo({ id: childrenActive?._id }));
   };
 
   const navigate = useNavigate();
@@ -146,13 +167,33 @@ export default function ProfileSettings() {
                           </div>
                         </div>
                         <div className="settings-card-right-btn">
-                          <Button
-                            variant="info"
-                            className="btn-profile-setting"
-                            onClick={() => handleCreateKey()}
-                          >
-                            Tạo
-                          </Button>
+                          {childrenActive?.secret_password ? (
+                            <>
+                              <Button
+                                variant="info"
+                                className="btn-profile-setting"
+                                onClick={() => handleCreateKey()}
+                              >
+                                Thay đổi
+                              </Button>
+
+                              <Button
+                                variant="info"
+                                className="btn-profile-setting-delete"
+                                onClick={handleShowDeleteSecretKey}
+                              >
+                                Xóa
+                              </Button>
+                            </>
+                          ) : (
+                            <Button
+                              variant="info"
+                              className="btn-profile-setting"
+                              onClick={() => handleCreateKey()}
+                            >
+                              Tạo
+                            </Button>
+                          )}
                         </div>
                       </div>
                     </Card.Body>
@@ -179,7 +220,7 @@ export default function ProfileSettings() {
                           <Button
                             variant="info"
                             className="btn-profile-setting"
-                            onClick={handleShow}
+                            onClick={handleShowDeleteHistory}
                           >
                             Xóa
                           </Button>
@@ -206,7 +247,10 @@ export default function ProfileSettings() {
       <DeleteModal
         show={show}
         handleClose={handleClose}
-        handleShow={handleShow}
+        handleClear={handleClear}
+        title={title}
+        subtitle={subtitle}
+        typeBtn={typeBtn}
       />
     </>
   );

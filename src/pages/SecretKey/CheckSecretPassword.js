@@ -4,6 +4,7 @@ import "./style.css";
 import { useSelector, useDispatch } from "react-redux";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import Header from "../../component/header";
+import { createSecretPasswordChildren } from "../../redux/feature/childrenSlice";
 
 export default function CheckSecretPassword({ nextStep, prevStep, formData }) {
   const { childrenActive } = useSelector((state) => state.children);
@@ -19,6 +20,9 @@ export default function CheckSecretPassword({ nextStep, prevStep, formData }) {
   const input2Ref = useRef(null);
   const input3Ref = useRef(null);
   const input4Ref = useRef(null);
+  const textRef = useRef(null);
+
+  const dispatch = useDispatch();
 
   const handleTypeInput = (e, ref) => {
     const re = /^[0-9\b]+$/;
@@ -70,7 +74,19 @@ export default function CheckSecretPassword({ nextStep, prevStep, formData }) {
   };
 
   const handleCheckResult = () => {
-    nextStep();
+    const password = value + value1 + value2 + value3;
+    if (formData === password) {
+      dispatch(
+        createSecretPasswordChildren({
+          childrenID: childrenActive?._id,
+          secretPassword: password,
+        })
+      );
+      nextStep();
+    } else {
+      textRef.current.innerHTML =
+        "Không ổn, mã của bạn không khớp rồi. Hãy thử lại nào";
+    }
   };
 
   return (
@@ -95,7 +111,10 @@ export default function CheckSecretPassword({ nextStep, prevStep, formData }) {
                     </div>
 
                     <div className="sidebar-container">
-                      <div className="sidebar-title title-profile-secret">
+                      <div
+                        className="sidebar-title title-check-key-secret"
+                        ref={textRef}
+                      >
                         Hãy nhập lại mã bí mật của bạn
                       </div>
                       <div className="sidebar-input profile-secret-key">
@@ -155,7 +174,7 @@ export default function CheckSecretPassword({ nextStep, prevStep, formData }) {
                               ? "sidebar-button-disable"
                               : "sidebar-button-active"
                           }
-                          onClick={handleCheckResult}
+                          onClick={() => handleCheckResult()}
                           disabled={disableBtn}
                         >
                           Tiếp
