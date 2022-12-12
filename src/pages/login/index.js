@@ -1,18 +1,11 @@
 import "./style.css";
-import Button from "react-bootstrap/Button";
-import { Card, Container, Row, Col } from "react-bootstrap";
-import BackgroundLogin from "../../svgs/BackgroundLogin";
+import { Container, Row, Col } from "react-bootstrap";
 import StepOne from "../../component/form/StepOne";
 import StepTwo from "../../component/form/StepTwo";
-import Final from "../../component/form/StepCheck";
 import { useState } from "react";
 import ChildrenForm from "../../component/form/ChildrenForm";
 import StepCheck from "../../component/form/StepCheck";
 import LoginOauth2 from "../../component/form/LoginOauth2";
-import CreateProfile from "../../component/form/CreateProfile";
-import ChooseVideosByAges from "../../component/form/ChooseVideosByAges";
-import InfoProfile from "../../component/form/InfoProfile";
-import ListProfileChildren from "../../component/form/ListProfileChildren";
 
 function Login() {
   //state for steps
@@ -48,8 +41,6 @@ function Login() {
       [input]: value,
     }));
   };
-
-  console.log(step);
 
   switch (step) {
     case 1:
