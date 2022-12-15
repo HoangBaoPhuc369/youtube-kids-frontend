@@ -70,6 +70,10 @@
   z-index: 999;
 }
 
+.video-card > .card-img-top {
+  border-radius: 4px !important;
+}
+
 .dropdown-menu.show {
   z-index: 99999;
 }

@@ -183,3 +183,18 @@ export const sendMessage = (chatId, name, picture, text) =>
     picture,
     text,
   });
+
+export const updateMessage = (chatId, messageId, name, picture, text) =>
+  axios.post(
+    `${process.env.REACT_APP_BACKEND_URL}/chat/${chatId}/messages/${messageId}`,
+    {
+      name,
+      picture,
+      text,
+    }
+  );
+
+export const deleteMessage = (chatId, messageId) =>
+  axios.delete(
+    `${process.env.REACT_APP_BACKEND_URL}/chat/${chatId}/messages/${messageId}`
+  );

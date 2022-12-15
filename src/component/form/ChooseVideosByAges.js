@@ -46,7 +46,7 @@ export default function ChooseVideosByAges({
   const navigate = useNavigate();
 
   const { user } = useSelector((state) => state.auth);
-  const { loading } = useSelector((state) => state.children);
+  // const { loading } = useSelector((state) => state.children);
 
   const dispatch = useDispatch();
 
@@ -81,58 +81,57 @@ export default function ChooseVideosByAges({
   return (
     <>
       <div className="loading-background-left"></div>
-      {loading && <div className="loading-animation" ref={container}></div>}
-      {!loading && (
-        <Card className="text-center choose-age-wrapper">
-          <Card.Body className="login-form-body">
-            <Form className="choose-age-form" onSubmit={submitFormData}>
-              <Form.Label className="login-form-title">
-                Tùy chọn cài đặt về nội dung đề xuất cho ???
-              </Form.Label>
-              <Form.Label className="login-form-text">
-                Sự lựa chọn của bạn sẽ tác động đến các loại video có trong
-                YouTube Kids
-              </Form.Label>
-              <div className="choose-age-btn-wrapper">
-                <Row xs={1} md={2} lg={3} className="g-4">
-                  {OptionsVideosByAges.map((opt, idx) => (
-                    <Col key={opt.id}>
-                      <Card
-                        className={
-                          setting === opt.content_settings
-                            ? "choose-age-btn-item active-setting"
-                            : "choose-age-btn-item"
-                        }
-                        onClick={() =>
-                          handleChooseSetting(opt.content_settings)
-                        }
-                      >
-                        <Card.Img variant="top" src={opt.picture} />
-                        <Card.Body>
-                          <Card.Title>{opt.name}</Card.Title>
-                          <Card.Text>{opt.about}</Card.Text>
-                        </Card.Body>
-                      </Card>
-                    </Col>
-                  ))}
-                </Row>
+      {/* {loading && <div className="loading-animation" ref={container}></div>} */}
+      {/* {!loading && (
+        
+      )} */}
+      <Card className="text-center choose-age-wrapper">
+        <Card.Body className="login-form-body">
+          <Form className="choose-age-form" onSubmit={submitFormData}>
+            <Form.Label className="login-form-title">
+              Tùy chọn cài đặt về nội dung đề xuất cho ???
+            </Form.Label>
+            <Form.Label className="login-form-text">
+              Sự lựa chọn của bạn sẽ tác động đến các loại video có trong
+              YouTube Kids
+            </Form.Label>
+            <div className="choose-age-btn-wrapper">
+              <Row xs={1} md={2} lg={3} className="g-4">
+                {OptionsVideosByAges.map((opt, idx) => (
+                  <Col key={opt.id}>
+                    <Card
+                      className={
+                        setting === opt.content_settings
+                          ? "choose-age-btn-item active-setting"
+                          : "choose-age-btn-item"
+                      }
+                      onClick={() => handleChooseSetting(opt.content_settings)}
+                    >
+                      <Card.Img variant="top" src={opt.picture} />
+                      <Card.Body>
+                        <Card.Title>{opt.name}</Card.Title>
+                        <Card.Text>{opt.about}</Card.Text>
+                      </Card.Body>
+                    </Card>
+                  </Col>
+                ))}
+              </Row>
+            </div>
+            <div className="group-login-btn pad-10 h-130">
+              <div className="group-login-btn-left">
+                <Button variant="primary" onClick={prevStep}>
+                  Quay lại
+                </Button>
               </div>
-              <div className="group-login-btn pad-10 h-130">
-                <div className="group-login-btn-left">
-                  <Button variant="primary" onClick={prevStep}>
-                    Quay lại
-                  </Button>
-                </div>
-                <div className="btn-right">
-                  <Button variant="primary" className="btn-next" type="submit">
-                    Next
-                  </Button>
-                </div>
+              <div className="btn-right">
+                <Button variant="primary" className="btn-next" type="submit">
+                  Next
+                </Button>
               </div>
-            </Form>
-          </Card.Body>
-        </Card>
-      )}
+            </div>
+          </Form>
+        </Card.Body>
+      </Card>
       <div className="loading-background-right"></div>
     </>
   );

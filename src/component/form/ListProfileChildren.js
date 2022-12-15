@@ -6,10 +6,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 import Cookies from "js-cookie";
-import {
-  getChildren,
-  listChildrensUser,
-} from "../../redux/feature/childrenSlice";
 import { setChildrenActive } from "../../redux/feature/authSlice";
 
 export default function ListProfileChildren() {
@@ -20,10 +16,6 @@ export default function ListProfileChildren() {
   const { id } = useParams();
 
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(listChildrensUser({ userOauthId: user.google_id }));
-  }, []);
 
   const handleClickCard = (childId) => {
     // cardRef.current.classList.add("active-card-profile");

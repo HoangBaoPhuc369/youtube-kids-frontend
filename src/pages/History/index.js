@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import Footer from "../../component/footer";
 import Header from "../../component/header";
 import "./style.css";
-import { getVideoList } from "../../redux/feature/videolistSlice";
 import { Button, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import VideoHistory from "../../component/video/videoHistory";
@@ -12,10 +11,6 @@ import { MdModeEdit } from "react-icons/md";
 export default function History() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    dispatch(getVideoList());
-  }, []);
 
   const { childrenActive, user } = useSelector(
     (state) => state.auth

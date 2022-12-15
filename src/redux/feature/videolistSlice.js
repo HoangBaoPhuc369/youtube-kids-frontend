@@ -59,7 +59,7 @@ export const searchVideos = createAsyncThunk(
       const videoForChildren = videoList.data.items.filter(
         (video) => video.status.madeForKids === true
       );
-    
+     
       return videoForChildren;
     } catch (err) {
       return err.response.data;
@@ -125,6 +125,8 @@ export const videolistSlice = createSlice({
       state.loading = true;
     },
     [searchVideos.fulfilled]: (state, action) => {
+      // setTimeout(() => {
+      // }, 1500);
       state.loading = false;
       state.videos = action.payload;
       state.error = "";

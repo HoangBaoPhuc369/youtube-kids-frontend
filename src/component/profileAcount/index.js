@@ -7,11 +7,8 @@ import InfoProfile from "../../component/form/InfoProfile";
 import ListProfileChildren from "../../component/form/ListProfileChildren";
 
 function ProfileAccount() {
-  //state for steps
   const [step, setstep] = useState(6);
-  //create name page
   const namePage = "Tạo hồ sơ";
-  //state for form data
   const [formData, setFormData] = useState({
     kid_name: "",
     age: "",
@@ -21,12 +18,10 @@ function ProfileAccount() {
     content_settings: "",
   });
 
-  // function for going to next step by increasing step state by 1
   const nextStep = () => {
     setstep(step + 1);
   };
 
-  // function for going to previous step by decreasing step state by 1
   const prevStep = () => {
     setstep(step - 1);
   };

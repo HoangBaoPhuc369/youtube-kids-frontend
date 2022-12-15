@@ -7,6 +7,7 @@ export const getUser = createAsyncThunk(
   async ({ navigate }, { rejectWithValue }) => {
     try {
       const { data } = await api.getUser();
+      console.log(data);
       const childrens = await api.listChildrens(data.user.google_id);
       const children = childrens.data;
       if (children.length === 0) {
@@ -53,6 +54,7 @@ export const createChildren = createAsyncThunk(
 export const createSecretPasswordChildren = createAsyncThunk(
   "children/createSecretPasswordChildren",
   async ({ childrenID, userId, secretPassword }, { rejectWithValue }) => {
+    console.log(childrenID, userId, secretPassword)
     try {
       const { data } = await api.createSecretPasswordChildren(
         childrenID,
@@ -167,11 +169,8 @@ export const authSlice = createSlice({
       state.error = action.payload.message;
     },
 
-    [createChildren.pending]: (state, action) => {
-      state.childrenCreated.loading = true;
-    },
+    
     [createChildren.fulfilled]: (state, action) => {
-      state.loading = false;
       state.user = action.payload.data;
       Cookies.set("user", JSON.stringify(state.user));
       state.childrenCreated = action.payload.formData;
@@ -179,8 +178,7 @@ export const authSlice = createSlice({
       state.error = "";
     },
     [createChildren.rejected]: (state, action) => {
-      state.childrenCreated.loading = false;
-      state.childrenCreated.error = action.payload.message;
+      state.error = action.payload.message;
     },
 
     [createSecretPasswordChildren.fulfilled]: (state, action) => {
