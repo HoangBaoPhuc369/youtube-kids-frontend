@@ -17,8 +17,8 @@ export default function History() {
     dispatch(getVideoList());
   }, []);
 
-  const { childrenActive, listChildrens } = useSelector(
-    (state) => state.children
+  const { childrenActive, user } = useSelector(
+    (state) => state.auth
   );
 
   const handleSettings = () => {
@@ -35,7 +35,7 @@ export default function History() {
           <div className="mb-3">
             <div className="d-flex justify-content-center align-items-end flex-column pt-3">
               <div className="d-flex">
-                {listChildrens.map((listChildren, index) => (
+                {user?.childrens?.map((listChildren, index) => (
                   <img
                     key={index}
                     className="avatar-resize"

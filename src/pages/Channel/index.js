@@ -16,8 +16,8 @@ export default function Channel() {
     dispatch(getVideoList());
   }, []);
 
-  const { childrenActive, listChildrens } = useSelector(
-    (state) => state.children
+  const { childrenActive } = useSelector(
+    (state) => state.auth
   );
 
   return (

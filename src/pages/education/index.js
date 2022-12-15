@@ -19,7 +19,9 @@ export default function Education() {
       <Header category="Học tập" />
 
       <div className="home-container">
-        <Video videos={videos}  />
+        <div className="home-background-left"></div>
+        <Video videos={videos} />
+        <div className="home-background-right"></div>
       </div>
 
       <Footer />

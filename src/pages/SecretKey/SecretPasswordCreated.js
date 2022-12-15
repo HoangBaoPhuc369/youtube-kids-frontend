@@ -7,7 +7,7 @@ import Header from "../../component/header";
 import { useNavigate } from "react-router-dom";
 
 export default function SecretPasswordCreated({ nextStep, prevStep }) {
-  const { childrenActive } = useSelector((state) => state.children);
+  const { childrenActive } = useSelector((state) => state.auth);
   const [pictureActive, setpictureActive] = useState(childrenActive?.picture);
 
   const navigate = useNavigate();

@@ -18,8 +18,14 @@ export default function Home() {
     <div className="home-wrapper">
       <Header category="Sáng tạo" />
 
-      <div className="home-container">
+      {/* <div className="home-container">
         <Video videos={videos}  />
+      </div> */}
+
+      <div className="home-container">
+        <div className="home-background-left"></div>
+        <Video videos={videos} />
+        <div className="home-background-right"></div>
       </div>
 
       <Footer />

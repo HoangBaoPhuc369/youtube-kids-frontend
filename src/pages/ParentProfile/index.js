@@ -11,15 +11,14 @@ export default function ParentProfile() {
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
   const { picture, _id } = user;
-  const { listChildrens } = useSelector((state) => state.children);
   const dispatch = useDispatch();
   const { id } = useParams();
 
-  const [childrens, setChildrens] = useState(listChildrens);
+  const [childrens, setChildrens] = useState(user?.childrens);
   const [childrenActive, setChildrenActive] = useState(null);
 
   useEffect(() => {
-    const findChildren = listChildrens?.find((children) => children._id === id);
+    const findChildren = user?.childrens?.find((children) => children._id === id);
     if (findChildren) {
       console.log(findChildren);
       setChildrenActive(findChildren);
@@ -45,7 +44,7 @@ export default function ParentProfile() {
           <div className="background-layer-left"></div>
           <Container className="container-center container-admin">
             <div className="d-flex flex-column align-items-center">
-              <div className="home-container text-center">
+              <div className="text-center">
                 <h3 className="header-admin">
                   Chỉnh sửa các tùy chọn cài đặt cho {childrenActive?.name}
                 </h3>

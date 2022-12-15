@@ -59,7 +59,7 @@ export const searchVideos = createAsyncThunk(
       const videoForChildren = videoList.data.items.filter(
         (video) => video.status.madeForKids === true
       );
-      console.log(videoForChildren)
+    
       return videoForChildren;
     } catch (err) {
       return err.response.data;

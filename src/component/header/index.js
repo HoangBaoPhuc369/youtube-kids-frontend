@@ -23,8 +23,8 @@ export default function Header({ page, category }) {
   const [navbar, setNavbar] = useState(false);
   const [search, setSearch] = useState(false);
 
-  const { childrenActive, loadingChildren } = useSelector(
-    (state) => state.children
+  const { childrenActive } = useSelector(
+    (state) => state.auth
   );
 
   const searchRef = useRef(null);
@@ -69,13 +69,11 @@ export default function Header({ page, category }) {
                     <ArrowLeftIcon />
                   </Link>
                 </div>
-                {!loadingChildren ? (
-                  <img
-                    src={childrenActive?.picture}
-                    alt=""
-                    onClick={handleHistory}
-                  />
-                ) : null}
+                <img
+                  src={childrenActive?.picture}
+                  alt=""
+                  onClick={handleHistory}
+                />
               </div>
 
               <div className="header-right">
@@ -139,13 +137,11 @@ export default function Header({ page, category }) {
           <div className="header-detail-wrap">
             <div className="header-wrap">
               <div className="header-left">
-                {!loadingChildren ? (
-                  <img
-                    src={childrenActive?.picture}
-                    alt=""
-                    onClick={handleHistory}
-                  />
-                ) : null}
+                <img
+                  src={childrenActive?.picture}
+                  alt=""
+                  onClick={handleHistory}
+                />
               </div>
 
               <div className="header-right">

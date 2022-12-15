@@ -15,15 +15,14 @@ export default function Admin() {
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
   const { picture } = user;
-  const { listChildrens } = useSelector((state) => state.children);
   const dispatch = useDispatch();
 
-  const [childrens, setChildrens] = useState(listChildrens);
+  const [childrens, setChildrens] = useState(user?.childrens);
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
 
   const handleLogout = () => {
-    window.open("http://localhost:8000/auth/logout", "_self");
+    window.open(`${process.env.REACT_APP_BACKEND_URL}/auth/logout`, "_self");
     dispatch(Logout());
     dispatch(resetChildren());
   };
@@ -36,8 +35,22 @@ export default function Admin() {
     if (password !== "" || password2 !== "") {
       if (password === password2) {
         dispatch(
-          createSecretPassword({ userId: user?._id, secretPassword: password2 })
+          createSecretPassword({ userId: user?.google_id, secretPassword: password2 })
         );
+        setPassword("");
+        setPassword2("");
+      }
+    }
+  };
+
+  const handleTypeInput = (e, ref) => {
+    console.log(ref);
+    const re = /^[0-9\b]+$/;
+    if (e.target.value === "" || re.test(e.target.value)) {
+      if (ref === "password") {
+        setPassword(e.target.value);
+      } else if (ref === "confirmPassword") {
+        setPassword2(e.target.value);
       }
     }
   };
@@ -46,11 +59,11 @@ export default function Admin() {
     <>
       <div className="admin-wrapper">
         <Header />
-        <div>
+        <div className="parent-profile-wrapper">
           <div className="background-layer-left"></div>
           <Container className="container-center container-admin">
             <div className="d-flex flex-column align-items-center">
-              <div className="home-container text-center">
+              <div className="text-center">
                 <h3 className="header-admin">Cài đặt dành cho cha mẹ</h3>
               </div>
               <Card className="my-2 w-50">
@@ -156,12 +169,13 @@ export default function Admin() {
                                 Nhập mật mã
                               </label>
                               <input
-                                type="password"
+                                type="text"
                                 className="form-control"
                                 value={password}
-                                onChange={(e) => setPassword(e.target.value)}
+                                onChange={(e) => handleTypeInput(e, "password")}
                                 id="exampleFormControlInput1"
                                 placeholder="Nhập mật mã"
+                                maxLength={4}
                               />
                             </div>
                             <div className="w-100 me-5">
@@ -172,22 +186,42 @@ export default function Admin() {
                                 Nhập lại mật mã
                               </label>
                               <input
-                                type="password"
+                                type="text"
                                 className="form-control"
                                 id="exampleFormControlTextarea1"
                                 value={password2}
-                                onChange={(e) => setPassword2(e.target.value)}
+                                onChange={(e) =>
+                                  handleTypeInput(e, "confirmPassword")
+                                }
                                 rows="3"
                                 placeholder="Nhập lại mật mã"
+                                maxLength={4}
                               />
                             </div>
                           </div>
-                          <button
-                            type="submit"
-                            className="mt-2 color-button-submit"
-                          >
-                            Gửi
-                          </button>
+                          {user?.secret_password ? (
+                            <>
+                              <button
+                                type="submit"
+                                className="mt-2 color-button-submit"
+                              >
+                                Thay đổi mật mã
+                              </button>
+                              <button
+                                type="submit"
+                                className="mt-2 color-button-submit"
+                              >
+                                Xóa
+                              </button>
+                            </>
+                          ) : (
+                            <button
+                              type="submit"
+                              className="mt-2 color-button-submit"
+                            >
+                              Gửi
+                            </button>
+                          )}
                         </form>
                       </Accordion.Body>
                     </Accordion.Item>

@@ -1,5 +1,5 @@
 .home-container {
-  margin-top: 40px;
+  min-height: calc(100vh - 128px - 154px);
 }
 
 .video-title {
@@ -59,6 +59,9 @@
 .video-card {
   position: relative;
   transition: all 0.35s cubic-bezier(0, 0.15, 0, 1);
+  border: none !important;
+  box-shadow: 0 2px 4px 0 rgb(0 0 0 / 24%) !important;
+  border-radius: 4px !important;
 }
 
 .video-card:hover {
@@ -69,4 +72,28 @@
 
 .dropdown-menu.show {
   z-index: 99999;
+}
+
+.home-background-left {
+  background-image: url("https\:\/\/www\.gstatic\.com\/ytkids\/web\/categories\/shows_bg_left_2\.png");
+  background-position: top right;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 105px;
+  background-repeat: no-repeat;
+  background-size: auto 500px;
+  height: 500px;
+}
+
+.home-background-right {
+  background-image: url("https\:\/\/www\.gstatic\.com\/ytkids\/web\/categories\/shows_bg_right_2\.png");
+  background-position: top left;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  width: 105px;
+  background-repeat: no-repeat;
+  background-size: auto 500px;
+  height: 500px;
 }

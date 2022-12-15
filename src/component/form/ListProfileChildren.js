@@ -10,10 +10,11 @@ import {
   getChildren,
   listChildrensUser,
 } from "../../redux/feature/childrenSlice";
+import { setChildrenActive } from "../../redux/feature/authSlice";
 
 export default function ListProfileChildren() {
   const { user } = useSelector((state) => state.auth);
-  const { listChildrens } = useSelector((state) => state.children);
+  // const { listChildrens } = useSelector((state) => state.children);
   const cardRef = useRef(null);
   const navigate = useNavigate();
   const { id } = useParams();
@@ -26,8 +27,10 @@ export default function ListProfileChildren() {
 
   const handleClickCard = (childId) => {
     // cardRef.current.classList.add("active-card-profile");
-    if (childId) {
-      dispatch(getChildren({ id: childId, navigate }));
+    const findChildren = user.childrens.find(child => child?._id === childId);
+    if (findChildren) {
+      dispatch(setChildrenActive(findChildren));
+      navigate("/")
     }
   };
 
@@ -52,10 +55,10 @@ export default function ListProfileChildren() {
                       md={2}
                       lg={4}
                       className={
-                        listChildrens?.length < 4 ? "g-4 flex-center" : "g-4"
+                        user?.childrens?.length < 4 ? "g-4 flex-center" : "g-4"
                       }
                     >
-                      {listChildrens?.map((children, idx) => (
+                      {user?.childrens?.map((children, idx) => (
                         <Col
                           key={children?._id}
                           onClick={() => handleClickCard(children?._id)}

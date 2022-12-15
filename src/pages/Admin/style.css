@@ -1,6 +1,7 @@
 .admin-wrapper {
   background-color: #00a7b6;
   position: relative;
+  min-height: 100vh;
 }
 
 .background-admin {
@@ -84,6 +85,7 @@
   text-align: center;
   text-decoration: none;
   text-transform: uppercase;
+  margin: 20px 10px 0 0 !important;
 }
 
 .admin-children-item {

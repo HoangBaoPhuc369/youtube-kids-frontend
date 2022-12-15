@@ -11,14 +11,6 @@ function Login() {
   //state for steps
   const [step, setstep] = useState(2);
 
-  //state for form data
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    age: "",
-    email: "",
-  });
-
   // function for going to next step by increasing step state by 1
   const nextStep = () => {
     setstep(step + 1);
@@ -31,15 +23,6 @@ function Login() {
 
   const jump2Step = () => {
     setstep(step + 2);
-  };
-
-  const handleInputData = (input) => (e) => {
-    const { value } = e.target;
-
-    setFormData((prevState) => ({
-      ...prevState,
-      [input]: value,
-    }));
   };
 
   switch (step) {
@@ -71,7 +54,6 @@ function Login() {
                   nextStep={nextStep}
                   prevStep={prevStep}
                   jump2Step={jump2Step}
-                  handleFormData={handleInputData}
                 />
               </Col>
             </Row>

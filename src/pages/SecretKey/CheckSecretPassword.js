@@ -4,10 +4,10 @@ import "./style.css";
 import { useSelector, useDispatch } from "react-redux";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import Header from "../../component/header";
-import { createSecretPasswordChildren } from "../../redux/feature/childrenSlice";
+import { createSecretPasswordChildren } from "../../redux/feature/authSlice";
 
 export default function CheckSecretPassword({ nextStep, prevStep, formData }) {
-  const { childrenActive } = useSelector((state) => state.children);
+  const { childrenActive, user } = useSelector((state) => state.auth);
   const [pictureActive, setpictureActive] = useState(childrenActive?.picture);
 
   const [value, setValue] = useState("");
@@ -79,6 +79,7 @@ export default function CheckSecretPassword({ nextStep, prevStep, formData }) {
       dispatch(
         createSecretPasswordChildren({
           childrenID: childrenActive?._id,
+          userId: user?.google_id,
           secretPassword: password,
         })
       );

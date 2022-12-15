@@ -23,7 +23,7 @@ import { BiSmile } from "react-icons/bi";
 import { HiOutlineArrowRightCircle } from "react-icons/hi2";
 import "animate.css/animate.min.css";
 import { useRef } from "react";
-import { addVideoHistory } from "../../redux/feature/childrenSlice";
+import { addVideoHistory } from "../../redux/feature/authSlice";
 
 export default function Details() {
   const navigate = useNavigate();
@@ -31,7 +31,7 @@ export default function Details() {
   const { videos, channelVideo, chatVideo } = useSelector(
     (state) => state.video
   );
-  const { childrenActive } = useSelector((state) => state.children);
+  const { childrenActive, user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
   const [videoPlay, setVideoPlay] = useState(null);
@@ -54,7 +54,7 @@ export default function Details() {
         dispatch(getChannelVideo({ idChannel: findVideo.snippet.channelId }));
       }
     }
-  }, []);
+  }, [param]);
 
   const handleOffChat = () => {
     setChatShow((prev) => !prev);
@@ -64,6 +64,7 @@ export default function Details() {
     dispatch(
       addVideoHistory({
         childrenID: childrenActive?._id,
+        userId: user?.google_id,
         videoId: param.id,
         thumbnail: channelVideo[0]?.snippet?.thumbnails?.default?.url,
         title: videoPlay?.snippet.title,

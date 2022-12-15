@@ -112,3 +112,13 @@
   padding: 2px 24px;
   color: #008596;
 }
+
+.video-wrapper {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+}
+
+.video-row {
+  margin-top: 0;
+}

@@ -12,7 +12,7 @@ import Admin from "./pages/Admin";
 import History from "./pages/History";
 import ProfileCreated from "./component/profileAcount/ProfileCreated";
 import LoggedInRoutes from "./routes/LoggedInRoutes";
-import NotLoggedInRoutes from "./routes/NotLoggedInRoutes";
+import NotLoggedInRoutes from "./routes/RequiredAuth";
 import ListProfileChildren from "./component/form/ListProfileChildren";
 import ProfileSettings from "./pages/profile/ProfileSettings";
 import { useSelector } from "react-redux";
@@ -25,47 +25,65 @@ import Education from "./pages/education";
 import SecretKey from "./pages/SecretKey/ProfileSecretKey";
 import ProfileOptions from "./component/profile-options";
 import ProfileSecretKey from "./pages/SecretKey/ProfileSecretKey";
+import RequiredAuth from "./routes/RequiredAuth";
 function App() {
   // const { user } = useSelector((state) => state.auth);
   // const { childrenActive } = useSelector((state) => state.children);
 
   return (
     <Routes>
-      {/* <Route element={<LoggedInRoutes />}> */}
-        <Route path="/" element={<Home />} />
-        <Route path="/ability" element={<Ability />} />
-        <Route path="/education" element={<Education />} />
-        <Route path="/parent" element={<Parent />} />
-        <Route path="/profile-account" element={<ProfileAccount />} />
-        <Route path="/video-detail/:id" element={<Details />} />
-        <Route path="/channel/:id" element={<Channel />} />
-        <Route path="/admin" element={<Admin />} />
-        <Route path="/history" element={<History />} />
-        <Route path="/profile-created" element={<ProfileCreated />} />
-        <Route path="/list-profile/:id" element={<ListProfileChildren />} />
-        <Route path="/profile-settings" element={<ProfileSettings />} />
-        <Route path="/search/:key" element={<Search />} />
-        <Route path="/profile-options" element={<ProfileOptions />} />
-        <Route path="/profile-settings/secret-key" element={<ProfileSecretKey />} />
+      <Route element={<LoggedInRoutes />}>
+        <Route path="/" element={<Home />} exact />
+        <Route path="/ability" element={<Ability />} exact />
+        <Route path="/education" element={<Education />} exact />
+        <Route path="/parent" element={<Parent />} exact />
+        <Route path="/video-detail/:id" element={<Details />} exact />
+        <Route path="/channel/:id" element={<Channel />} exact />
+        <Route path="/history" element={<History />} exact />
+        <Route path="/profile-settings" element={<ProfileSettings />} exact />
+        <Route path="/search/:key" element={<Search />} exact />
+
+        <Route path="/profile-options" element={<ProfileOptions />} exact />
+        <Route
+          path="/profile-settings/secret-key"
+          element={<ProfileSecretKey />}
+          exact
+        />
 
         {/* Admin route */}
+        <Route path="/admin" element={<Admin />} exact />
         <Route
           path="/admin/profile-settings/:id"
           element={<ProfileSettings />}
+          exact
         />
         <Route
           path="/admin/parentprofilesettings/:id"
           element={<ParentProfile />}
+          exact
         />
 
-        <Route path="/admin/setting-profile/:id" element={<SettingProfile />} />
-        <Route path="/admin/setting-age/:id" element={<SettingAge />} />
-      {/* </Route> */}
+        <Route
+          path="/admin/setting-profile/:id"
+          element={<SettingProfile />}
+          exact
+        />
+        <Route path="/admin/setting-age/:id" element={<SettingAge />} exact />
+      </Route>
 
-      {/* <Route element={<NotLoggedInRoutes />}> */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/login/success" element={<LoginSuccess />} />
-      {/* </Route> */}
+      <Route path="/login" element={<Login />} exact />
+      <Route path="/login/success" element={<LoginSuccess />} exact />
+      <Route path="*" element={<div>Not found</div>} exact />
+
+      <Route element={<RequiredAuth />}>
+        <Route path="/profile-account" element={<ProfileAccount />} exact />
+        <Route path="/profile-created" element={<ProfileCreated />} exact />
+        <Route
+          path="/list-profile/:id"
+          element={<ListProfileChildren />}
+          exact
+        />
+      </Route>
     </Routes>
   );
 }

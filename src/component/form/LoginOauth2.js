@@ -50,7 +50,7 @@ export default function LoginOauth2() {
     const left = (width - w) / 2 / systemZoom + dualScreenLeft;
     const top = (height - h) / 2 / systemZoom + dualScreenTop;
     const newWindow = window.open(
-      "http://localhost:8000/auth/google",
+      `${process.env.REACT_APP_BACKEND_URL}/auth/google`,
       "google_login",
       `width=${w / systemZoom}, 
       height=${h / systemZoom}, 

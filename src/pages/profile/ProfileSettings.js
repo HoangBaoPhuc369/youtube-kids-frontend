@@ -12,16 +12,17 @@ import ChooseProfilePictureSettings from "../../component/modals/ChooseProfilePi
 import { listProfilePicture } from "./../../data/listProfilePicture";
 import { getChannelVideo } from "./../../redux/api";
 import validator from "validator";
-import {
-  updateChildrenProfileForChildren,
-  clearHistoryVideo,
-  deleteSecretPasswordChildren,
-} from "./../../redux/feature/childrenSlice";
+
 import DeleteModal from "./../../component/modals/DeleteModal";
 import { useNavigate } from "react-router-dom";
+import {
+  clearHistoryVideo,
+  createSecretPasswordChildren,
+  updateChildrenProfileForChildren,
+} from "../../redux/feature/authSlice";
 
 export default function ProfileSettings() {
-  const { childrenActive } = useSelector((state) => state.children);
+  const { user, childrenActive } = useSelector((state) => state.auth);
   const [modalShow, setModalShow] = useState(false);
   const [disableBtn, setDisableBtn] = useState(true);
   const [title, setTitle] = useState("");
@@ -38,10 +39,21 @@ export default function ProfileSettings() {
 
   const handleClear = (type) => {
     if (type === "history") {
-      dispatch(clearHistoryVideo({ id: childrenActive?._id }));
+      dispatch(
+        clearHistoryVideo({
+          childrenID: childrenActive?._id,
+          userId: user?.google_id,
+        })
+      );
       handleClose();
     } else if (type === "secretKey") {
-      dispatch(deleteSecretPasswordChildren({ id: childrenActive?._id }));
+      dispatch(
+        createSecretPasswordChildren({
+          childrenID: childrenActive?._id,
+          userId: user?.google_id,
+          secretPassword: "",
+        })
+      );
       handleClose();
     }
   };
@@ -82,9 +94,10 @@ export default function ProfileSettings() {
       console.log(name, pictureActive);
       dispatch(
         updateChildrenProfileForChildren({
+          childId: childrenActive._id,
+          userId: user?.google_id,
           name: name,
           picture: pictureActive,
-          id: childrenActive._id,
         })
       );
       setDisableBtn(false);

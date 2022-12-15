@@ -8,7 +8,7 @@ import { HiDotsVertical } from "react-icons/hi";
 
 export default function VideoCard({ video }) {
   function formatDuration(x) {
-    if (x) {
+    if (x && !x.includes("DT")) {
       const toSecond = eval(
         x
           .replace("PT", "")
@@ -40,6 +40,7 @@ export default function VideoCard({ video }) {
       return timeString;
     }
   }
+
   return (
     <>
       <Col>
@@ -48,7 +49,7 @@ export default function VideoCard({ video }) {
             <Card.Img variant="top" src={video.snippet.thumbnails.medium.url} />
             {video.contentDetails?.duration ? (
               <Badge bg="dark" className="video-duration">
-                {formatDuration(video.contentDetail?.duration)}
+                {formatDuration(video.contentDetails?.duration)}
               </Badge>
             ) : null}
 

@@ -1,20 +1,23 @@
 import { useSelector } from "react-redux";
-import { Outlet, Navigate } from "react-router-dom";
+import { Outlet} from "react-router-dom";
 import ProfileOptions from "../component/profile-options";
 import Login from "../pages/login";
 
 export default function LoggedInRoutes() {
-  const { user } = useSelector((state) => ({ ...state.auth }));
-  const { childrenActive } = useSelector((state) => state.children);
-  // return user && childrenActive ? (
-  //   <Outlet />
-  // ) : user && !childrenActive ? (
-  //   <Login />
-  // ) : (
-  //   <ProfileOptions />
-  // );
+  const { user, childrenActive, guess } = useSelector((state) => ({
+    ...state.auth,
+  }));
 
-  return user ? <Outlet /> : <Login />;
+  return !user && !guess ? (
+    // <Navigate to="/login" />
+    <Login />
+  ) : (!user && guess) || (user && !guess && childrenActive) ? (
+    <Outlet />
+  ) : user && !guess && !childrenActive ? (
+    // <Navigate to="/profile-options" />
+    <ProfileOptions />
+  ) : (
+    // <Navigate to="/login" />
+    <Login />
+  );
 }
-
-//<Navigate to="/login" />

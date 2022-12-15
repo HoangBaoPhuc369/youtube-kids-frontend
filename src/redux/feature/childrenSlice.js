@@ -2,20 +2,20 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
 import * as api from "../api";
 
-export const createChildren = createAsyncThunk(
-  "children/createChildren",
-  async ({ formData, userOauthId, navigate }, { rejectWithValue }) => {
-    try {
-      const { data } = await api.createChildren(formData, userOauthId);
-      if (data) {
-        navigate("/profile-created");
-      }
-      return data;
-    } catch (err) {
-      return err.response.data;
-    }
-  }
-);
+// export const createChildren = createAsyncThunk(
+//   "children/createChildren",
+//   async ({ formData, userOauthId, navigate }, { rejectWithValue }) => {
+//     try {
+//       const { data } = await api.createChildren(formData, userOauthId);
+//       if (data) {
+//         navigate("/profile-created");
+//       }
+//       return data;
+//     } catch (err) {
+//       return err.response.data;
+//     }
+//   }
+// );
 
 export const listChildrensUser = createAsyncThunk(
   "children/listChildrens",
@@ -32,93 +32,26 @@ export const listChildrensUser = createAsyncThunk(
   }
 );
 
-export const addVideoHistory = createAsyncThunk(
-  "children/addVideoHistory",
-  async ({ childrenID, videoId, thumbnail, title }, { rejectWithValue }) => {
-    console.log(childrenID, videoId, thumbnail, title);
-    try {
-      const { data } = await api.addVideoHistory(
-        childrenID,
-        videoId,
-        thumbnail,
-        title
-      );
-      return data.historyWatchVideo;
-    } catch (err) {
-      return err.response.data;
-    }
-  }
-);
 
-export const getChildren = createAsyncThunk(
-  "children/getChildren",
-  async ({ id, navigate }, { rejectWithValue }) => {
-    try {
-      const { data } = await api.getChildren(id);
-      if (data) {
-        navigate("/");
-      }
-      return data;
-    } catch (err) {
-      return err.response.data;
-    }
-  }
-);
+// export const getChildren = createAsyncThunk(
+//   "children/getChildren",
+//   async ({ id, userId, navigate }, { rejectWithValue }) => {
+//     try {
+//       const { data } = await api.getChildren(id, userId);
+//       if (data) {
+//         navigate("/");
+//       }
+//       return data;
+//     } catch (err) {
+//       return err.response.data;
+//     }
+//   }
+// );
 
-export const updateChildrenProfileForChildren = createAsyncThunk(
-  "children/updateChildrenProfileForChildren",
-  async ({ name, picture, id }, { rejectWithValue }) => {
-    try {
-      const { data } = await api.updateChildrenProfileForChildren(
-        name,
-        picture,
-        id
-      );
-      return data;
-    } catch (err) {
-      return err.response.data;
-    }
-  }
-);
 
-export const clearHistoryVideo = createAsyncThunk(
-  "children/clearHistoryVideo",
-  async ({ id }, { rejectWithValue }) => {
-    try {
-      const { data } = await api.clearHistoryVideo(id);
-      return data;
-    } catch (err) {
-      return err.response.data;
-    }
-  }
-);
 
-export const createSecretPasswordChildren = createAsyncThunk(
-  "children/createSecretPasswordChildren",
-  async ({ childrenID, secretPassword }, { rejectWithValue }) => {
-    try {
-      const { data } = await api.createSecretPasswordChildren(
-        childrenID,
-        secretPassword
-      );
-      return data;
-    } catch (err) {
-      return err.response.data;
-    }
-  }
-);
 
-export const deleteSecretPasswordChildren = createAsyncThunk(
-  "children/deleteSecretPasswordChildren",
-  async ({ childrenID }, { rejectWithValue }) => {
-    try {
-      const { data } = await api.deleteSecretPasswordChildren(childrenID);
-      return data;
-    } catch (err) {
-      return err.response.data;
-    }
-  }
-);
+
 
 const initialState = {
   children: Cookies.get("children")
@@ -127,9 +60,7 @@ const initialState = {
   listChildrens: Cookies.get("listChildrens")
     ? JSON.parse(Cookies.get("listChildrens"))
     : null,
-  childrenActive: Cookies.get("childrenActive")
-    ? JSON.parse(Cookies.get("childrenActive"))
-    : null,
+  childrenActive: null,
   error: "",
   loading: false,
   loadingChildren: false,
@@ -145,24 +76,23 @@ export const childrenSlice = createSlice({
       state.listChildrens = null;
       state.childrenActive = null;
       Cookies.remove("children");
-      Cookies.remove("childrenActive");
       Cookies.remove("listChildrens");
     },
   },
   extraReducers: {
-    [createChildren.pending]: (state, action) => {
-      state.loading = true;
-    },
-    [createChildren.fulfilled]: (state, action) => {
-      state.loading = false;
-      state.children = action.payload;
-      Cookies.set("children", JSON.stringify(action.payload));
-      state.error = "";
-    },
-    [createChildren.rejected]: (state, action) => {
-      state.loading = false;
-      state.error = action.payload.message;
-    },
+    // [createChildren.pending]: (state, action) => {
+    //   state.loading = true;
+    // },
+    // [createChildren.fulfilled]: (state, action) => {
+    //   state.loading = false;
+    //   state.children = action.payload;
+    //   Cookies.set("children", JSON.stringify(action.payload));
+    //   state.error = "";
+    // },
+    // [createChildren.rejected]: (state, action) => {
+    //   state.loading = false;
+    //   state.error = action.payload.message;
+    // },
 
     [listChildrensUser.fulfilled]: (state, action) => {
       state.loading = false;
@@ -175,68 +105,15 @@ export const childrenSlice = createSlice({
       state.error = action.payload.message;
     },
 
-    [addVideoHistory.fulfilled]: (state, action) => {
-      state.loading = false;
-      state.childrenActive.historyWatchVideo = action.payload;
-      Cookies.set("childrenActive", JSON.stringify(state.childrenActive));
-      state.error = "";
-    },
-    [addVideoHistory.rejected]: (state, action) => {
-      state.loading = false;
-      state.error = action.payload.message;
-    },
+    
 
-    [getChildren.pending]: (state, action) => {
-      state.loadingChildren = true;
-    },
-    [getChildren.fulfilled]: (state, action) => {
-      state.loadingChildren = false;
-      state.childrenActive = action.payload;
-      Cookies.set("childrenActive", JSON.stringify(action.payload));
-      state.errorChildren = "";
-    },
-    [getChildren.rejected]: (state, action) => {
-      state.loadingChildren = false;
-      state.errorChildren = action.payload.message;
-    },
+ 
 
-    [updateChildrenProfileForChildren.fulfilled]: (state, action) => {
-      state.childrenActive = action.payload;
-      Cookies.set("childrenActive", JSON.stringify(action.payload));
-      state.errorChildren = "";
-    },
-    [updateChildrenProfileForChildren.rejected]: (state, action) => {
-      state.errorChildren = action.payload.message;
-    },
+    
 
-    [clearHistoryVideo.fulfilled]: (state, action) => {
-      console.log(action.payload);
-      state.errorChildren = "";
-    },
-    [clearHistoryVideo.rejected]: (state, action) => {
-      state.errorChildren = action.payload.message;
-    },
-
-    [createSecretPasswordChildren.fulfilled]: (state, action) => {
-      state.childrenActive = action.payload;
-      Cookies.set("childrenActive", JSON.stringify(action.payload));
-      state.errorChildren = "";
-    },
-    [createSecretPasswordChildren.rejected]: (state, action) => {
-      state.errorChildren = action.payload.message;
-    },
-
-    [deleteSecretPasswordChildren.fulfilled]: (state, action) => {
-      console.log(action.payload);
-      if (action.payload === "ok") {
-        state.childrenActive.secret_password = "";
-        Cookies.set("childrenActive", JSON.stringify(state.childrenActive));
-      }
-      state.errorChildren = "";
-    },
-    [deleteSecretPasswordChildren.rejected]: (state, action) => {
-      state.errorChildren = action.payload.message;
-    },
+   
+  
+  
   },
 });
 

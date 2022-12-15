@@ -35,8 +35,9 @@
 }
 
 .profile-options-body {
-    position: relative;
-    z-index: 10;
+  position: relative;
+  min-height: calc(100vh - 128px);
+  z-index: 10;
 }
 
 .profile-options-body-title {

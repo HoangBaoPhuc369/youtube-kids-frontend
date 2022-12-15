@@ -9,5 +9,35 @@
 }
 
 .search-content {
-  background: hsl(206.1, 79.3%, 52.7%);
+  background: #91d5ff;
+  min-height: calc(100vh - 128px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32px 0 20px 0;
+  position: relative;
+}
+
+.search-background-left {
+  background-image: url("https://www.gstatic.com/ytkids/web/search/search_bg_left_2.png");
+  background-position: top right;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 144px;
+  background-repeat: no-repeat;
+  background-size: auto 500px;
+  height: 500px;
+}
+
+.search-background-right {
+  background-image: url("https://www.gstatic.com/ytkids/web/search/search_bg_right_2.png");
+  background-position: top left;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  width: 144px;
+  background-repeat: no-repeat;
+  background-size: auto 500px;
+  height: 500px;
 }

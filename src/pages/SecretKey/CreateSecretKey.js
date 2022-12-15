@@ -6,7 +6,7 @@ import { Container, Row, Col, Button } from "react-bootstrap";
 import Header from "../../component/header";
 
 export default function CreateSecretKey({ nextStep, prevStep, setFormData }) {
-  const { childrenActive } = useSelector((state) => state.children);
+  const { childrenActive } = useSelector((state) => state.auth);
   const [pictureActive, setpictureActive] = useState(childrenActive?.picture);
 
   const [value, setValue] = useState("");

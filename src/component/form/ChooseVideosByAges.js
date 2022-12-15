@@ -5,8 +5,8 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import lottie from "lottie-web";
 import { useDispatch, useSelector } from "react-redux";
-import { createChildren } from "../../redux/feature/childrenSlice";
 import { useNavigate } from "react-router-dom";
+import { createChildren } from "../../redux/feature/authSlice";
 
 const OptionsVideosByAges = [
   {
@@ -76,8 +76,6 @@ export default function ChooseVideosByAges({
     dispatch(
       createChildren({ formData, userOauthId: user.google_id, navigate })
     );
-    // nextStep();
-    // console.log(formData);
   };
 
   return (

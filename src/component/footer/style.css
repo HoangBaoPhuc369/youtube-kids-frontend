@@ -2,10 +2,25 @@
   height: 154px;
   display: flex;
   align-items: flex-end;
+  position: relative;
 }
 
 .footer-bottom {
   height: 32px;
   width: 100%;
   background: #2e5fd8;
+}
+
+.footer-background {
+  background-image: url("https\:\/\/www\.gstatic\.com\/ytkids\/web\/categories\/shows_bg_bottom_2\.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  bottom: 0;
+  height: 154px;
+  left: 50%;
+  max-width: 1280px;
+  position: absolute;
+  transform: translateX(-50%);
+  width: 100%;
 }
