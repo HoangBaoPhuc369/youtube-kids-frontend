@@ -24,7 +24,7 @@ export default function InfoProfile({ nextStep }) {
             <Form.Label className="login-form-title">Đã tạo hồ sơ!</Form.Label>
             <Form.Label className="login-form-text">
               Hãy chuyển đến phần "Chỉnh sửa hồ sơ" để thiết lập mã bí mật cho
-              {childrenCreated?.kid_name}. Mã này sẽ ngăn những trẻ khác trên thiết bị này
+              {childrenCreated?.name}. Mã này sẽ ngăn những trẻ khác trên thiết bị này
               truy cập vào hồ sơ đó. Bạn có thể đặt lại mã này bất cứ lúc nào.
             </Form.Label>
 
@@ -37,7 +37,7 @@ export default function InfoProfile({ nextStep }) {
                   {childrenCreated?.name}
                 </Form.Label>
                 <Form.Label className="login-form-profile-age">
-                  {childrenCreated?.age} tuổi
+                  {childrenCreated?.year} tuổi
                 </Form.Label>
               </div>
               <MdModeEdit className="edit-icon-md" />

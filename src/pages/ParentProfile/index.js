@@ -18,9 +18,10 @@ export default function ParentProfile() {
   const [childrenActive, setChildrenActive] = useState(null);
 
   useEffect(() => {
-    const findChildren = user?.childrens?.find((children) => children._id === id);
+    const findChildren = user?.childrens?.find(
+      (children) => children._id === id
+    );
     if (findChildren) {
-      console.log(findChildren);
       setChildrenActive(findChildren);
     }
   }, [id]);
@@ -35,6 +36,10 @@ export default function ParentProfile() {
   const handleParentSettingAge = (_id) => {
     navigate(`/admin/setting-age/${_id}`);
   };
+
+  const handleApproveContentForChild = (_id) => {
+    navigate(`/admin/approve-content/${_id}`);
+  }
 
   return (
     <>
@@ -81,7 +86,7 @@ export default function ParentProfile() {
                 </Card.Body>
               </Card>
               <Card className="my-2 w-50">
-                <Card.Header>Bước xác minh dành cho cha mẹ</Card.Header>
+                <Card.Header>Cài đặt nội dung</Card.Header>
                 <Card.Body>
                   <div className="d-flex justify-content-between">
                     <div>
@@ -97,6 +102,23 @@ export default function ParentProfile() {
                       className="text-end text-color-edit"
                     >
                       Chỉnh sửa
+                    </Button>
+                  </div>
+                  <hr />
+                  <div className="d-flex justify-content-between">
+                    <div>
+                      Phê duyệt nội dung cho trẻ
+                      <br />
+                      <span className="font-size-accordion">
+                        Hãy tự chọn lọc nội dung cho con của bạn
+                      </span>
+                    </div>
+                    <Button
+                      variant="light"
+                      onClick={() => handleApproveContentForChild(_id)}
+                      className="text-end text-color-edit"
+                    >
+                      Phê duyệt
                     </Button>
                   </div>
                   <hr />

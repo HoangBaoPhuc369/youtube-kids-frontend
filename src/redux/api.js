@@ -60,7 +60,7 @@ export const updateChildrenProfileForChildren = (
   picture
 ) =>
   axios.patch(
-    `${process.env.REACT_APP_BACKEND_URL}users/${userId}/childrens/${childId}/for-child`,
+    `${process.env.REACT_APP_BACKEND_URL}/users/${userId}/childrens/${childId}/for-child`,
     {
       name,
       picture,
@@ -130,22 +130,10 @@ export const createSecretPassword = (userId, secretPassword) =>
     }
   );
 
-export const updateChildrenProfileForParent = (
-  childId,
-  userId,
-  name,
-  picture,
-  year,
-  month
-) =>
+export const updateChildrenProfileForParent = (childId, userId, formData) =>
   axios.patch(
     `${process.env.REACT_APP_BACKEND_URL}/users/${userId}/childrens/${childId}/for-parent`,
-    {
-      name,
-      picture,
-      year,
-      month,
-    }
+    formData
   );
 
 export const addVideoByParent = (childId, userId, videoId, thumbnail, title) =>

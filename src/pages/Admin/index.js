@@ -6,7 +6,7 @@ import "./style.css";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { BsPlus } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
-import { createSecretPassword, Logout } from "../../redux/feature/authSlice";
+import { createSecretPassword, Logout, setChildrenSelect } from "../../redux/feature/authSlice";
 import { resetChildren } from "../../redux/feature/childrenSlice";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -24,10 +24,11 @@ export default function Admin() {
   const handleLogout = () => {
     window.open(`${process.env.REACT_APP_BACKEND_URL}/auth/logout`, "_self");
     dispatch(Logout());
-    dispatch(resetChildren());
+    // dispatch(resetChildren());
   };
   const handleParentProfileSettings = (_id) => {
     navigate(`/admin/parentprofilesettings/${_id}`);
+    dispatch(setChildrenSelect(_id));
   };
 
   const handlePassword = (e) => {

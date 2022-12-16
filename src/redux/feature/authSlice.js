@@ -7,14 +7,12 @@ export const getUser = createAsyncThunk(
   async ({ navigate }, { rejectWithValue }) => {
     try {
       const { data } = await api.getUser();
-      console.log(data);
-      const childrens = await api.listChildrens(data.user.google_id);
-      const children = childrens.data;
+      const children = data.user.childrens;
       if (children.length === 0) {
         navigate("/profile-account");
       } else {
         const listProfilePage = `/list-profile/${data.user.google_id}`;
-        Cookies.set("listChildrens", JSON.stringify(childrens.data));
+        // Cookies.set("listChildrens", JSON.stringify(children));
         navigate(listProfilePage);
       }
       return data.user;
@@ -39,12 +37,13 @@ export const createSecretPassword = createAsyncThunk(
 export const createChildren = createAsyncThunk(
   "children/createChildren",
   async ({ formData, userOauthId, navigate }, { rejectWithValue }) => {
+    console.log(formData);
     try {
       const { data } = await api.createChildren(formData, userOauthId);
       if (data) {
         navigate("/profile-created");
       }
-      return { data: data, formData: formData };
+      return data;
     } catch (err) {
       return err.response.data;
     }
@@ -53,15 +52,33 @@ export const createChildren = createAsyncThunk(
 
 export const createSecretPasswordChildren = createAsyncThunk(
   "children/createSecretPasswordChildren",
-  async ({ childrenID, userId, secretPassword }, { rejectWithValue }) => {
-    console.log(childrenID, userId, secretPassword)
+  async (
+    { childrenID, userId, secretPassword, nextStep },
+    { rejectWithValue }
+  ) => {
     try {
       const { data } = await api.createSecretPasswordChildren(
         childrenID,
         userId,
         secretPassword
       );
-      return { data: data, childrenID: childrenID };
+      return { data: data, nextStep };
+    } catch (err) {
+      return err.response.data;
+    }
+  }
+);
+
+export const deleteSecretPasswordChildren = createAsyncThunk(
+  "children/deleteSecretPasswordChildren",
+  async ({ childrenID, userId, secretPassword }, { rejectWithValue }) => {
+    try {
+      const { data } = await api.createSecretPasswordChildren(
+        childrenID,
+        userId,
+        secretPassword
+      );
+      return data;
     } catch (err) {
       return err.response.data;
     }
@@ -83,7 +100,7 @@ export const addVideoHistory = createAsyncThunk(
         thumbnail,
         title
       );
-      return { data: data, childrenID: childrenID };
+      return data;
     } catch (err) {
       return err.response.data;
     }
@@ -95,7 +112,7 @@ export const clearHistoryVideo = createAsyncThunk(
   async ({ childrenID, userId }, { rejectWithValue }) => {
     try {
       const { data } = await api.clearVideoHistory(childrenID, userId);
-      return { data: data, childrenID: childrenID };
+      return data;
     } catch (err) {
       return err.response.data;
     }
@@ -112,7 +129,26 @@ export const updateChildrenProfileForChildren = createAsyncThunk(
         name,
         picture
       );
-      return { data: data, childrenID: childId };
+      return data;
+    } catch (err) {
+      return err.response.data;
+    }
+  }
+);
+
+export const updateChildrenProfileForParent = createAsyncThunk(
+  "children/updateChildrenProfileForParent",
+  async ({ childId, userId, formData, navigate }, { rejectWithValue }) => {
+    try {
+      const { data } = await api.updateChildrenProfileForParent(
+        childId,
+        userId,
+        formData
+      );
+      if (data) {
+        navigate(`/admin/parentprofilesettings/${childId}`);
+      }
+      return data;
     } catch (err) {
       return err.response.data;
     }
@@ -126,6 +162,9 @@ const initialState = {
     ? JSON.parse(Cookies.get("childrenCreated"))
     : null,
   childrenActive: null,
+  childrenSelected: Cookies.get("childrenSelected")
+    ? JSON.parse(Cookies.get("childrenSelected"))
+    : null,
   error: "",
   loading: false,
 };
@@ -136,11 +175,24 @@ export const authSlice = createSlice({
   reducers: {
     Logout: (state) => {
       state.user = null;
+      state.childrenActive = null;
+      state.childrenCreated = null;
+      Cookies.remove("childrenCreated");
       Cookies.remove("user");
     },
 
     setChildrenActive: (state, action) => {
       state.childrenActive = action.payload;
+    },
+
+    setChildrenSelect: (state, action) => {
+      const findChildren = state.user.childrens.find(
+        (child) => child._id === action.payload
+      );
+      if (findChildren) {
+        state.childrenSelected = findChildren;
+        Cookies.set("childrenSelected", JSON.stringify(findChildren));
+      }
     },
   },
   extraReducers: {
@@ -150,7 +202,7 @@ export const authSlice = createSlice({
     [getUser.fulfilled]: (state, action) => {
       state.loading = false;
       state.user = action.payload;
-      Cookies.set("user", JSON.stringify(action.payload), { expires: 7 });
+      Cookies.set("user", JSON.stringify(action.payload));
       state.error = "";
     },
     [getUser.rejected]: (state, action) => {
@@ -169,12 +221,11 @@ export const authSlice = createSlice({
       state.error = action.payload.message;
     },
 
-    
     [createChildren.fulfilled]: (state, action) => {
-      state.user = action.payload.data;
+      state.user.childrens.push(action.payload);
       Cookies.set("user", JSON.stringify(state.user));
-      state.childrenCreated = action.payload.formData;
-      Cookies.set("childrenCreated", JSON.stringify(state.childrenCreated));
+      state.childrenCreated = action.payload;
+      Cookies.set("childrenCreated", JSON.stringify(action.payload));
       state.error = "";
     },
     [createChildren.rejected]: (state, action) => {
@@ -182,29 +233,31 @@ export const authSlice = createSlice({
     },
 
     [createSecretPasswordChildren.fulfilled]: (state, action) => {
-      state.user = action.payload.data;
+      state.user.childrens = action.payload.data.childrens;
       Cookies.set("user", JSON.stringify(state.user));
-      const findChildren = state.user.childrens.find(
-        (child) => child._id === action.payload.childrenID
-      );
-      if (findChildren) {
-        state.childrenActive = findChildren;
-      }
+      state.childrenActive = action.payload.data.children;
+      action.payload.nextStep();
+
       state.errorChildren = "";
     },
     [createSecretPasswordChildren.rejected]: (state, action) => {
       state.errorChildren = action.payload.message;
     },
 
-    [addVideoHistory.fulfilled]: (state, action) => {
-      state.user = action.payload.data;
+    [deleteSecretPasswordChildren.fulfilled]: (state, action) => {
+      state.user.childrens = action.payload.childrens;
       Cookies.set("user", JSON.stringify(state.user));
-      const findChildren = state.user.childrens.find(
-        (child) => child._id === action.payload.childrenID
-      );
-      if (findChildren) {
-        state.childrenActive = findChildren;
-      }
+      state.childrenActive = action.payload.children;
+      state.errorChildren = "";
+    },
+    [deleteSecretPasswordChildren.rejected]: (state, action) => {
+      state.errorChildren = action.payload.message;
+    },
+
+    [addVideoHistory.fulfilled]: (state, action) => {
+      state.user.childrens = action.payload.childrens;
+      Cookies.set("user", JSON.stringify(state.user));
+      state.childrenActive = action.payload.children;
       state.error = "";
     },
     [addVideoHistory.rejected]: (state, action) => {
@@ -212,14 +265,10 @@ export const authSlice = createSlice({
     },
 
     [clearHistoryVideo.fulfilled]: (state, action) => {
-      state.user = action.payload.data;
+      state.user.childrens = action.payload.childrens;
       Cookies.set("user", JSON.stringify(state.user));
-      const findChildren = state.user.childrens.find(
-        (child) => child._id === action.payload.childrenID
-      );
-      if (findChildren) {
-        state.childrenActive = findChildren;
-      }
+
+      state.childrenActive = action.payload.children;
       state.error = "";
     },
     [clearHistoryVideo.rejected]: (state, action) => {
@@ -227,23 +276,29 @@ export const authSlice = createSlice({
     },
 
     [updateChildrenProfileForChildren.fulfilled]: (state, action) => {
-      state.user = action.payload.data;
+      state.user.childrens = action.payload.childrens;
       Cookies.set("user", JSON.stringify(state.user));
-      const findChildren = state.user.childrens.find(
-        (child) => child._id === action.payload.childrenID
-      );
-      if (findChildren) {
-        state.childrenActive = findChildren;
-      }
+      state.childrenActive = action.payload.children;
       state.error = "";
     },
     [updateChildrenProfileForChildren.rejected]: (state, action) => {
+      state.error = action.payload.message;
+    },
+
+    [updateChildrenProfileForParent.fulfilled]: (state, action) => {
+      state.user.childrens = action.payload.childrens;
+      Cookies.set("user", JSON.stringify(state.user));
+      state.childrenActive = action.payload.children;
+      state.error = "";
+    },
+    [updateChildrenProfileForParent.rejected]: (state, action) => {
       state.error = action.payload.message;
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { Logout, setChildrenActive } = authSlice.actions;
+export const { Logout, setChildrenActive, setChildrenSelect } =
+  authSlice.actions;
 
 export default authSlice.reducer;

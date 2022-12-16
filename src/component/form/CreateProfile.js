@@ -15,22 +15,10 @@ export default function CreateProfile({
 }) {
   const [modalShow, setModalShow] = useState(false);
   const [profilePictures, setProfilePictures] = useState(listProfilePicture);
-  const [pictureActive, setpictureActive] = useState("");
   const [error, setError] = useState(false);
   const [error2, setError2] = useState(false);
   const [disableBtn, setDisableBtn] = useState(true);
 
-  useEffect(() => {
-    const activePicture = profilePictures.find(
-      (picture) => picture.active === true
-    );
-    setpictureActive(activePicture.src);
-
-    setFormData((prevState) => ({
-      ...prevState,
-      picture: activePicture.src,
-    }));
-  }, [profilePictures]);
 
   useEffect(() => {
     if (
@@ -95,7 +83,7 @@ export default function CreateProfile({
                 className="login-form-profile-img"
                 onClick={() => setModalShow(true)}
               >
-                <img src={pictureActive} alt="" />
+                <img src={formData.picture} alt="" />
                 <span className="login-form-profile-img-edit">
                   <MdModeEdit />
                 </span>
@@ -167,7 +155,7 @@ export default function CreateProfile({
         show={modalShow}
         onHide={() => setModalShow(false)}
         profilePictures={profilePictures}
-        setProfilePictures={setProfilePictures}
+        setFormData={setFormData}
       />
     </>
   );

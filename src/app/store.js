@@ -7,8 +7,11 @@ import SEARCH from "../redux/feature/searchSlice";
 export const store = configureStore({
   reducer: {
     auth: AUTH,
-    // children: CHILDREN,
     video: VIDEOLIST,
     search: SEARCH,
   },
+  middleware: (getDefaultMiddleware) =>
+  getDefaultMiddleware({
+    serializableCheck: false,
+  }),
 });

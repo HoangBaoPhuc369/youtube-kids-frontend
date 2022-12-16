@@ -12,9 +12,7 @@ export default function History() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { childrenActive, user } = useSelector(
-    (state) => state.auth
-  );
+  const { childrenActive, user } = useSelector((state) => state.auth);
 
   const handleSettings = () => {
     navigate("/profile-settings");
@@ -25,23 +23,27 @@ export default function History() {
   return (
     <div className="home-wrapper background-history">
       <Header />
-      <div className="">
+      <div className="history-wrapper">
         <Container>
           <div className="mb-3">
             <div className="d-flex justify-content-center align-items-end flex-column pt-3">
               <div className="d-flex">
-                {user?.childrens?.map((listChildren, index) => (
-                  <img
-                    key={index}
-                    className="avatar-resize"
-                    alt="avatar-user-history"
-                    src={listChildren?.picture}
-                  />
-                ))}
+                {user?.childrens.length > 1
+                  ? user?.childrens?.map((listChildren, index) => (
+                      <img
+                        key={index}
+                        className="avatar-resize"
+                        alt="avatar-user-history"
+                        src={listChildren?.picture}
+                      />
+                    ))
+                  : null}
               </div>
-              <div className="text-white fw-bold history-list-profile-text">
-                Bạn không phải {childrenActive?.name}?
-              </div>
+              {user?.childrens?.length > 1 ? (
+                <div className="text-white fw-bold history-list-profile-text">
+                  Bạn không phải {childrenActive?.name}?
+                </div>
+              ) : null}
             </div>
             <div className="d-flex align-items-center">
               <img
@@ -75,6 +77,8 @@ export default function History() {
           </div>
         )}
       </div>
+
+      <Footer />
     </div>
   );
 }

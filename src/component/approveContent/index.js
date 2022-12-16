@@ -6,7 +6,7 @@ import Video from "../../component/video";
 import { searchVideos } from "../../redux/feature/videolistSlice";
 import "./style.css";
 
-export default function Home() {
+export default function ApproveContent() {
   const { videos, loading } = useSelector((state) => state.video);
 
   const dispatch = useDispatch();
@@ -16,7 +16,7 @@ export default function Home() {
 
   return (
     <div className="home-wrapper">
-      <Header category="Sáng tạo" page="home" />
+      <Header category="Sáng tạo" />
 
       <div className="home-container">
         <div className="home-background-left"></div>

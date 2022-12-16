@@ -26,6 +26,7 @@ import SecretKey from "./pages/SecretKey/ProfileSecretKey";
 import ProfileOptions from "./component/profile-options";
 import ProfileSecretKey from "./pages/SecretKey/ProfileSecretKey";
 import RequiredAuth from "./routes/RequiredAuth";
+import ApproveContent from "./component/approveContent";
 function App() {
   // const { user } = useSelector((state) => state.auth);
   // const { childrenActive } = useSelector((state) => state.children);
@@ -49,6 +50,20 @@ function App() {
           element={<ProfileSecretKey />}
           exact
         />
+      </Route>
+
+      <Route path="/login" element={<Login />} exact />
+      <Route path="/login/success" element={<LoginSuccess />} exact />
+      <Route path="*" element={<div>Not found</div>} exact />
+
+      <Route element={<RequiredAuth />}>
+        <Route path="/profile-account" element={<ProfileAccount />} exact />
+        <Route path="/profile-created" element={<ProfileCreated />} exact />
+        <Route
+          path="/list-profile/:id"
+          element={<ListProfileChildren />}
+          exact
+        />
 
         {/* Admin route */}
         <Route path="/admin" element={<Admin />} exact />
@@ -69,18 +84,10 @@ function App() {
           exact
         />
         <Route path="/admin/setting-age/:id" element={<SettingAge />} exact />
-      </Route>
 
-      <Route path="/login" element={<Login />} exact />
-      <Route path="/login/success" element={<LoginSuccess />} exact />
-      <Route path="*" element={<div>Not found</div>} exact />
-
-      <Route element={<RequiredAuth />}>
-        <Route path="/profile-account" element={<ProfileAccount />} exact />
-        <Route path="/profile-created" element={<ProfileCreated />} exact />
         <Route
-          path="/list-profile/:id"
-          element={<ListProfileChildren />}
+          path="/admin/approve-content/:id"
+          element={<ApproveContent />}
           exact
         />
       </Route>

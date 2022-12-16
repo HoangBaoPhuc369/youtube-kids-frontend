@@ -1,16 +1,12 @@
 import "./style.css";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
 import VideoCard from "./VideoCard";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { Card, Col } from "react-bootstrap";
-import Placeholder from "react-bootstrap/Placeholder";
 
 export default function Video({ videos, loading }) {
-  // const { videos } = useSelector((state) => state.video);
   return (
     <>
       <div className="video-wrapper">
@@ -21,7 +17,7 @@ export default function Video({ videos, loading }) {
             )) : null}
             {loading ? Array.from({ length: 8 }).map((ske, idx) => (
               <Col key={idx}>
-                <Card className="video-card">
+                <Card className="video-skeleton-card">
                   <Skeleton
                     height="172.13px"
                     containerClassName="avatar-skeleton"

@@ -1,23 +1,21 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Form, Card, Button } from "react-bootstrap";
+import { Card, Button } from "react-bootstrap";
 import "./style.css";
 import { MdModeEdit } from "react-icons/md";
 import { useSelector, useDispatch } from "react-redux";
 import { Container, Row, Col } from "react-bootstrap";
 import Header from "../../component/header";
-import ChooseProfilePicture from "../../component/modals/ChooseProfilePicture";
 import { BiKey } from "react-icons/bi";
 import { FaTrash } from "react-icons/fa";
 import ChooseProfilePictureSettings from "../../component/modals/ChooseProfilePictureSettings";
 import { listProfilePicture } from "./../../data/listProfilePicture";
-import { getChannelVideo } from "./../../redux/api";
 import validator from "validator";
 
 import DeleteModal from "./../../component/modals/DeleteModal";
 import { useNavigate } from "react-router-dom";
 import {
   clearHistoryVideo,
-  createSecretPasswordChildren,
+  deleteSecretPasswordChildren,
   updateChildrenProfileForChildren,
 } from "../../redux/feature/authSlice";
 
@@ -48,7 +46,7 @@ export default function ProfileSettings() {
       handleClose();
     } else if (type === "secretKey") {
       dispatch(
-        createSecretPasswordChildren({
+        deleteSecretPasswordChildren({
           childrenID: childrenActive?._id,
           userId: user?.google_id,
           secretPassword: "",

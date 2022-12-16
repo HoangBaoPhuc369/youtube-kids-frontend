@@ -10,7 +10,6 @@ import { setChildrenActive } from "../../redux/feature/authSlice";
 
 export default function ListProfileChildren() {
   const { user } = useSelector((state) => state.auth);
-  // const { listChildrens } = useSelector((state) => state.children);
   const cardRef = useRef(null);
   const navigate = useNavigate();
   const { id } = useParams();

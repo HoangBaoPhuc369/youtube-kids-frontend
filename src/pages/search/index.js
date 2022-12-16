@@ -22,20 +22,16 @@ export default function Search() {
         <div className="search-content">
           <div className="search-background-left"></div>
           {videos?.length > 0 ? (
-            // <div className="search-videos-item">
-            // </div>
             <Video videos={videos} />
           ) : (
-            // <div className="search-not-found-wrap">
             <>
               <div className="search-not-found"></div>
               <h3 style={{ textAlign: "center" }}>
                 Hãy thử tìm kiếm nội dung khác!
               </h3>
             </>
-            // </div>
           )}
-           <div className="search-background-right"></div>
+          <div className="search-background-right"></div>
         </div>
       </div>
     </>

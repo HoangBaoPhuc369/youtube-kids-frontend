@@ -10,24 +10,20 @@ export default function ChooseProfilePicture({
   onHide,
   profilePictures,
   setProfilePictures,
+  setFormData,
 }) {
   const handleChooseProfilePicture = (id) => {
-    console.log("loi o day");
     const newProfilePictures = profilePictures.map((picture) => {
       if (picture.id === id) {
-        return {
-          ...picture,
-          active: true,
-        };
+        setFormData((prevState) => ({
+          ...prevState,
+          picture: picture.src,
+        }));
+        return picture.src;
       } else {
-        return {
-          ...picture,
-          active: false,
-        };
+        return "";
       }
     });
-
-    setProfilePictures(newProfilePictures);
     onHide();
   };
 

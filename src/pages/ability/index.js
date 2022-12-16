@@ -7,7 +7,7 @@ import { searchVideos } from "../../redux/feature/videolistSlice";
 import "./style.css";
 
 export default function Ability() {
-  const { videos } = useSelector((state) => state.video);
+  const { videos, loading } = useSelector((state) => state.video);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -16,10 +16,12 @@ export default function Ability() {
 
   return (
     <div className="home-wrapper">
-      <Header category="Kỹ năng" />
+      <Header category="Kỹ năng" page="home" />
 
       <div className="home-container">
-        <Video videos={videos}  />
+        <div className="home-background-left"></div>
+        <Video videos={videos} loading={loading} />
+        <div className="home-background-right"></div>
       </div>
 
       <Footer />

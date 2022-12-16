@@ -61,15 +61,18 @@ export default function Details() {
   };
 
   const handleStoreVideo = () => {
-    dispatch(
-      addVideoHistory({
-        childrenID: childrenActive?._id,
-        userId: user?.google_id,
-        videoId: param.id,
-        thumbnail: channelVideo[0]?.snippet?.thumbnails?.default?.url,
-        title: videoPlay?.snippet.title,
-      })
-    );
+    const findVideo = videos.find((v) => v.id === param.id);
+    if (findVideo) {
+      dispatch(
+        addVideoHistory({
+          childrenID: childrenActive?._id,
+          userId: user?.google_id,
+          videoId: param.id,
+          thumbnail: findVideo.snippet.thumbnails.medium.url,
+          title: videoPlay?.snippet.title,
+        })
+      );
+    }
   };
 
   const handleSend = () => {
@@ -93,7 +96,7 @@ export default function Details() {
       <Header page="video-detail" />
 
       <Row className="video-play-wrapper">
-        <Col sm={9} className="video-play-wrap">
+        <Col xl={9} className="video-play-wrap">
           <div className="video-play-row">
             <div
               className={
@@ -113,7 +116,6 @@ export default function Details() {
                 allowFullScreen
               ></iframe>
             </div>
-            {/* animate__animated animate__fadeInRight ref={chatRef} */}
             <div
               className={
                 chatShow ? "video-play-right" : "video-play-right show-chat"
@@ -202,7 +204,7 @@ export default function Details() {
             </Col>
           </Row>
         </Col>
-        <Col sm={3} className="video-list-suggest scroll-bar">
+        <Col xl={3} className="video-list-suggest scroll-bar">
           <Row xs={1} md={1} lg={1} className="g-4 video-list-suggest-row">
             {videos?.map((video, idx) => (
               <VideoCard video={video} key={video.id} />

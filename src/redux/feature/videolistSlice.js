@@ -85,7 +85,6 @@ export const videolistSlice = createSlice({
     },
     [getVideoList.fulfilled]: (state, action) => {
       state.loading = false;
-
       // const videos = action.payload.items;
       // const videoListForKids = videos.filter((video) => video.status.madeForKids === true);
       // console.log(videoListForKids);
@@ -114,7 +113,7 @@ export const videolistSlice = createSlice({
     },
 
     [sendMessage.fulfilled]: (state, action) => {
-      state.chatVideo = action.payload;
+      state.chatVideo.messages = action.payload;
       state.error = "";
     },
     [sendMessage.rejected]: (state, action) => {
@@ -125,8 +124,6 @@ export const videolistSlice = createSlice({
       state.loading = true;
     },
     [searchVideos.fulfilled]: (state, action) => {
-      // setTimeout(() => {
-      // }, 1500);
       state.loading = false;
       state.videos = action.payload;
       state.error = "";

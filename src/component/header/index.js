@@ -23,9 +23,7 @@ export default function Header({ page, category }) {
   const [navbar, setNavbar] = useState(false);
   const [search, setSearch] = useState(false);
 
-  const { childrenActive } = useSelector(
-    (state) => state.auth
-  );
+  const { childrenActive } = useSelector((state) => state.auth);
 
   const searchRef = useRef(null);
   const inputSearchRef = useRef(null);
@@ -59,7 +57,7 @@ export default function Header({ page, category }) {
 
   return (
     <>
-      {page === "video-detail" ? (
+      {page !== "home" ? (
         <div className="header-detail">
           <div className="header-detail-wrap">
             <div className="header-wrap">
@@ -113,18 +111,24 @@ export default function Header({ page, category }) {
                 ) : null}
                 {!search ? (
                   <div className="header-center-category-wrapper">
-                    <div className="header-center-category-item">
+                    <Link to={"/"} className="header-center-category-item">
                       <BopcornIcon className="category-item-icon" />
-                      {/* <span>Sáng tạo</span> */}
-                    </div>
-                    <div className="header-center-category-item">
+                      {/* <span>{category === "Sáng tạo" ? category : ""}</span> */}
+                    </Link>
+                    <Link
+                      to={"/ability"}
+                      className="header-center-category-item"
+                    >
                       <HeartIcon className="category-item-icon" />
-                      {/* <span></span> */}
-                    </div>
-                    <div className="header-center-category-item">
+                      {/* <span>{category === "Kỹ năng" ? category : ""}</span> */}
+                    </Link>
+                    <Link
+                      to={"/education"}
+                      className="header-center-category-item"
+                    >
                       <LightIcon className="category-item-icon" />
-                      {/* <span></span> */}
-                    </div>
+                      {/* <span>{category === "Học tập" ? category : ""}</span> */}
+                    </Link>
                   </div>
                 ) : null}
               </div>
@@ -132,7 +136,7 @@ export default function Header({ page, category }) {
             </div>
           </div>
         </div>
-      ) : (
+      ) : page === "home" ? (
         <div className="header-detail">
           <div className="header-detail-wrap">
             <div className="header-wrap">
@@ -206,7 +210,7 @@ export default function Header({ page, category }) {
             </div>
           </div>
         </div>
-      )}
+      ) : null}
     </>
   );
 }

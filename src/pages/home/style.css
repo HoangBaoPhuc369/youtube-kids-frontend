@@ -74,6 +74,13 @@
   border-radius: 4px !important;
 }
 
+.video-skeleton-card {
+  border: none !important;
+  box-shadow: 0 2px 4px 0 rgb(0 0 0 / 24%) !important;
+  border-radius: 4px !important;
+  cursor: pointer;
+}
+
 .dropdown-menu.show {
   z-index: 99999;
 }

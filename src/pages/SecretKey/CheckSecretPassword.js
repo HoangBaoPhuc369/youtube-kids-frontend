@@ -81,9 +81,10 @@ export default function CheckSecretPassword({ nextStep, prevStep, formData }) {
           childrenID: childrenActive?._id,
           userId: user?.google_id,
           secretPassword: password,
+          nextStep,
         })
       );
-      nextStep();
+        
     } else {
       textRef.current.innerHTML =
         "Không ổn, mã của bạn không khớp rồi. Hãy thử lại nào";
