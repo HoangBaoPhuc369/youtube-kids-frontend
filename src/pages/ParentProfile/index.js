@@ -6,24 +6,20 @@ import { BsPlus } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { setChildrenSelect } from "../../redux/feature/authSlice";
 
 export default function ParentProfile() {
   const navigate = useNavigate();
-  const { user } = useSelector((state) => state.auth);
-  const { picture, _id } = user;
+  const { user, childrenSelected } = useSelector((state) => state.auth);
+  const { _id } = user;
   const dispatch = useDispatch();
   const { id } = useParams();
 
   const [childrens, setChildrens] = useState(user?.childrens);
-  const [childrenActive, setChildrenActive] = useState(null);
+  // const [childrenActive, setChildrenActive] = useState(null);
 
   useEffect(() => {
-    const findChildren = user?.childrens?.find(
-      (children) => children._id === id
-    );
-    if (findChildren) {
-      setChildrenActive(findChildren);
-    }
+    dispatch(setChildrenSelect(id));
   }, [id]);
 
   const handleParentProfileSettings = (_id) => {
@@ -34,11 +30,16 @@ export default function ParentProfile() {
     navigate(`/admin/setting-profile/${_id}`);
   };
   const handleParentSettingAge = (_id) => {
-    navigate(`/admin/setting-age/${_id}`);
+    navigate("/admin/content-settings/");
   };
 
   const handleApproveContentForChild = (_id) => {
     navigate(`/admin/approve-content/${_id}`);
+  };
+
+  const handleAddProfile = () => {
+    const admin = true;
+    navigate(`/admin/add-profile/${admin}`);
   }
 
   return (
@@ -51,7 +52,7 @@ export default function ParentProfile() {
             <div className="d-flex flex-column align-items-center">
               <div className="text-center">
                 <h3 className="header-admin">
-                  Chỉnh sửa các tùy chọn cài đặt cho {childrenActive?.name}
+                  Chỉnh sửa các tùy chọn cài đặt cho {childrenSelected?.name}
                 </h3>
               </div>
               <Card className="my-2 w-50">
@@ -63,20 +64,20 @@ export default function ParentProfile() {
                         <img
                           className="avatar-resize-setting-parent"
                           alt="avatar-user"
-                          src={childrenActive?.picture}
+                          src={childrenSelected?.picture}
                         />
                       </div>
                       <div>
                         <Card.Title className="parent-setting-child-name">
-                          {childrenActive?.name}
+                          {childrenSelected?.name}
                         </Card.Title>
-                        <Card.Text>{childrenActive?.year} tuổi</Card.Text>
+                        <Card.Text>{childrenSelected?.year} tuổi</Card.Text>
                       </div>
                     </div>
                     <div>
                       <Button
                         variant="light"
-                        onClick={() => handleParentSettings(_id)}
+                        onClick={() => handleParentSettings(childrenSelected?._id)}
                         className="text-end text-color-edit"
                       >
                         Chỉnh sửa
@@ -93,7 +94,11 @@ export default function ParentProfile() {
                       Trẻ nhỏ tuổi
                       <br />
                       <span className="font-size-accordion">
-                        Nội dung đề xuất cho trẻ em từ 5 – 8 tuổi
+                        {childrenSelected?.content_settings === "kiddie"
+                          ? "Nội dung đề xuất cho trẻ từ 3 - 10 tuổi"
+                          : childrenSelected?.content_settings === "teen"
+                          ? "Nội dung đề xuất cho trẻ từ 11 - 14 tuổi"
+                          : "Nội dung được bạn phê duyệt cho trẻ"}
                       </span>
                     </div>
                     <Button
@@ -136,51 +141,58 @@ export default function ParentProfile() {
               </Card>
               <Card className="my-2 w-50">
                 <Card.Header>Hồ sơ</Card.Header>
-                <Card.Body>
-                  {childrens?.map((children, index) => (
-                    <div
-                      key={children._id}
-                      className="d-flex justify-content-between align-items-center admin-children-item"
-                    >
-                      <div className="d-flex align-items-center">
-                        <div>
-                          <img
-                            className="avatar-resize"
-                            alt="avatar-user"
-                            src={children.picture}
-                          />
+                {childrens?.map((children, index) => {
+                  if (children?._id !== childrenSelected?._id) {
+                    return (
+                      <div
+                        key={children._id}
+                        className="d-flex justify-content-between align-items-center admin-children-item"
+                      >
+                        <div className="d-flex align-items-center">
+                          <div>
+                            <img
+                              className="avatar-resize"
+                              alt="avatar-user"
+                              src={children.picture}
+                            />
+                          </div>
+                          <div>
+                            <Card.Title>{children.name}</Card.Title>
+                          </div>
                         </div>
                         <div>
-                          <Card.Title>{children.name}</Card.Title>
+                          <Button
+                            variant="light"
+                            className="text-end"
+                            onClick={() =>
+                              handleParentProfileSettings(children._id)
+                            }
+                          >
+                            <AiOutlineArrowRight />
+                          </Button>
                         </div>
                       </div>
-                      <div>
-                        <Button
-                          variant="light"
-                          className="text-end"
-                          onClick={() =>
-                            handleParentProfileSettings(children._id)
-                          }
-                        >
-                          <AiOutlineArrowRight />
-                        </Button>
-                      </div>
+                    );
+                  } else {
+                    return null;
+                  }
+                })}
+                <div
+                  className="mt-2 d-flex ml-2 justify-content-between align-items-center admin-add-profile-btn-wrap"
+                  onClick={handleAddProfile}
+                >
+                  <div className="mt-2 d-flex align-items-center">
+                    <div className="card-divider">
+                      <BsPlus className="text-white text-center text-size-plus" />
                     </div>
-                  ))}
-                  <div className="mt-2 d-flex ml-2 justify-content-between align-items-center">
-                    <div className="mt-2 d-flex align-items-center">
-                      <div className="card-divider">
-                        <BsPlus className="text-white text-center text-size-plus" />
-                      </div>
-                      <Card.Text className="mx-2">Thêm hồ sơ khác</Card.Text>
-                    </div>
-                    <div>
-                      <Button variant="light" className="text-end">
-                        <AiOutlineArrowRight />
-                      </Button>
-                    </div>
+                    <Card.Text className="mx-2">Thêm hồ sơ khác</Card.Text>
                   </div>
-                </Card.Body>
+                  <div>
+                    <Button variant="light" className="text-end">
+                      <AiOutlineArrowRight />
+                    </Button>
+                  </div>
+                </div>
               </Card>
             </div>
           </Container>

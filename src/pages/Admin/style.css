@@ -88,9 +88,40 @@
   margin: 20px 10px 0 0 !important;
 }
 
+.color-button-submit:disabled {
+  background-color: #ccc;
+  border: 3px solid #ccc;
+  color: rgba(0, 0, 0, 0.24);
+  cursor: not-allowed;
+}
+
+.color-button-delete {
+  background-color: transparent;
+  border: none;
+  border-radius: 6px;
+  box-sizing: border-box;
+  color: #008596;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 15px;
+  font-weight: 500;
+  height: 38px;
+  min-width: 128px;
+  padding: 0 16px;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  margin: 20px 10px 0 0 !important;
+}
+
 .admin-children-item {
-  padding: 20px 0;
+  padding: 20px;
   border-bottom: 1px solid #eee;
+}
+
+.admin-children-item:hover {
+  background-color: #f8f9fa;
+  cursor: pointer;
 }
 
 .admin-account-wrapper > .card-title {
@@ -117,4 +148,15 @@
   border: none !important;
   background: transparent !important;
   transform: scale(1.1);
+}
+
+.admin-add-profile-btn-wrap {
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 0 !important;
+}
+
+.admin-add-profile-btn-wrap:hover {
+  background-color: #f8f9fa;
+  cursor: pointer;
 }

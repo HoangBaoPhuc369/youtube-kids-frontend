@@ -39,6 +39,7 @@ export default function ChooseVideosByAges({
   prevStep,
   formData,
   setFormData,
+  admin,
 }) {
   const [setting, setSetting] = useState("kiddie");
   const container = useRef(null);
@@ -74,7 +75,7 @@ export default function ChooseVideosByAges({
   const submitFormData = (e) => {
     e.preventDefault();
     dispatch(
-      createChildren({ formData, userOauthId: user.google_id, navigate })
+      createChildren({ formData, userOauthId: user.google_id, navigate, admin })
     );
   };
 

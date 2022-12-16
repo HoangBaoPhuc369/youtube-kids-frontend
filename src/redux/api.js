@@ -121,12 +121,11 @@ export const clearVideoHistory = (childrenID, userId) =>
   );
 
 // --------------------------PARENT API-----------------------------------
-export const createSecretPassword = (userId, secretPassword) =>
+export const createSecretPassword = (userId, password) =>
   axios.patch(
-    `${process.env.REACT_APP_BACKEND_URL}/user/update-secret-password`,
+    `${process.env.REACT_APP_BACKEND_URL}/users/${userId}/update-secret-password`,
     {
-      userId,
-      secretPassword,
+      password,
     }
   );
 
@@ -135,6 +134,7 @@ export const updateChildrenProfileForParent = (childId, userId, formData) =>
     `${process.env.REACT_APP_BACKEND_URL}/users/${userId}/childrens/${childId}/for-parent`,
     formData
   );
+
 
 export const addVideoByParent = (childId, userId, videoId, thumbnail, title) =>
   axios.patch(

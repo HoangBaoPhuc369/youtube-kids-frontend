@@ -12,7 +12,6 @@ import Admin from "./pages/Admin";
 import History from "./pages/History";
 import ProfileCreated from "./component/profileAcount/ProfileCreated";
 import LoggedInRoutes from "./routes/LoggedInRoutes";
-import NotLoggedInRoutes from "./routes/RequiredAuth";
 import ListProfileChildren from "./component/form/ListProfileChildren";
 import ProfileSettings from "./pages/profile/ProfileSettings";
 import { useSelector } from "react-redux";
@@ -22,11 +21,11 @@ import SettingProfile from "./pages/SettingProfile";
 import SettingAge from "./pages/SettingAge";
 import Ability from "./pages/ability";
 import Education from "./pages/education";
-import SecretKey from "./pages/SecretKey/ProfileSecretKey";
 import ProfileOptions from "./component/profile-options";
 import ProfileSecretKey from "./pages/SecretKey/ProfileSecretKey";
 import RequiredAuth from "./routes/RequiredAuth";
 import ApproveContent from "./component/approveContent";
+import ChooseContentSettings from "./pages/Admin/ChooseContentSettings";
 function App() {
   // const { user } = useSelector((state) => state.auth);
   // const { childrenActive } = useSelector((state) => state.children);
@@ -88,6 +87,17 @@ function App() {
         <Route
           path="/admin/approve-content/:id"
           element={<ApproveContent />}
+          exact
+        />
+        <Route
+          path="/admin/content-settings/"
+          element={<ChooseContentSettings />}
+          exact
+        />
+
+        <Route
+          path="/admin/add-profile/:admin"
+          element={<ProfileAccount />}
           exact
         />
       </Route>

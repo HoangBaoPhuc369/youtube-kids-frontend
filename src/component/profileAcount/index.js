@@ -5,8 +5,10 @@ import CreateProfile from "../../component/form/CreateProfile";
 import ChooseVideosByAges from "../../component/form/ChooseVideosByAges";
 import InfoProfile from "../../component/form/InfoProfile";
 import ListProfileChildren from "../../component/form/ListProfileChildren";
+import { useParams } from "react-router-dom";
 
 function ProfileAccount() {
+  const { admin} = useParams();
   const [step, setstep] = useState(6);
   const namePage = "Tạo hồ sơ";
   const [formData, setFormData] = useState({
@@ -70,6 +72,7 @@ function ProfileAccount() {
                   setFormData={setFormData}
                   prevStep={prevStep}
                   nextStep={nextStep}
+                  admin={admin}
                 />
               </Col>
             </Row>

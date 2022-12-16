@@ -12,7 +12,6 @@ export const getUser = createAsyncThunk(
         navigate("/profile-account");
       } else {
         const listProfilePage = `/list-profile/${data.user.google_id}`;
-        // Cookies.set("listChildrens", JSON.stringify(children));
         navigate(listProfilePage);
       }
       return data.user;
@@ -24,9 +23,12 @@ export const getUser = createAsyncThunk(
 
 export const createSecretPassword = createAsyncThunk(
   "auth/createSecretPassword",
-  async ({ userId, secretPassword }, { rejectWithValue }) => {
+  async ({ userId, password, navigate }, { rejectWithValue }) => {
     try {
-      const { data } = await api.createSecretPassword(userId, secretPassword);
+      const { data } = await api.createSecretPassword(userId, password);
+      if (data) {
+        navigate("/admin");
+      }
       return data;
     } catch (err) {
       return err.response.data;
@@ -36,12 +38,15 @@ export const createSecretPassword = createAsyncThunk(
 
 export const createChildren = createAsyncThunk(
   "children/createChildren",
-  async ({ formData, userOauthId, navigate }, { rejectWithValue }) => {
-    console.log(formData);
+  async ({ formData, userOauthId, navigate, admin }, { rejectWithValue }) => {
     try {
       const { data } = await api.createChildren(formData, userOauthId);
       if (data) {
-        navigate("/profile-created");
+        if (admin) {
+          navigate(`/admin/parentprofilesettings/${data._id}`);
+        } else {
+          navigate("/profile-created");
+        }
       }
       return data;
     } catch (err) {
@@ -155,6 +160,28 @@ export const updateChildrenProfileForParent = createAsyncThunk(
   }
 );
 
+export const updateContentChidlrenSettings = createAsyncThunk(
+  "children/updateContentChidlrenSettings",
+  async (
+    { childrenID, userId, contentSetting, navigate },
+    { rejectWithValue }
+  ) => {
+    try {
+      const { data } = await api.updateContentChidlrenSettings(
+        childrenID,
+        userId,
+        contentSetting
+      );
+      if (data) {
+        navigate(`/admin/parentprofilesettings/${childrenID}`);
+      }
+      return data;
+    } catch (err) {
+      return err.response.data;
+    }
+  }
+);
+
 const initialState = {
   user: Cookies.get("user") ? JSON.parse(Cookies.get("user")) : null,
   guess: null,
@@ -211,13 +238,11 @@ export const authSlice = createSlice({
     },
 
     [createSecretPassword.fulfilled]: (state, action) => {
-      state.loading = false;
       state.user = action.payload;
-      Cookies.set("user", JSON.stringify(action.payload), { expires: 7 });
+      Cookies.set("user", JSON.stringify(action.payload));
       state.error = "";
     },
     [createSecretPassword.rejected]: (state, action) => {
-      state.loading = false;
       state.error = action.payload.message;
     },
 
@@ -292,6 +317,18 @@ export const authSlice = createSlice({
       state.error = "";
     },
     [updateChildrenProfileForParent.rejected]: (state, action) => {
+      state.error = action.payload.message;
+    },
+
+    [updateContentChidlrenSettings.fulfilled]: (state, action) => {
+      state.user.childrens = action.payload.childrens;
+      Cookies.set("user", JSON.stringify(state.user));
+      state.childrenActive = action.payload.children;
+      state.childrenSelected = action.payload.children;
+      Cookies.set("childrenSelected", JSON.stringify(action.payload.children));
+      state.error = "";
+    },
+    [updateContentChidlrenSettings.rejected]: (state, action) => {
       state.error = action.payload.message;
     },
   },

@@ -6,10 +6,15 @@ import "./style.css";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { BsPlus } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
-import { createSecretPassword, Logout, setChildrenSelect } from "../../redux/feature/authSlice";
+import {
+  createSecretPassword,
+  Logout,
+  setChildrenSelect,
+} from "../../redux/feature/authSlice";
 import { resetChildren } from "../../redux/feature/childrenSlice";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 export default function Admin() {
   const navigate = useNavigate();
@@ -20,6 +25,15 @@ export default function Admin() {
   const [childrens, setChildrens] = useState(user?.childrens);
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
+  const [disable, setdisable] = useState(true);
+
+  useEffect(() => {
+    if (password === "" && password2 === "") {
+      setdisable(true);
+    } else if (password !== "" && password2 !== "") {
+      setdisable(false);
+    }
+  }, [password, password2]);
 
   const handleLogout = () => {
     window.open(`${process.env.REACT_APP_BACKEND_URL}/auth/logout`, "_self");
@@ -36,12 +50,29 @@ export default function Admin() {
     if (password !== "" || password2 !== "") {
       if (password === password2) {
         dispatch(
-          createSecretPassword({ userId: user?.google_id, secretPassword: password2 })
+          createSecretPassword({
+            userId: user?.google_id,
+            password: password2,
+            navigate,
+          })
         );
         setPassword("");
         setPassword2("");
       }
     }
+  };
+
+  const handleDeletePassword = (e) => {
+    e.preventDefault();
+    dispatch(
+      createSecretPassword({
+        userId: user?.google_id,
+        password: "",
+        navigate,
+      })
+    );
+    setPassword("");
+    setPassword2("");
   };
 
   const handleTypeInput = (e, ref) => {
@@ -54,6 +85,11 @@ export default function Admin() {
         setPassword2(e.target.value);
       }
     }
+  };
+
+  const handleAddProfile = () => {
+    const admin = true;
+    navigate(`/admin/add-profile/${admin}`);
   };
 
   return (
@@ -98,51 +134,53 @@ export default function Admin() {
               </Card>
               <Card className="my-2 w-50">
                 <Card.Header>Con của tôi</Card.Header>
-                <Card.Body>
-                  {childrens?.map((children, index) => (
-                    <div
-                      key={children._id}
-                      className="d-flex justify-content-between align-items-center admin-children-item"
-                    >
-                      <div className="d-flex align-items-center">
-                        <div>
-                          <img
-                            className="avatar-resize"
-                            alt="avatar-user"
-                            src={children.picture}
-                          />
-                        </div>
-                        <div>
-                          <Card.Title>{children.name}</Card.Title>
-                        </div>
+                {childrens?.map((children, index) => (
+                  <div
+                    key={children._id}
+                    className="d-flex justify-content-between align-items-center admin-children-item"
+                    onClick={() => handleParentProfileSettings(children._id)}
+                  >
+                    <div className="d-flex align-items-center">
+                      <div>
+                        <img
+                          className="avatar-resize"
+                          alt="avatar-user"
+                          src={children.picture}
+                        />
                       </div>
                       <div>
-                        <Button
-                          variant="light"
-                          className="text-end"
-                          onClick={() =>
-                            handleParentProfileSettings(children._id)
-                          }
-                        >
-                          <AiOutlineArrowRight />
-                        </Button>
+                        <Card.Title>{children.name}</Card.Title>
                       </div>
-                    </div>
-                  ))}
-                  <div className="mt-2 d-flex ml-2 justify-content-between align-items-center">
-                    <div className="mt-2 d-flex align-items-center">
-                      <div className="card-divider">
-                        <BsPlus className="text-white text-center text-size-plus" />
-                      </div>
-                      <Card.Text className="mx-2">Thêm hồ sơ khác</Card.Text>
                     </div>
                     <div>
-                      <Button variant="light" className="text-end">
+                      <Button
+                        variant="light"
+                        className="text-end"
+                        onClick={() =>
+                          handleParentProfileSettings(children._id)
+                        }
+                      >
                         <AiOutlineArrowRight />
                       </Button>
                     </div>
                   </div>
-                </Card.Body>
+                ))}
+                <div
+                  className="mt-2 d-flex ml-2 justify-content-between align-items-center admin-add-profile-btn-wrap"
+                  onClick={handleAddProfile}
+                >
+                  <div className="mt-2 d-flex align-items-center ">
+                    <div className="card-divider">
+                      <BsPlus className="text-white text-center text-size-plus" />
+                    </div>
+                    <Card.Text className="mx-2">Thêm hồ sơ khác</Card.Text>
+                  </div>
+                  <div>
+                    <Button variant="light" className="text-end">
+                      <AiOutlineArrowRight />
+                    </Button>
+                  </div>
+                </div>
               </Card>
               <Card className="my-2 w-50">
                 <Card.Header>Bước xác minh dành cho cha mẹ</Card.Header>
@@ -160,7 +198,7 @@ export default function Admin() {
                         </div>
                       </Accordion.Header>
                       <Accordion.Body className="">
-                        <form className="mb-3" onSubmit={handlePassword}>
+                        <form className="mb-3">
                           <div className="d-flex">
                             <div className="w-100 me-5">
                               <label
@@ -203,21 +241,23 @@ export default function Admin() {
                           {user?.secret_password ? (
                             <>
                               <button
-                                type="submit"
+                                disabled={disable}
+                                onClick={handlePassword}
                                 className="mt-2 color-button-submit"
                               >
                                 Thay đổi mật mã
                               </button>
                               <button
-                                type="submit"
-                                className="mt-2 color-button-submit"
+                                onClick={handleDeletePassword}
+                                className="mt-2 color-button-delete"
                               >
-                                Xóa
+                                Xóa mật mã
                               </button>
                             </>
                           ) : (
                             <button
-                              type="submit"
+                              disabled={disable}
+                              onClick={handlePassword}
                               className="mt-2 color-button-submit"
                             >
                               Gửi
