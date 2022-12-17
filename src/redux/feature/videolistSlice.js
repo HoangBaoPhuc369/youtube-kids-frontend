@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { getVideos } from "../../utils/getVideos";
 import * as api from "../api";
 
 export const getVideoList = createAsyncThunk(
@@ -49,17 +50,70 @@ export const sendMessage = createAsyncThunk(
   }
 );
 
+export const getMessageChat = createAsyncThunk(
+  "videos/getMessageChat",
+  async ({ videoId }, { rejectWithValue }) => {
+    console.log(videoId)
+    try {
+      const { data } = await api.getMessageChat(videoId);
+      return data;
+    } catch (err) {
+      return err.response?.data;
+    }
+  }
+);
+
 export const searchVideos = createAsyncThunk(
   "search/searchVideos",
+  async ({ key}) => {
+    try {
+      const videos = await getVideos(key);
+      // const { data } = await api.searchVideo(key);
+      // const videosSearch = data.items.map((x) => x.id.videoId).join("%2C");
+      // const videoList = await api.checkVideoForChildren(videosSearch);
+      // const videoForChildren = videoList.data.items.filter(
+      //   (video) => video.status.madeForKids === true
+      // );
+
+      return videos;
+    } catch (err) {
+      console.log(err)
+      return err?.response?.data;
+    }
+  }
+);
+
+export const getPlaylistChannelVideos = createAsyncThunk(
+  "search/getChannelVideos",
   async ({ key }) => {
     try {
-      const { data } = await api.searchVideo(key);
+      const { data } = await api.getPlaylistChannelVideos(key);
+      const videoPlaylist = data.items
+        .map((x) => x.snippet.resourceId.videoId)
+        .join("%2C");
+      const videoList = await api.checkVideoForChildren(videoPlaylist);
+
+      const videoForChildren = videoList.data.items.filter(
+        (video) => video.status.madeForKids === true
+      );
+      return videoForChildren;
+    } catch (err) {
+      return err.response.data;
+    }
+  }
+);
+
+export const relatedToVideos = createAsyncThunk(
+  "search/relatedToVideos",
+  async ({ videoId }) => {
+    try {
+      const { data } = await api.relatedToVideos(videoId);
       const videosSearch = data.items.map((x) => x.id.videoId).join("%2C");
       const videoList = await api.checkVideoForChildren(videosSearch);
       const videoForChildren = videoList.data.items.filter(
         (video) => video.status.madeForKids === true
       );
-     
+
       return videoForChildren;
     } catch (err) {
       return err.response.data;
@@ -71,6 +125,7 @@ const initialState = {
   videos: null,
   channelVideo: null,
   chatVideo: null,
+  category: "Chương trình",
   error: "",
   loading: false,
 };
@@ -78,7 +133,15 @@ const initialState = {
 export const videolistSlice = createSlice({
   name: "videos",
   initialState,
-  reducers: {},
+  reducers: {
+    clearMessageSuccess: (state, action) => {
+      state.messageSendSuccess = false;
+    },
+
+    setCategory: (state, action) => {
+      state.category = action.payload;
+    },
+  },
   extraReducers: {
     [getVideoList.pending]: (state, action) => {
       state.loading = true;
@@ -120,6 +183,14 @@ export const videolistSlice = createSlice({
       state.error = action.payload?.message;
     },
 
+    [getMessageChat.fulfilled]: (state, action) => {
+      state.chatVideo.messages = action.payload;
+      state.error = "";
+    },
+    [getMessageChat.rejected]: (state, action) => {
+      state.error = action.payload?.message;
+    },
+
     [searchVideos.pending]: (state, action) => {
       state.loading = true;
     },
@@ -132,10 +203,36 @@ export const videolistSlice = createSlice({
       state.loading = false;
       state.error = action.payload.message;
     },
+
+    [getPlaylistChannelVideos.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [getPlaylistChannelVideos.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.videos = action.payload;
+      state.error = "";
+    },
+    [getPlaylistChannelVideos.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload.message;
+    },
+
+    [relatedToVideos.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [relatedToVideos.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.videos = action.payload;
+      state.error = "";
+    },
+    [relatedToVideos.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload.message;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-// export const { setLogout, updatePicture } = videolistSlice.actions;
+export const { clearMessageSuccess, setCategory } = videolistSlice.actions;
 
 export default videolistSlice.reducer;

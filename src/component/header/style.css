@@ -157,7 +157,8 @@
 
 .header-center-category-item > span {
   color: #d90a17;
-  font-size: 24px;
+  font-size: 20px;
+  font-weight: 700;
   opacity: 0.87;
   line-height: 28px;
   position: relative;

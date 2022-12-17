@@ -6,18 +6,21 @@ import ChooseVideosByAges from "../../component/form/ChooseVideosByAges";
 import InfoProfile from "../../component/form/InfoProfile";
 import ListProfileChildren from "../../component/form/ListProfileChildren";
 import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function ProfileAccount() {
-  const { admin} = useParams();
+  const { admin } = useParams();
+  const { childrenCreated } = useSelector((state) => state.auth);
   const [step, setstep] = useState(6);
   const namePage = "Tạo hồ sơ";
   const [formData, setFormData] = useState({
-    kid_name: "",
-    age: "",
-    picture:
-      "https://www.gstatic.com/ytkids/avatars/bck_avatar_kids_optimisticgiraffe_800_20170929.png",
-    bMonth: "",
-    content_settings: "",
+    name: "" || childrenCreated?.name,
+    year: "" || childrenCreated?.year,
+    month: "" || childrenCreated?.month,
+    content_settings: "" || childrenCreated?.content_settings,
+    picture: childrenCreated?.picture
+      ? childrenCreated?.picture
+      : "https://www.gstatic.com/ytkids/avatars/bck_avatar_kids_optimisticgiraffe_800_20170929.png",
   });
 
   const nextStep = () => {

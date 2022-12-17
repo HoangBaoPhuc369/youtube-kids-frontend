@@ -6,7 +6,10 @@ import Row from "react-bootstrap/Row";
 import lottie from "lottie-web";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { createChildren } from "../../redux/feature/authSlice";
+import {
+  createChildren,
+  updateChildrenProfileForParent,
+} from "../../redux/feature/authSlice";
 
 const OptionsVideosByAges = [
   {
@@ -43,6 +46,7 @@ export default function ChooseVideosByAges({
 }) {
   const [setting, setSetting] = useState("kiddie");
   const container = useRef(null);
+  const { childrenCreated } = useSelector((state) => state.auth);
 
   const navigate = useNavigate();
 
@@ -74,9 +78,26 @@ export default function ChooseVideosByAges({
 
   const submitFormData = (e) => {
     e.preventDefault();
-    dispatch(
-      createChildren({ formData, userOauthId: user.google_id, navigate, admin })
-    );
+    if (childrenCreated) {
+      dispatch(
+        updateChildrenProfileForParent({
+          childId: childrenCreated?._id,
+          userId: user?.google_id,
+          formData: formData,
+          navigate,
+          defauth: true,
+        })
+      );
+    } else {
+      dispatch(
+        createChildren({
+          formData,
+          userOauthId: user.google_id,
+          navigate,
+          admin,
+        })
+      );
+    }
   };
 
   return (

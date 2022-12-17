@@ -144,7 +144,10 @@ export const updateChildrenProfileForChildren = createAsyncThunk(
 
 export const updateChildrenProfileForParent = createAsyncThunk(
   "children/updateChildrenProfileForParent",
-  async ({ childId, userId, formData, navigate }, { rejectWithValue }) => {
+  async (
+    { childId, userId, formData, navigate, defauth },
+    { rejectWithValue }
+  ) => {
     try {
       const { data } = await api.updateChildrenProfileForParent(
         childId,
@@ -152,7 +155,11 @@ export const updateChildrenProfileForParent = createAsyncThunk(
         formData
       );
       if (data) {
-        navigate(`/admin/parentprofilesettings/${childId}`);
+        if (defauth) {
+          navigate("/profile-created");
+        } else {
+          navigate(`/admin/parentprofilesettings/${childId}`);
+        }
       }
       return data;
     } catch (err) {
@@ -221,6 +228,11 @@ export const authSlice = createSlice({
         state.childrenSelected = findChildren;
         Cookies.set("childrenSelected", JSON.stringify(findChildren));
       }
+    },
+
+    removeChildrenCreated: (state, action) => {
+      state.childrenCreated = null;
+      Cookies.remove("childrenCreated");
     },
   },
   extraReducers: {
@@ -336,7 +348,7 @@ export const authSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { Logout, setChildrenActive, setChildrenSelect } =
+export const { Logout, setChildrenActive, setChildrenSelect, removeChildrenCreated } =
   authSlice.actions;
 
 export default authSlice.reducer;

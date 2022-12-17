@@ -16,13 +16,21 @@ export default function ListProfileChildren() {
   const dispatch = useDispatch();
 
   const handleClickCard = (childId) => {
-    // cardRef.current.classList.add("active-card-profile");
-    const findChildren = user.childrens.find(child => child?._id === childId);
+
+    const findChildren = user.childrens.find((child) => child?._id === childId);
     if (findChildren) {
       dispatch(setChildrenActive(findChildren));
-      navigate("/")
+      if (findChildren?.secret_password !== "") {
+        navigate("/secret-key-child");
+      } else {
+        navigate("/");
+      }
     }
   };
+
+  const handleAddProfile = () => {
+    navigate("/profile-account");
+  }
 
   return (
     <>
@@ -73,7 +81,7 @@ export default function ListProfileChildren() {
                     </Row>
 
                     <div className="group-login-btn-left list-profile-btn mgt-10">
-                      <Button variant="primary">Thêm hồ sơ khác</Button>
+                      <Button variant="primary" onClick={() => handleAddProfile()}>Thêm hồ sơ khác</Button>
                     </div>
                   </Form>
                 </Card.Body>

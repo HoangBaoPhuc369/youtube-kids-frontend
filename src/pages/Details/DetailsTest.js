@@ -32,7 +32,7 @@ import { io } from "socket.io-client";
 
 const socketRef = io.connect("http://localhost:8900");
 
-export default function Details() {
+export default function DetailsTest() {
   const navigate = useNavigate();
   const param = useParams();
   const { videos, channelVideo, chatVideo, loading } = useSelector(
@@ -50,26 +50,10 @@ export default function Details() {
   const playRef = useRef(null);
 
   useEffect(() => {
-    dispatch(createOrGetChatVideo({ videoId: param.id }));
-    // eslint-disable-next-line
-  }, []);
-
-  useEffect(() => {
     socketRef.emit("join_room", param.id);
     dispatch(createOrGetChatVideo({ videoId: param.id }));
     // eslint-disable-next-line
   }, []);
-
-  useEffect(() => {
-    if (videos) {
-      const findVideo = videos.find((v) => v.id === param.id);
-      if (findVideo) {
-        setVideoPlay(findVideo);
-        dispatch(getChannelVideo({ idChannel: findVideo.snippet.channelId }));
-        dispatch(relatedToVideos({ videoId: param.id }));
-      }
-    }
-  }, [param]);
 
   const handleOffChat = () => {
     setChatShow((prev) => !prev);
@@ -127,20 +111,7 @@ export default function Details() {
               className={
                 chatShow ? "video-play-left" : "video-play-left transform-video"
               }
-            >
-              <iframe
-                width="100%"
-                height="475"
-                id="video-play"
-                ref={videoRef}
-                // onClick={handleStoreVideo}
-                src={`https://www.youtube.com/embed/${param.id}`}
-                title="YouTube video player"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              ></iframe>
-            </div>
+            ></div>
             <div
               className={
                 chatShow ? "video-play-right" : "video-play-right show-chat"
@@ -230,7 +201,7 @@ export default function Details() {
           </Row>
         </Col>
         <Col xl={3} className="video-list-suggest scroll-bar">
-          <Row xs={1} md={1} lg={1} className="g-4 video-list-suggest-row">
+          {/* <Row xs={1} md={1} lg={1} className="g-4 video-list-suggest-row">
             {loading
               ? Array.from({ length: 8 }).map((ske, idx) => (
                   <Col key={idx}>
@@ -260,7 +231,7 @@ export default function Details() {
               : videos?.map((video, idx) => (
                   <VideoCard video={video} key={video.id} />
                 ))}
-          </Row>
+          </Row> */}
         </Col>
       </Row>
     </div>

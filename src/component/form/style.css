@@ -493,3 +493,8 @@
   align-items: center;
   justify-content: center;
 }
+
+.info-edit-icon {
+  color: unset;
+  text-decoration: none;
+}

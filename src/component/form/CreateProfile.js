@@ -22,9 +22,9 @@ export default function CreateProfile({
 
   useEffect(() => {
     if (
-      formData.kid_name === "" ||
-      formData.age === null ||
-      formData.age === ""
+      formData.name === "" ||
+      formData.year === null ||
+      formData.year === ""
     ) {
       setDisableBtn(true);
     } else {
@@ -37,25 +37,25 @@ export default function CreateProfile({
 
     // checking if value of first name and last name is empty show error else take to step 2
     if (
-      validator.isEmpty(formData.kid_name) ||
-      validator.isEmpty(formData.age)
+      validator.isEmpty(formData.name) ||
+      validator.isEmpty(formData.year)
     ) {
       setDisableBtn(true);
     } else if (
-      (formData.age > 100 || formData.age <= 0) &&
-      !validator.matches(formData.kid_name, /^[a-zA-Z ]+$/)
+      (formData.year > 100 || formData.year <= 0) &&
+      !validator.matches(formData.name, /^[a-zA-Z ]+$/)
     ) {
       setError(true);
       setError2(true);
     } else if (
-      (formData.age > 100 || formData.age <= 0) &&
-      validator.matches(formData.kid_name, /^[a-zA-Z ]+$/)
+      (formData.year > 100 || formData.year <= 0) &&
+      validator.matches(formData.name, /^[a-zA-Z ]+$/)
     ) {
       setError(true);
       setError2(false);
     } else if (
-      (formData.age <= 100 || formData.age > 0) &&
-      !validator.matches(formData.kid_name, /^[a-zA-Z ]+$/)
+      (formData.year <= 100 || formData.year > 0) &&
+      !validator.matches(formData.name, /^[a-zA-Z ]+$/)
     ) {
       setError(false);
       setError2(true);
@@ -93,9 +93,9 @@ export default function CreateProfile({
                   <input
                     className={error2 ? "effect-2 error-input" : "effect-2"}
                     type="text"
-                    value={formData.kid_name}
+                    value={formData.name}
                     placeholder="Kid's firstname*"
-                    onChange={handleInputData("kid_name")}
+                    onChange={handleInputData("name")}
                   />
                   <span className="focus-border"></span>
                   {error2 && (
@@ -109,8 +109,8 @@ export default function CreateProfile({
                   <input
                     className={error ? "effect-2 error-input" : "effect-2"}
                     type="text"
-                    value={formData.age}
-                    onChange={handleInputData("age")}
+                    value={formData.year}
+                    onChange={handleInputData("year")}
                     placeholder="Age*"
                   />
                   <span className="focus-border"></span>
@@ -125,9 +125,9 @@ export default function CreateProfile({
                   <input
                     className="effect-2"
                     type="text"
-                    value={formData.bMonth}
+                    value={formData.month}
                     placeholder="Birth month"
-                    onChange={handleInputData("bMonth")}
+                    onChange={handleInputData("month")}
                   />
                   <span className="focus-border"></span>
                 </div>

@@ -65,3 +65,7 @@
 .channel-title {
   margin: 0;
 }
+
+.background-channel {
+  background: rgba(79,84,101,1);
+}

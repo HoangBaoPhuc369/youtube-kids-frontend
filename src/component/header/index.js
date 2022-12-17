@@ -17,16 +17,29 @@ import Sidebar from "../sidebar";
 import "./style.css";
 import ArrowLeftIcon from "../../svgs/ArrowLeftIcon";
 import useClickOutside from "../../utils/clickOutside";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setCategory } from "../../redux/feature/videolistSlice";
+import MusicIconDisable from "./../../svgs/MusicIconDisable";
+import MusicIcon from "../../svgs/MusicIcon";
+import BopcornIconDisable from "../../svgs/BopcornIconDisable";
+import LightIconDisable from "../../svgs/LightIconDisable";
+import DiscoverDisableIcon from "../../svgs/DiscoverDisableIcon";
+import GamingIcon from "./../../svgs/GamingIcon";
+import GamingDisableIcon from "../../svgs/GamingDisableIcon";
+import OrangeIcon from "../../svgs/OrangeIcon";
+import OrangeDisableIcon from "../../svgs/OrangeDisableIcon";
 
-export default function Header({ page, category }) {
+export default function Header({ page }) {
   const [navbar, setNavbar] = useState(false);
   const [search, setSearch] = useState(false);
 
   const { childrenActive } = useSelector((state) => state.auth);
+  const { category } = useSelector((state) => state.video);
 
   const searchRef = useRef(null);
   const inputSearchRef = useRef(null);
+
+  const dispatch = useDispatch();
 
   useClickOutside(searchRef, () => {
     setSearch(false);
@@ -53,6 +66,10 @@ export default function Header({ page, category }) {
 
   const handleSearch = () => {
     navigate(`/search/${inputSearchRef.current.value}`);
+  };
+
+  const handleChangeCategory = (cate) => {
+    dispatch(setCategory(cate));
   };
 
   return (
@@ -111,24 +128,77 @@ export default function Header({ page, category }) {
                 ) : null}
                 {!search ? (
                   <div className="header-center-category-wrapper">
-                    <Link to={"/"} className="header-center-category-item">
-                      <BopcornIcon className="category-item-icon" />
-                      {/* <span>{category === "Sáng tạo" ? category : ""}</span> */}
-                    </Link>
-                    <Link
-                      to={"/ability"}
-                      className="header-center-category-item"
-                    >
-                      <HeartIcon className="category-item-icon" />
-                      {/* <span>{category === "Kỹ năng" ? category : ""}</span> */}
-                    </Link>
-                    <Link
-                      to={"/education"}
-                      className="header-center-category-item"
-                    >
-                      <LightIcon className="category-item-icon" />
-                      {/* <span>{category === "Học tập" ? category : ""}</span> */}
-                    </Link>
+                    {childrenActive?.content_settings === "kiddie" ? (
+                      <>
+                        <Link
+                          to={"/"}
+                          onClick={() => handleChangeCategory("Chương trình")}
+                          className="header-center-category-item"
+                        >
+                          <BopcornIconDisable className="category-item-icon" />
+                        </Link>
+                        <Link
+                          to={"/"}
+                          onClick={() => handleChangeCategory("Âm nhạc")}
+                          className="header-center-category-item"
+                        >
+                          <MusicIconDisable className="category-item-icon" />
+                        </Link>
+                        <Link
+                          to={"/"}
+                          onClick={() => handleChangeCategory("Học tập")}
+                          className="header-center-category-item"
+                        >
+                          <LightIconDisable className="category-item-icon" />
+                        </Link>
+                      </>
+                    ) : childrenActive?.content_settings === "teen" ? (
+                      <>
+                        <Link
+                          to={"/"}
+                          onClick={() => handleChangeCategory("Chương trình")}
+                          className="header-center-category-item"
+                        >
+                          <BopcornIconDisable className="category-item-icon" />
+                        </Link>
+                        <Link
+                          to={"/"}
+                          onClick={() => handleChangeCategory("Âm nhạc")}
+                          className="header-center-category-item"
+                        >
+                          <MusicIconDisable className="category-item-icon" />
+                        </Link>
+                        <Link
+                          to={"/"}
+                          onClick={() => handleChangeCategory("Học tập")}
+                          className="header-center-category-item"
+                        >
+                          <LightIconDisable className="category-item-icon" />
+                        </Link>
+                        <Link
+                          to={"/"}
+                          onClick={() => handleChangeCategory("Khám phá")}
+                          className="header-center-category-item"
+                        >
+                          <DiscoverDisableIcon className="category-item-icon" />
+                        </Link>
+                        <Link
+                          to={"/"}
+                          onClick={() => handleChangeCategory("Trò chơi")}
+                          className="header-center-category-item"
+                        >
+                          <GamingDisableIcon className="category-item-icon" />
+                        </Link>
+                      </>
+                    ) : (
+                      <Link
+                        to={"/"}
+                        // onClick={() => handleChangeCategory("Chương trình")}
+                        className="header-center-category-item"
+                      >
+                        <OrangeDisableIcon className="category-item-icon" />
+                      </Link>
+                    )}
                   </div>
                 ) : null}
               </div>
@@ -185,24 +255,149 @@ export default function Header({ page, category }) {
                 ) : null}
                 {!search ? (
                   <div className="header-center-category-wrapper">
-                    <Link to={"/"} className="header-center-category-item">
-                      <BopcornIcon className="category-item-icon" />
-                      <span>{category === "Sáng tạo" ? category : ""}</span>
-                    </Link>
-                    <Link
-                      to={"/ability"}
-                      className="header-center-category-item"
-                    >
-                      <HeartIcon className="category-item-icon" />
-                      <span>{category === "Kỹ năng" ? category : ""}</span>
-                    </Link>
-                    <Link
-                      to={"/education"}
-                      className="header-center-category-item"
-                    >
-                      <LightIcon className="category-item-icon" />
-                      <span>{category === "Học tập" ? category : ""}</span>
-                    </Link>
+                    {childrenActive?.content_settings === "kiddie" ? (
+                      <>
+                        <div
+                          className="header-center-category-item"
+                          onClick={() => handleChangeCategory("Chương trình")}
+                        >
+                          {category === "Chương trình" ? (
+                            <>
+                              <BopcornIcon className="category-item-icon" />
+                              <span>Chương trình</span>
+                            </>
+                          ) : (
+                            <>
+                              <BopcornIconDisable className="category-item-icon" />
+                              <span></span>
+                            </>
+                          )}
+                        </div>
+                        <div
+                          className="header-center-category-item"
+                          onClick={() => handleChangeCategory("Âm nhạc")}
+                        >
+                          {category === "Âm nhạc" ? (
+                            <>
+                              <MusicIcon className="category-item-icon" />
+                              <span>Âm nhạc</span>
+                            </>
+                          ) : (
+                            <>
+                              <MusicIconDisable className="category-item-icon" />
+                              <span></span>
+                            </>
+                          )}
+                        </div>
+                        <div
+                          className="header-center-category-item"
+                          onClick={() => handleChangeCategory("Học tập")}
+                        >
+                          {category === "Học tập" ? (
+                            <>
+                              <LightIcon className="category-item-icon" />
+                              <span>Học tập</span>
+                            </>
+                          ) : (
+                            <>
+                              <LightIconDisable className="category-item-icon" />
+                              <span></span>
+                            </>
+                          )}
+                        </div>
+                      </>
+                    ) : childrenActive?.content_settings === "teen" ? (
+                      <>
+                        <div
+                          className="header-center-category-item"
+                          onClick={() => handleChangeCategory("Chương trình")}
+                        >
+                          {category === "Chương trình" ? (
+                            <>
+                              <BopcornIcon className="category-item-icon" />
+                              <span>Chương trình</span>
+                            </>
+                          ) : (
+                            <>
+                              <BopcornIconDisable className="category-item-icon" />
+                              <span></span>
+                            </>
+                          )}
+                        </div>
+                        <div
+                          className="header-center-category-item"
+                          onClick={() => handleChangeCategory("Âm nhạc")}
+                        >
+                          {category === "Âm nhạc" ? (
+                            <>
+                              <MusicIcon className="category-item-icon" />
+                              <span>Âm nhạc</span>
+                            </>
+                          ) : (
+                            <>
+                              <MusicIconDisable className="category-item-icon" />
+                              <span></span>
+                            </>
+                          )}
+                        </div>
+                        <div
+                          className="header-center-category-item"
+                          onClick={() => handleChangeCategory("Học tập")}
+                        >
+                          {category === "Học tập" ? (
+                            <>
+                              <LightIcon className="category-item-icon" />
+                              <span>Học tập</span>
+                            </>
+                          ) : (
+                            <>
+                              <LightIconDisable className="category-item-icon" />
+                              <span></span>
+                            </>
+                          )}
+                        </div>
+                        <div
+                          className="header-center-category-item"
+                          onClick={() => handleChangeCategory("Khám phá")}
+                        >
+                          {category === "Khám phá" ? (
+                            <>
+                              <Discovery className="category-item-icon" />
+                              <span>Khám phá</span>
+                            </>
+                          ) : (
+                            <>
+                              <DiscoverDisableIcon className="category-item-icon" />
+                              <span></span>
+                            </>
+                          )}
+                        </div>
+                        <div
+                          className="header-center-category-item"
+                          onClick={() => handleChangeCategory("Trò chơi")}
+                        >
+                          {category === "Trò chơi" ? (
+                            <>
+                              <GamingIcon className="category-item-icon" />
+                              <span>Trò chơi</span>
+                            </>
+                          ) : (
+                            <>
+                              <GamingDisableIcon className="category-item-icon" />
+                              <span></span>
+                            </>
+                          )}
+                        </div>
+                      </>
+                    ) : (
+                      <div
+                        className="header-center-category-item"
+                        // onClick={() => handleChangeCategory("Học tập")}
+                      >
+                        <OrangeIcon className="category-item-icon" />
+                        <span>Đã phê duyệt cho bạn</span>
+                      </div>
+                    )}
                   </div>
                 ) : null}
               </div>

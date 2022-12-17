@@ -27,9 +27,14 @@ import RequiredAuth from "./routes/RequiredAuth";
 import ApproveContent from "./component/approveContent";
 import ChooseContentSettings from "./pages/Admin/ChooseContentSettings";
 import SecretKeyChild from "./pages/profile/SecretKeyChild";
+import { useEffect, useState } from "react";
+import DetailsTest from "./pages/Details/DetailsTest";
+
+
 function App() {
   // const { user } = useSelector((state) => state.auth);
   // const { childrenActive } = useSelector((state) => state.children);
+  
 
   return (
     <Routes>
@@ -102,6 +107,8 @@ function App() {
           element={<ProfileAccount />}
           exact
         />
+
+        {/* <Route path="/video-detail-test/:id" element={<DetailsTest />} exact /> */}
       </Route>
     </Routes>
   );

@@ -13,15 +13,25 @@ export const getVideoList = () =>
     `${process.env.REACT_APP_YOUTUBE_BASE_URL}videos?part=snippet%2C%20status%2C%20contentDetails&chart=mostPopular&maxResults=500&regionCode=VN&videoCategoryId=24&key=${process.env.REACT_APP_YOUTUBE_API_KEY}`
   );
 
+export const relatedToVideos = (videoId) =>
+  axios.get(
+    `${process.env.REACT_APP_YOUTUBE_BASE_URL}search?part=snippet&maxResults=32&order=date&relatedToVideoId=${videoId}&safeSearch=strict&type=video&videoDuration=medium&key=${process.env.REACT_APP_YOUTUBE_API_KEY}`
+  );
+
 export const getChannelVideo = (idChannel) =>
   axios.get(
     `${process.env.REACT_APP_YOUTUBE_BASE_URL}channels?part=snippet%2Cstatistics%2CcontentDetails%2Cstatus&part=brandingSettings&id=${idChannel}&maxResults=1&key=${process.env.REACT_APP_YOUTUBE_API_KEY}`
   );
 
-export const searchVideo = (key) =>
+export const getPlaylistChannelVideos = (idPlaylist) =>
+  axios.get(
+    `${process.env.REACT_APP_YOUTUBE_BASE_URL}playlistItems?part=snippet%2CcontentDetails%2Cstatus&maxResults=50&playlistId=${idPlaylist}&key=${process.env.REACT_APP_YOUTUBE_API_KEY}`
+  );
+
+export const searchVideo = (key, nextPage) =>
   // search?part=snippet&order=date&q=video cho tre em&safeSearch=strict&maxResults=32&key=AIzaSyAkCm5boRgvBXioONTHkoxomRa538S5zUg&regionCode=VN
   axios.get(
-    `${process.env.REACT_APP_YOUTUBE_BASE_URL}search?part=snippet&order=date&q=${key}&safeSearch=strict&maxResults=32&key=${process.env.REACT_APP_YOUTUBE_API_KEY}&regionCode=VN`
+    `${process.env.REACT_APP_YOUTUBE_BASE_URL}search?part=snippet&order=date&q=${key}&safeSearch=strict&maxResults=32&key=${process.env.REACT_APP_YOUTUBE_API_KEY}&regionCode=VN${nextPage}`
   );
 
 export const checkVideoForChildren = (videosId) =>
@@ -34,13 +44,7 @@ export const checkVideoForChildren = (videosId) =>
 export const createChildren = (formData, userOauthId) =>
   axios.post(
     `${process.env.REACT_APP_BACKEND_URL}/users/${userOauthId}/childrens`,
-    {
-      name: formData.kid_name,
-      year: formData.age,
-      month: formData.bMonth,
-      content_settings: formData.content_settings,
-      picture: formData.picture,
-    }
+    formData
   );
 
 export const listChildrens = (userOauthId) =>
@@ -135,7 +139,6 @@ export const updateChildrenProfileForParent = (childId, userId, formData) =>
     formData
   );
 
-
 export const addVideoByParent = (childId, userId, videoId, thumbnail, title) =>
   axios.patch(
     `${process.env.REACT_APP_BACKEND_URL}/users/${userId}/childrens/${childId}/add-video`,
@@ -172,8 +175,11 @@ export const sendMessage = (chatId, name, picture, text) =>
     text,
   });
 
+export const getMessageChat = (videoId) =>
+  axios.get(`${process.env.REACT_APP_BACKEND_URL}/chat/${videoId}`);
+
 export const updateMessage = (chatId, messageId, name, picture, text) =>
-  axios.post(
+  axios.patch(
     `${process.env.REACT_APP_BACKEND_URL}/chat/${chatId}/messages/${messageId}`,
     {
       name,

@@ -4,7 +4,10 @@ import Footer from "../../component/footer";
 import Header from "../../component/header";
 import Video from "../../component/video";
 import "./style.css";
-import { getVideoList } from "../../redux/feature/videolistSlice";
+import {
+  getPlaylistChannelVideos,
+  getVideoList,
+} from "../../redux/feature/videolistSlice";
 import { Container } from "react-bootstrap";
 import RubyIcon from "../../svgs/RubyIcon";
 import { SlOptionsVertical } from "react-icons/sl";
@@ -14,7 +17,7 @@ export default function Channel() {
 
   const { childrenActive } = useSelector((state) => state.auth);
 
-  const { videos, channelVideo } = useSelector((state) => state.video);
+  const { videos, channelVideo, loading } = useSelector((state) => state.video);
 
   const handleNumberFormat = (number) => {
     return new Intl.NumberFormat("vi-VN", { notation: "compact" }).format(
@@ -22,9 +25,17 @@ export default function Channel() {
     );
   };
 
+  useEffect(() => {
+    dispatch(
+      getPlaylistChannelVideos({
+        key: channelVideo[0]?.contentDetails.relatedPlaylists.uploads,
+      })
+    );
+  }, []);
+
   return (
-    <div className="home-wrapper background-history">
-      <Header />
+    <div className="home-wrapper background-channel">
+      <Header page={"channel"} />
       <div className="home-container">
         <div
           className="background-channel-wrapper"
@@ -65,7 +76,7 @@ export default function Channel() {
           </Container>
           <div className="background-overlay-channel"></div>
         </div>
-        <Video videos={videos} />
+        <Video videos={videos} loading={loading} />
       </div>
       <Footer />
     </div>
