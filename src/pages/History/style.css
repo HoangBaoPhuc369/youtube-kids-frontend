@@ -30,10 +30,11 @@
 .history-list-profile-text {
   font-size: 20px;
   text-transform: uppercase;
+  text-decoration: none;
 }
 
 .profile-child-history-wrapper {
-  margin: 0 0 40px 25px;
+  /* margin: 0 0 40px 25px; */
 }
 
 .profile-child-history-btn {

@@ -15,7 +15,7 @@ export const getVideoList = () =>
 
 export const getChannelVideo = (idChannel) =>
   axios.get(
-    `${process.env.REACT_APP_YOUTUBE_BASE_URL}channels?part=snippet%2CcontentDetails%2Cstatus&part=brandingSettings&id=${idChannel}&maxResults=1&key=${process.env.REACT_APP_YOUTUBE_API_KEY}`
+    `${process.env.REACT_APP_YOUTUBE_BASE_URL}channels?part=snippet%2Cstatistics%2CcontentDetails%2Cstatus&part=brandingSettings&id=${idChannel}&maxResults=1&key=${process.env.REACT_APP_YOUTUBE_API_KEY}`
   );
 
 export const searchVideo = (key) =>

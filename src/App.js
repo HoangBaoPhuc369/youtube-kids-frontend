@@ -26,6 +26,7 @@ import ProfileSecretKey from "./pages/SecretKey/ProfileSecretKey";
 import RequiredAuth from "./routes/RequiredAuth";
 import ApproveContent from "./component/approveContent";
 import ChooseContentSettings from "./pages/Admin/ChooseContentSettings";
+import SecretKeyChild from "./pages/profile/SecretKeyChild";
 function App() {
   // const { user } = useSelector((state) => state.auth);
   // const { childrenActive } = useSelector((state) => state.children);
@@ -44,6 +45,7 @@ function App() {
         <Route path="/search/:key" element={<Search />} exact />
 
         <Route path="/profile-options" element={<ProfileOptions />} exact />
+        <Route path="/secret-key-child" element={<SecretKeyChild />} exact />
         <Route
           path="/profile-settings/secret-key"
           element={<ProfileSecretKey />}

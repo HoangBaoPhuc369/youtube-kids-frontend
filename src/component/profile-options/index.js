@@ -17,7 +17,11 @@ export default function ProfileOptions() {
     const findChildren = user.childrens.find((child) => child?._id === childId);
     if (findChildren) {
       dispatch(setChildrenActive(findChildren));
-      navigate("/");
+      if (findChildren?.secret_password !== "") {
+        navigate("/secret-key-child");
+      } else {
+        navigate("/");
+      }
     }
   };
 

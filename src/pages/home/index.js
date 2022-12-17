@@ -11,7 +11,7 @@ export default function Home() {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(searchVideos({ key: "tư duy sáng tạo" }));
+    dispatch(searchVideos({ key: "chương trình trẻ em" }));
   }, []);
 
   return (

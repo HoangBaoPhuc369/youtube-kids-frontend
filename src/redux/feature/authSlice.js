@@ -7,6 +7,7 @@ export const getUser = createAsyncThunk(
   async ({ navigate }, { rejectWithValue }) => {
     try {
       const { data } = await api.getUser();
+
       const children = data.user.childrens;
       if (children.length === 0) {
         navigate("/profile-account");
@@ -228,8 +229,8 @@ export const authSlice = createSlice({
     },
     [getUser.fulfilled]: (state, action) => {
       state.loading = false;
+      Cookies.set("user", JSON.stringify(action.payload), { expires: 7 });
       state.user = action.payload;
-      Cookies.set("user", JSON.stringify(action.payload));
       state.error = "";
     },
     [getUser.rejected]: (state, action) => {
@@ -238,8 +239,8 @@ export const authSlice = createSlice({
     },
 
     [createSecretPassword.fulfilled]: (state, action) => {
-      state.user = action.payload;
       Cookies.set("user", JSON.stringify(action.payload));
+      state.user = action.payload;
       state.error = "";
     },
     [createSecretPassword.rejected]: (state, action) => {

@@ -4,7 +4,7 @@ import Footer from "../../component/footer";
 import Header from "../../component/header";
 import "./style.css";
 import { Button, Container } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import VideoHistory from "../../component/video/videoHistory";
 import { MdModeEdit } from "react-icons/md";
 
@@ -18,8 +18,6 @@ export default function History() {
     navigate("/profile-settings");
   };
 
-  console.log();
-
   return (
     <div className="home-wrapper background-history">
       <Header />
@@ -27,22 +25,31 @@ export default function History() {
         <Container>
           <div className="mb-3">
             <div className="d-flex justify-content-center align-items-end flex-column pt-3">
-              <div className="d-flex">
+              <Link to={"/profile-options"} className="d-flex ">
                 {user?.childrens.length > 1
-                  ? user?.childrens?.map((listChildren, index) => (
-                      <img
-                        key={index}
-                        className="avatar-resize"
-                        alt="avatar-user-history"
-                        src={listChildren?.picture}
-                      />
-                    ))
+                  ? user?.childrens?.map((listChildren, index) => {
+                      if (listChildren._id !== childrenActive?._id) {
+                        return (
+                          <img
+                            key={index}
+                            className="avatar-resize"
+                            alt="avatar-user-history"
+                            src={listChildren?.picture}
+                          />
+                        );
+                      } else {
+                        return null;
+                      }
+                    })
                   : null}
-              </div>
+              </Link>
               {user?.childrens?.length > 1 ? (
-                <div className="text-white fw-bold history-list-profile-text">
+                <Link
+                  to={"/profile-options"}
+                  className="text-white fw-bold history-list-profile-text"
+                >
                   Bạn không phải {childrenActive?.name}?
-                </div>
+                </Link>
               ) : null}
             </div>
             <div className="d-flex align-items-center">

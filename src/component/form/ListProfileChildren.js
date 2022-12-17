@@ -5,7 +5,6 @@ import { MdModeEdit } from "react-icons/md";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
-import Cookies from "js-cookie";
 import { setChildrenActive } from "../../redux/feature/authSlice";
 
 export default function ListProfileChildren() {

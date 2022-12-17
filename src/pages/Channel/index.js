@@ -12,45 +12,60 @@ import { SlOptionsVertical } from "react-icons/sl";
 export default function Channel() {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getVideoList());
-  }, []);
+  const { childrenActive } = useSelector((state) => state.auth);
 
-  const { childrenActive } = useSelector(
-    (state) => state.auth
-  );
+  const { videos, channelVideo } = useSelector((state) => state.video);
+
+  const handleNumberFormat = (number) => {
+    return new Intl.NumberFormat("vi-VN", { notation: "compact" }).format(
+      number
+    );
+  };
 
   return (
     <div className="home-wrapper background-history">
       <Header />
       <div className="home-container">
-        <Container>
-          <div className="mb-3">
-            <div className="d-flex align-items-center justify-content-between">
-              <div className="d-flex align-items-center">
-                <img
-                  className="avatar-resize-channel"
-                  alt="avatar-user-history"
-                  src={childrenActive?.picture}
-                />
-                <div className="profile-child-history-wrapper">
-                  <h2 className="text-white font-bold fw-bold">
-                    Winx Club Việt Nam
-                  </h2>
-                  <div className="text-white">976 N người đăng ký</div>
+        <div
+          className="background-channel-wrapper"
+          style={{
+            backgroundImage: `url('${channelVideo[0]?.brandingSettings.image.bannerExternalUrl}')`,
+          }}
+        >
+          <Container className="channel-container">
+            <div className="mb-4">
+              <div className="d-flex align-items-center justify-content-between">
+                <div className="d-flex align-items-center">
+                  <img
+                    className="avatar-resize-channel"
+                    alt="avatar-user-history"
+                    src={channelVideo[0]?.snippet.thumbnails.medium.url}
+                  />
+                  <div className="profile-child-history-wrapper">
+                    <h2 className="text-white font-bold fw-bold channel-title">
+                      {channelVideo[0]?.snippet.title}
+                    </h2>
+                    <div className="text-white">
+                      {handleNumberFormat(
+                        channelVideo[0]?.statistics.subscriberCount
+                      )}{" "}
+                      người đăng ký
+                    </div>
+                  </div>
+                </div>
+                <div className="d-flex align-items-center">
+                  <button className="text-white bg-btn-sub d-flex align-items-center">
+                    <RubyIcon />
+                    <span>Đăng ký</span>
+                  </button>
+                  <SlOptionsVertical className="text-white fs-3 ms-4" />
                 </div>
               </div>
-              <div className="d-flex align-items-center">
-                <button className="text-white bg-btn-sub d-flex align-items-center">
-                  <RubyIcon />
-                  <span>Đăng ký</span>
-                </button>
-                <SlOptionsVertical className="text-white fs-3 ms-4" />
-              </div>
             </div>
-          </div>
-        </Container>
-        <Video />
+          </Container>
+          <div className="background-overlay-channel"></div>
+        </div>
+        <Video videos={videos} />
       </div>
       <Footer />
     </div>

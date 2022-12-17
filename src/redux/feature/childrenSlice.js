@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import Cookies from "js-cookie";
 import * as api from "../api";
 
 
@@ -19,12 +18,6 @@ import * as api from "../api";
 // );
 
 const initialState = {
-  children: Cookies.get("children")
-    ? JSON.parse(Cookies.get("children"))
-    : null,
-  listChildrens: Cookies.get("listChildrens")
-    ? JSON.parse(Cookies.get("listChildrens"))
-    : null,
   childrenActive: null,
   error: "",
   loading: false,
@@ -40,8 +33,7 @@ export const childrenSlice = createSlice({
       state.children = null;
       state.listChildrens = null;
       state.childrenActive = null;
-      Cookies.remove("children");
-      Cookies.remove("listChildrens");
+     
     },
   },
   extraReducers: {
