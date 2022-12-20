@@ -8,12 +8,12 @@ import { HiDotsVertical } from "react-icons/hi";
 
 export default function VideoCardHistory({ video, role }) {
 
-  const checkRole = role === "parent" ? `` : `/video-detail/${video.videoId}`
+  const checkRole = role === "parent" ? `/admin/video-details/${video.videoId}` : `/video-detail/${video.videoId}`
 
   return (
     <>
       <Col>
-        <Link className="video-link" to={`/video-detail/${video.videoId}`}>
+        <Link className="video-link" to={checkRole}>
           <Card className="video-card">
             <Card.Img variant="top" src={video.thumbnail} />
 

@@ -53,7 +53,7 @@ export const sendMessage = createAsyncThunk(
 export const getMessageChat = createAsyncThunk(
   "videos/getMessageChat",
   async ({ videoId }, { rejectWithValue }) => {
-    console.log(videoId)
+    console.log(videoId);
     try {
       const { data } = await api.getMessageChat(videoId);
       return data;
@@ -65,19 +65,12 @@ export const getMessageChat = createAsyncThunk(
 
 export const searchVideos = createAsyncThunk(
   "search/searchVideos",
-  async ({ key}) => {
+  async ({ key }) => {
     try {
       const videos = await getVideos(key);
-      // const { data } = await api.searchVideo(key);
-      // const videosSearch = data.items.map((x) => x.id.videoId).join("%2C");
-      // const videoList = await api.checkVideoForChildren(videosSearch);
-      // const videoForChildren = videoList.data.items.filter(
-      //   (video) => video.status.madeForKids === true
-      // );
-
       return videos;
     } catch (err) {
-      console.log(err)
+      console.log(err);
       return err?.response?.data;
     }
   }
@@ -127,6 +120,7 @@ const initialState = {
   channelVideo: null,
   chatVideo: null,
   category: "Chương trình",
+  categoryAdmin: "Chương trình",
   error: "",
   loading: false,
 };
@@ -141,6 +135,10 @@ export const videolistSlice = createSlice({
 
     setCategory: (state, action) => {
       state.category = action.payload;
+    },
+
+    setCategoryAdmin: (state, action) => {
+      state.categoryAdmin = action.payload;
     },
   },
   extraReducers: {
@@ -197,8 +195,11 @@ export const videolistSlice = createSlice({
     },
     [searchVideos.fulfilled]: (state, action) => {
       state.loading = false;
-      state.videos = action.payload;
-      state.error = "";
+      if (!action.payload.error) {
+        state.videos = action.payload;
+      } else {
+        state.error = action.payload.error.message;
+      }
     },
     [searchVideos.rejected]: (state, action) => {
       state.loading = false;
@@ -234,6 +235,7 @@ export const videolistSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { clearMessageSuccess, setCategory } = videolistSlice.actions;
+export const { clearMessageSuccess, setCategory, setCategoryAdmin } =
+  videolistSlice.actions;
 
 export default videolistSlice.reducer;

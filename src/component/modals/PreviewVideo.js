@@ -94,7 +94,7 @@ export default function PreviewVideo({ show, onHide }) {
       <Modal.Body>
         <Row xs={1} md={4} className="g-4">
           <div className="preview-video-wrapper">
-            <VideoHistory videos={fakeVideos} />
+            <VideoHistory videos={fakeVideos} role="parent" />
           </div>
         </Row>
       </Modal.Body>

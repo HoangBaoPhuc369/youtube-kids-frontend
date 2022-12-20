@@ -34,7 +34,7 @@ export default function ParentProfile({page}) {
   };
 
   const handleApproveContentForChild = (_id) => {
-    navigate(`/admin/approve-content/${_id}`);
+    navigate(`/admin/approve-content/`);
   };
 
   const handleAddProfile = () => {

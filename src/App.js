@@ -30,6 +30,8 @@ import SecretKeyChild from "./pages/profile/SecretKeyChild";
 import { useEffect, useState } from "react";
 import DetailsTest from "./pages/Details/DetailsTest";
 import VideoPlayer from "./component/video player";
+import VideoDetailsForAdmin from "./pages/Details/VideoDetailsForAdmin";
+import HomeApproveContent from "./component/approveContent/HomeApproveContent";
 
 function App() {
   // const { user } = useSelector((state) => state.auth);
@@ -95,8 +97,8 @@ function App() {
         <Route path="/admin/setting-age/:id" element={<SettingAge />} exact />
 
         <Route
-          path="/admin/approve-content/:id"
-          element={<Home page="home" />}
+          path="/admin/approve-content/"
+          element={<HomeApproveContent  />}
           exact
         />
         <Route
@@ -113,7 +115,7 @@ function App() {
 
         <Route
           path="/admin/video-details/:id"
-          element={<Details page="details" />}
+          element={<VideoDetailsForAdmin page="details" />}
           exact
         />
       </Route>

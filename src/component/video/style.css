@@ -122,3 +122,17 @@
 .video-row {
   margin-top: 0;
 }
+
+.video-error {
+  width: 100%;
+}
+
+.video-not-found {
+  background-image: url(https\:\/\/www\.gstatic\.com\/ytkids\/web\/errors\/error_failnana_1\.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 384px;
+  margin: 40px auto;
+  max-width: 736px;
+  width: 100%;
+}

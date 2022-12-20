@@ -6,7 +6,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import { HiDotsVertical } from "react-icons/hi";
 
-export default function VideoCard({ video, loading }) {
+export default function VideoCard({ video, loading, role }) {
   function formatDuration(x) {
     if (x && !x.includes("DT") && !x.includes("P0")) {
       const toSecond = eval(

@@ -5,10 +5,14 @@ import Header from "../../component/header";
 import ContentSettingsToast from "../../component/toast/ContentSettingsToast";
 import Video from "../../component/video";
 import { searchVideos } from "../../redux/feature/videolistSlice";
+import HeaderHomeAPC from "../header/HeaderHomeAPC";
+import HeaderVideoDetailAdmin from "../header/HeaderVideoDetailAdmin";
 import "./style.css";
 
-export default function Home({ page }) {
-  const { videos, loading, category } = useSelector((state) => state.video);
+export default function HomeApproveContent() {
+  const { videos, loading, categoryAdmin, error } = useSelector(
+    (state) => state.video
+  );
 
   const { childrenSelected } = useSelector((state) => state.auth);
 
@@ -31,21 +35,23 @@ export default function Home({ page }) {
     }
   };
 
-  // useEffect(() => {
-  //   dispatch(searchVideos({ key: keyword(category) }));
-  // }, [category]);
+  useEffect(() => {
+    dispatch(searchVideos({ key: keyword(categoryAdmin) }));
+  }, [categoryAdmin]);
 
   return (
     <div className="home-wrapper">
-      <Header page={page} />
+      <HeaderHomeAPC />
 
       <div className="home-container">
-        {/* <div className="home-background-left"></div>
-        <Video videos={videos} loading={loading} />
-        <div className="home-background-right"></div> */}
+        <div className="home-background-left"></div>
+        <Video videos={videos} loading={loading} role="admin" error={error} />
+        <div className="home-background-right"></div>
       </div>
 
-      <Footer />
+      <ContentSettingsToast />
+
+      <div className="footer"></div>
     </div>
   );
 }
