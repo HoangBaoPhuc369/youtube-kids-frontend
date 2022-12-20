@@ -16,7 +16,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
-export default function Admin() {
+export default function Admin({page}) {
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
   const { picture } = user;
@@ -95,7 +95,7 @@ export default function Admin() {
   return (
     <>
       <div className="admin-wrapper">
-        <Header />
+        <Header page={page} />
         <div className="parent-profile-wrapper">
           <div className="background-layer-left"></div>
           <Container className="container-center container-admin">

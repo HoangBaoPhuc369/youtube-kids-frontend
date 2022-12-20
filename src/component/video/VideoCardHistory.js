@@ -6,7 +6,9 @@ import Dropdown from "react-bootstrap/Dropdown";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import { HiDotsVertical } from "react-icons/hi";
 
-export default function VideoCardHistory({ video }) {
+export default function VideoCardHistory({ video, role }) {
+
+  const checkRole = role === "parent" ? `` : `/video-detail/${video.videoId}`
 
   return (
     <>

@@ -1,78 +1,15 @@
 import React, { useState, useRef } from "react";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import Container from "@material-ui/core/Container";
 import ReactPlayer from "react-player";
 import { makeStyles } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
 import screenful from "screenfull";
 import Controls from "./Controls";
+import "./style.css";
 
 const useStyles = makeStyles((theme) => ({
   playerWrapper: {
     width: "100%",
+    height: "100%",
     position: "relative",
-  },
-
-  controlsWrapper: {
-    visibility: "hidden",
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    background: "rgba(0,0,0,0.4)",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-between",
-  },
-  topControls: {
-    display: "flex",
-    justifyContent: "flex-end",
-    padding: theme.spacing(2),
-  },
-  middleControls: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  bottomWrapper: {
-    display: "flex",
-    flexDirection: "column",
-    padding: theme.spacing(2),
-  },
-
-  bottomControls: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-
-  button: {
-    margin: theme.spacing(1),
-  },
-  controlIcons: {
-    color: "#777",
-
-    fontSize: 50,
-    transform: "scale(0.9)",
-    "&:hover": {
-      color: "#fff",
-      transform: "scale(1)",
-    },
-  },
-
-  bottomIcons: {
-    color: "#999",
-    "&:hover": {
-      color: "#fff",
-    },
-  },
-
-  volumeSlider: {
-    width: 100,
   },
 }));
 
@@ -92,7 +29,7 @@ const format = (seconds) => {
 
 let count = 0;
 
-export default function VideoPlayer() {
+export default function VideoPlayer({ id, handleStoreVideo }) {
   const classes = useStyles();
   const [timeDisplayFormat, setTimeDisplayFormat] = React.useState("normal");
   const [bookmarks, setBookmarks] = useState([]);
@@ -102,7 +39,7 @@ export default function VideoPlayer() {
     controls: false,
     light: false,
 
-    muted: true,
+    muted: false,
     played: 0,
     duration: 0,
     playbackRate: 1.0,
@@ -239,7 +176,7 @@ export default function VideoPlayer() {
   const duration =
     playerRef && playerRef.current ? playerRef.current.getDuration() : "00:00";
   const elapsedTime =
-    timeDisplayFormat == "normal"
+    timeDisplayFormat === "normal"
       ? format(currentTime)
       : `-${format(duration - currentTime)}`;
 
@@ -247,92 +184,63 @@ export default function VideoPlayer() {
 
   return (
     <>
-      <AppBar position="fixed">
-        <Toolbar>
-          <Typography>React Video Player</Typography>
-        </Toolbar>
-      </AppBar>
-      <Toolbar />
-      <Container maxWidth="md">
-        <div
-          onMouseMove={handleMouseMove}
-          onMouseLeave={hanldeMouseLeave}
-          ref={playerContainerRef}
-          className={classes.playerWrapper}
-        >
-          <ReactPlayer
-            ref={playerRef}
-            width="100%"
-            height="100%"
-            url="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
-            pip={pip}
-            playing={playing}
-            controls={false}
-            light={light}
-            loop={loop}
-            playbackRate={playbackRate}
-            volume={volume}
-            muted={muted}
-            onProgress={handleProgress}
-            config={{
-              file: {
-                attributes: {
-                  crossorigin: "anonymous",
-                },
+      <div
+        onMouseMove={handleMouseMove}
+        onMouseLeave={hanldeMouseLeave}
+        ref={playerContainerRef}
+        className={classes.playerWrapper}
+      >
+        <ReactPlayer
+          ref={playerRef}
+          className="react-player"
+          width="100%"
+          height="100%"
+          url={`https://www.youtube.com/watch?v=${id}`}
+          pip={pip}
+          playing={playing}
+          controls={false}
+          light={light}
+          loop={loop}
+          playbackRate={playbackRate}
+          volume={volume}
+          muted={muted}
+          onProgress={handleProgress}
+          config={{
+            file: {
+              attributes: {
+                crossorigin: "anonymous",
               },
-            }}
-          />
+            },
+          }}
+        />
 
-          <Controls
-            ref={controlsRef}
-            onSeek={handleSeekChange}
-            onSeekMouseDown={handleSeekMouseDown}
-            onSeekMouseUp={handleSeekMouseUp}
-            onDuration={handleDuration}
-            onRewind={handleRewind}
-            onPlayPause={handlePlayPause}
-            onFastForward={handleFastForward}
-            playing={playing}
-            played={played}
-            elapsedTime={elapsedTime}
-            totalDuration={totalDuration}
-            onMute={hanldeMute}
-            muted={muted}
-            onVolumeChange={handleVolumeChange}
-            onVolumeSeekDown={handleVolumeSeekDown}
-            onChangeDispayFormat={handleDisplayFormat}
-            playbackRate={playbackRate}
-            onPlaybackRateChange={handlePlaybackRate}
-            onToggleFullScreen={toggleFullScreen}
-            volume={volume}
-            onBookmark={addBookmark}
-          />
-        </div>
-
-        <Grid container style={{ marginTop: 20 }} spacing={3}>
-          {bookmarks.map((bookmark, index) => (
-            <Grid key={index} item>
-              <Paper
-                onClick={() => {
-                  playerRef.current.seekTo(bookmark.time);
-                  controlsRef.current.style.visibility = "visible";
-
-                  setTimeout(() => {
-                    controlsRef.current.style.visibility = "hidden";
-                  }, 1000);
-                }}
-                elevation={3}
-              >
-                <img crossOrigin="anonymous" alt="" src={bookmark.image} />
-                <Typography variant="body2" align="center">
-                  bookmark at {bookmark.display}
-                </Typography>
-              </Paper>
-            </Grid>
-          ))}
-        </Grid>
-        <canvas ref={canvasRef} />
-      </Container>
+        <Controls
+          ref={controlsRef}
+          handleStoreVideo={handleStoreVideo}
+          onSeek={handleSeekChange}
+          onSeekMouseDown={handleSeekMouseDown}
+          onSeekMouseUp={handleSeekMouseUp}
+          onDuration={handleDuration}
+          onRewind={handleRewind}
+          onPlayPause={handlePlayPause}
+          onFastForward={handleFastForward}
+          playing={playing}
+          played={played}
+          elapsedTime={elapsedTime}
+          totalDuration={totalDuration}
+          onMute={hanldeMute}
+          muted={muted}
+          onVolumeChange={handleVolumeChange}
+          onVolumeSeekDown={handleVolumeSeekDown}
+          onChangeDispayFormat={handleDisplayFormat}
+          playbackRate={playbackRate}
+          onPlaybackRateChange={handlePlaybackRate}
+          onToggleFullScreen={toggleFullScreen}
+          volume={volume}
+          onBookmark={addBookmark}
+        />
+      </div>
+      <canvas ref={canvasRef} />
     </>
   );
 }

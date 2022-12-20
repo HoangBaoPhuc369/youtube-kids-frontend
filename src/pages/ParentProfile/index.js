@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { setChildrenSelect } from "../../redux/feature/authSlice";
 
-export default function ParentProfile() {
+export default function ParentProfile({page}) {
   const navigate = useNavigate();
   const { user, childrenSelected } = useSelector((state) => state.auth);
   const { _id } = user;
@@ -40,12 +40,12 @@ export default function ParentProfile() {
   const handleAddProfile = () => {
     const admin = true;
     navigate(`/admin/add-profile/${admin}`);
-  }
+  };
 
   return (
     <>
       <div className="admin-wrapper">
-        <Header />
+        <Header page={page} />
         <div className="parent-profile-wrapper">
           <div className="background-layer-left"></div>
           <Container className="container-center container-admin">
@@ -77,7 +77,9 @@ export default function ParentProfile() {
                     <div>
                       <Button
                         variant="light"
-                        onClick={() => handleParentSettings(childrenSelected?._id)}
+                        onClick={() =>
+                          handleParentSettings(childrenSelected?._id)
+                        }
                         className="text-end text-color-edit"
                       >
                         Chỉnh sửa
@@ -110,23 +112,27 @@ export default function ParentProfile() {
                     </Button>
                   </div>
                   <hr />
-                  <div className="d-flex justify-content-between">
-                    <div>
-                      Phê duyệt nội dung cho trẻ
-                      <br />
-                      <span className="font-size-accordion">
-                        Hãy tự chọn lọc nội dung cho con của bạn
-                      </span>
-                    </div>
-                    <Button
-                      variant="light"
-                      onClick={() => handleApproveContentForChild(_id)}
-                      className="text-end text-color-edit"
-                    >
-                      Phê duyệt
-                    </Button>
-                  </div>
-                  <hr />
+                  {childrenSelected?.content_settings === "self-approval" ? (
+                    <>
+                      <div className="d-flex justify-content-between">
+                        <div>
+                          Phê duyệt nội dung cho trẻ
+                          <br />
+                          <span className="font-size-accordion">
+                            Hãy tự chọn lọc nội dung cho con của bạn
+                          </span>
+                        </div>
+                        <Button
+                          variant="light"
+                          onClick={() => handleApproveContentForChild(_id)}
+                          className="text-end text-color-edit"
+                        >
+                          Phê duyệt
+                        </Button>
+                      </div>
+                      <hr />
+                    </>
+                  ) : null}
                   <div className="d-flex justify-content-between">
                     <div>Xóa hồ sơ này</div>
                     <Button

@@ -10,18 +10,18 @@ export default function ApproveContent() {
   const { videos, loading } = useSelector((state) => state.video);
 
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(searchVideos({ key: "tư duy sáng tạo" }));
-  }, []);
+  // useEffect(() => {
+  //   dispatch(searchVideos({ key: "tư duy sáng tạo" }));
+  // }, []);
 
   return (
     <div className="home-wrapper">
       <Header category="Sáng tạo" />
 
       <div className="home-container">
-        <div className="home-background-left"></div>
+        {/* <div className="home-background-left"></div>
         <Video videos={videos} loading={loading} />
-        <div className="home-background-right"></div>
+        <div className="home-background-right"></div> */}
       </div>
 
       <Footer />

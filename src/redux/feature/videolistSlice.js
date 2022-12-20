@@ -123,6 +123,7 @@ export const relatedToVideos = createAsyncThunk(
 
 const initialState = {
   videos: null,
+  relateVideos: null,
   channelVideo: null,
   chatVideo: null,
   category: "Chương trình",
@@ -222,7 +223,7 @@ export const videolistSlice = createSlice({
     },
     [relatedToVideos.fulfilled]: (state, action) => {
       state.loading = false;
-      state.videos = action.payload;
+      state.relateVideos = action.payload;
       state.error = "";
     },
     [relatedToVideos.rejected]: (state, action) => {

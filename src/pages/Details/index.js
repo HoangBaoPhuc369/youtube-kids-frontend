@@ -1,5 +1,4 @@
 import "./style.css";
-import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
@@ -10,16 +9,13 @@ import VideoCard from "../../component/video/VideoCard";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import {
-  clearMessageSuccess,
   createOrGetChatVideo,
   getChannelVideo,
   getMessageChat,
-  getVideoList,
   relatedToVideos,
   sendMessage,
 } from "../../redux/feature/videolistSlice";
 import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
 import Message from "../../component/video/Message";
 import { IoSendSharp } from "react-icons/io5";
 import { BiSmile } from "react-icons/bi";
@@ -29,13 +25,14 @@ import { useRef } from "react";
 import { addVideoHistory } from "../../redux/feature/authSlice";
 import Skeleton from "react-loading-skeleton";
 import { io } from "socket.io-client";
+import VideoPlayer from "../../component/video player";
 
 const socketRef = io.connect("http://localhost:8900");
 
-export default function Details() {
+export default function Details({page}) {
   const navigate = useNavigate();
   const param = useParams();
-  const { videos, channelVideo, chatVideo, loading } = useSelector(
+  const { videos, channelVideo, chatVideo, loading, relateVideos } = useSelector(
     (state) => state.video
   );
   const { childrenActive, user } = useSelector((state) => state.auth);
@@ -82,7 +79,9 @@ export default function Details() {
 
   const handleStoreVideo = () => {
     const findVideo = videos.find((v) => v.id === param.id);
-    if (findVideo) {
+    const checkHistory = childrenActive.historyWatchVideo.find((v) => v.videoId === param.id);
+    console.log(findVideo)
+    if (findVideo && !checkHistory) {
       dispatch(
         addVideoHistory({
           childrenID: childrenActive?._id,
@@ -123,7 +122,7 @@ export default function Details() {
 
   return (
     <div className="video-detail-wrapper">
-      <Header page="video-detail" />
+      <Header page={page} />
 
       <Row className="video-play-wrapper">
         <Col xl={9} className="video-play-wrap">
@@ -133,18 +132,7 @@ export default function Details() {
                 chatShow ? "video-play-left" : "video-play-left transform-video"
               }
             >
-              <iframe
-                width="100%"
-                height="475"
-                id="video-play"
-                ref={videoRef}
-                // onClick={handleStoreVideo}
-                src={`https://www.youtube.com/embed/${param.id}`}
-                title="YouTube video player"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              ></iframe>
+              <VideoPlayer id={param.id} handleStoreVideo={handleStoreVideo} />
             </div>
             <div
               className={
@@ -264,7 +252,7 @@ export default function Details() {
                     </Card>
                   </Col>
                 ))
-              : videos?.map((video, idx) => (
+              : relateVideos?.map((video, idx) => (
                   <VideoCard video={video} key={video.id} />
                 ))}
           </Row>

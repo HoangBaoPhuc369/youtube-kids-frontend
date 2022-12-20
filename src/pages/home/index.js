@@ -2,12 +2,15 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Footer from "../../component/footer";
 import Header from "../../component/header";
+import ContentSettingsToast from "../../component/toast/ContentSettingsToast";
 import Video from "../../component/video";
 import { searchVideos } from "../../redux/feature/videolistSlice";
 import "./style.css";
 
-export default function Home() {
+export default function Home({ page }) {
   const { videos, loading, category } = useSelector((state) => state.video);
+
+  const { childrenSelected } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
 
@@ -34,13 +37,17 @@ export default function Home() {
 
   return (
     <div className="home-wrapper">
-      <Header page="home" />
+      <Header page={page} />
 
       <div className="home-container">
-        <div className="home-background-left"></div>
+        {/* <div className="home-background-left"></div>
         <Video videos={videos} loading={loading} />
-        <div className="home-background-right"></div>
+        <div className="home-background-right"></div> */}
       </div>
+
+      {childrenSelected?.content_settings === "self-approval" ? (
+        <ContentSettingsToast />
+      ) : null}
 
       <Footer />
     </div>

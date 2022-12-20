@@ -31,20 +31,22 @@ import { useEffect, useState } from "react";
 import DetailsTest from "./pages/Details/DetailsTest";
 import VideoPlayer from "./component/video player";
 
-
 function App() {
   // const { user } = useSelector((state) => state.auth);
   // const { childrenActive } = useSelector((state) => state.children);
-  
 
   return (
     <Routes>
       <Route element={<LoggedInRoutes />}>
-        <Route path="/" element={<Home />} exact />
+        <Route path="/" element={<Home page="home" />} exact />
         <Route path="/ability" element={<Ability />} exact />
         <Route path="/education" element={<Education />} exact />
         <Route path="/parent" element={<Parent />} exact />
-        <Route path="/video-detail/:id" element={<Details />} exact />
+        <Route
+          path="/video-detail/:id"
+          element={<Details page="details" />}
+          exact
+        />
         <Route path="/channel/:id" element={<Channel />} exact />
         <Route path="/history" element={<History />} exact />
         <Route path="/profile-settings" element={<ProfileSettings />} exact />
@@ -73,7 +75,7 @@ function App() {
         />
 
         {/* Admin route */}
-        <Route path="/admin" element={<Admin />} exact />
+        <Route path="/admin" element={<Admin page="admin" />} exact />
         <Route
           path="/admin/profile-settings/:id"
           element={<ProfileSettings />}
@@ -81,7 +83,7 @@ function App() {
         />
         <Route
           path="/admin/parentprofilesettings/:id"
-          element={<ParentProfile />}
+          element={<ParentProfile page="admin" />}
           exact
         />
 
@@ -94,7 +96,7 @@ function App() {
 
         <Route
           path="/admin/approve-content/:id"
-          element={<ApproveContent />}
+          element={<Home page="home" />}
           exact
         />
         <Route
@@ -109,8 +111,13 @@ function App() {
           exact
         />
 
-        <Route path="/video-player-test/" element={<VideoPlayer />} exact />
+        <Route
+          path="/admin/video-details/:id"
+          element={<Details page="details" />}
+          exact
+        />
       </Route>
+      <Route path="/video-player-test/" element={<VideoPlayer />} exact />
     </Routes>
   );
 }

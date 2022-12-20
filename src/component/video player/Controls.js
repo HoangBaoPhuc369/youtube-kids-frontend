@@ -27,7 +27,6 @@ const useStyles = makeStyles((theme) => ({
     right: 0,
     bottom: 0,
     height: "100%",
-    background: "rgba(0,0,0,0.6)",
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
@@ -37,25 +36,29 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1),
   },
   controlIcons: {
-    color: "#777",
-
+    color: "#fff",
     fontSize: 50,
-    transform: "scale(0.9)",
-    "&:hover": {
-      color: "#fff",
-      transform: "scale(1)",
-    },
+    marginTop: "100px",
   },
 
   bottomIcons: {
-    color: "#999",
-    "&:hover": {
-      color: "#fff",
-    },
+    color: "#fff",
   },
 
   volumeSlider: {
     width: 100,
+  },
+
+  playBtnWrapper: {
+    flex: 1,
+    cursor: "pointer",
+  },
+
+  ProgressWrap: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: "10px",
   },
 }));
 
@@ -122,6 +125,7 @@ const Controls = forwardRef(
       volume,
       onVolumeChange,
       onBookmark,
+      handleStoreVideo,
     },
     ref
   ) => {
@@ -150,37 +154,14 @@ const Controls = forwardRef(
             container
             direction="row"
             alignItems="center"
-            justify="space-between"
-            style={{ padding: 16 }}
+            justify="center"
+            className={classes.playBtnWrapper}
+            onClick={() => {
+              onPlayPause();
+              handleStoreVideo();
+            }}
           >
-            <Grid item>
-              <Typography variant="h5" style={{ color: "#fff" }}>
-                Video Title
-              </Typography>
-            </Grid>
-            <Grid item>
-              <Button
-                onClick={onBookmark}
-                variant="contained"
-                color="primary"
-                startIcon={<BookmarkIcon />}
-              >
-                Bookmark
-              </Button>
-            </Grid>
-          </Grid>
-          <Grid container direction="row" alignItems="center" justify="center">
-            <IconButton
-              onClick={onRewind}
-              className={classes.controlIcons}
-              aria-label="rewind"
-            >
-              <FastRewindIcon
-                className={classes.controlIcons}
-                fontSize="inherit"
-              />
-            </IconButton>
-            <IconButton
+            {/* <IconButton
               onClick={onPlayPause}
               className={classes.controlIcons}
               aria-label="play"
@@ -190,14 +171,7 @@ const Controls = forwardRef(
               ) : (
                 <PlayArrowIcon fontSize="inherit" />
               )}
-            </IconButton>
-            <IconButton
-              onClick={onFastForward}
-              className={classes.controlIcons}
-              aria-label="forward"
-            >
-              <FastForwardIcon fontSize="inherit" />
-            </IconButton>
+            </IconButton> */}
           </Grid>
           {/* bottom controls */}
           <Grid
@@ -207,7 +181,13 @@ const Controls = forwardRef(
             alignItems="center"
             style={{ padding: 16 }}
           >
-            <Grid item xs={12}>
+            <Grid item xs={12} className={classes.ProgressWrap}>
+              <Typography
+                variant="body1"
+                style={{ color: "#fff", marginLeft: 16 }}
+              >
+                {elapsedTime}
+              </Typography>
               <PrettoSlider
                 min={0}
                 max={100}
@@ -221,6 +201,12 @@ const Controls = forwardRef(
                 onChangeCommitted={onSeekMouseUp}
                 onDuration={onDuration}
               />
+              <Typography
+                variant="body1"
+                style={{ color: "#fff", marginLeft: 16 }}
+              >
+                {totalDuration}
+              </Typography>
             </Grid>
 
             <Grid item>
@@ -260,23 +246,7 @@ const Controls = forwardRef(
                   onMouseDown={onSeekMouseDown}
                   onChangeCommitted={onVolumeSeekDown}
                 />
-                <Button
-                  variant="text"
-                  onClick={
-                    onChangeDispayFormat
-                    //     () =>
-                    //   setTimeDisplayFormat(
-                    //     timeDisplayFormat == "normal" ? "remaining" : "normal"
-                    //   )
-                  }
-                >
-                  <Typography
-                    variant="body1"
-                    style={{ color: "#fff", marginLeft: 16 }}
-                  >
-                    {elapsedTime}/{totalDuration}
-                  </Typography>
-                </Button>
+                <Button variant="text" onClick={onChangeDispayFormat}></Button>
               </Grid>
             </Grid>
 

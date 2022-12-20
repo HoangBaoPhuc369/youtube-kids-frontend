@@ -1,0 +1,3 @@
+.react-player > video {
+    object-fit: fill !important;
+}

@@ -2,6 +2,10 @@
   min-height: calc(100vh - 128px - 154px);
 }
 
+.home-wrapper {
+  position: relative;
+}
+
 .video-title {
   margin: 0;
   width: 244px;

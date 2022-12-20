@@ -30,10 +30,14 @@ import OrangeIcon from "../../svgs/OrangeIcon";
 import OrangeDisableIcon from "../../svgs/OrangeDisableIcon";
 
 export default function Header({ page }) {
+  const checkAdminPage = page === "admin" ? true : false;
+
   const [navbar, setNavbar] = useState(false);
   const [search, setSearch] = useState(false);
 
-  const { childrenActive } = useSelector((state) => state.auth);
+  const { childrenActive, childrenSelected } = useSelector(
+    (state) => state.auth
+  );
   const { category } = useSelector((state) => state.video);
 
   const searchRef = useRef(null);
@@ -85,7 +89,7 @@ export default function Header({ page }) {
                   </Link>
                 </div>
                 <img
-                  src={childrenActive?.picture}
+                  src={childrenActive?.picture || childrenSelected?.picture}
                   alt=""
                   onClick={handleHistory}
                 />
@@ -93,7 +97,7 @@ export default function Header({ page }) {
 
               <div className="header-right">
                 <div className="header-right-icon">
-                  {!search ? (
+                  {!search && !checkAdminPage ? (
                     <div className="header-right-search-icon-wrap">
                       <div
                         className="header-right-search-icon"
@@ -190,7 +194,8 @@ export default function Header({ page }) {
                           <GamingDisableIcon className="category-item-icon" />
                         </Link>
                       </>
-                    ) : (
+                    ) : childrenActive?.content_settings === "self-approval" &&
+                      !checkAdminPage ? (
                       <Link
                         to={"/"}
                         // onClick={() => handleChangeCategory("Chương trình")}
@@ -198,7 +203,7 @@ export default function Header({ page }) {
                       >
                         <OrangeDisableIcon className="category-item-icon" />
                       </Link>
-                    )}
+                    ) : null}
                   </div>
                 ) : null}
               </div>
@@ -212,7 +217,7 @@ export default function Header({ page }) {
             <div className="header-wrap">
               <div className="header-left">
                 <img
-                  src={childrenActive?.picture}
+                  src={childrenActive?.picture || childrenSelected?.picture}
                   alt=""
                   onClick={handleHistory}
                 />
@@ -220,7 +225,7 @@ export default function Header({ page }) {
 
               <div className="header-right">
                 <div className="header-right-icon">
-                  {!search ? (
+                  {!search && checkAdminPage ? (
                     <div className="header-right-search-icon-wrap">
                       <div
                         className="header-right-search-icon"
@@ -255,7 +260,8 @@ export default function Header({ page }) {
                 ) : null}
                 {!search ? (
                   <div className="header-center-category-wrapper">
-                    {childrenActive?.content_settings === "kiddie" ? (
+                    {childrenActive?.content_settings === "kiddie" ||
+                    childrenSelected?.content_settings === "kiddie" ? (
                       <>
                         <div
                           className="header-center-category-item"
@@ -306,7 +312,9 @@ export default function Header({ page }) {
                           )}
                         </div>
                       </>
-                    ) : childrenActive?.content_settings === "teen" ? (
+                    ) : childrenActive?.content_settings === "teen" ||
+                      (childrenSelected?.content_settings === "self-approval" &&
+                        !checkAdminPage) ? (
                       <>
                         <div
                           className="header-center-category-item"
@@ -389,7 +397,7 @@ export default function Header({ page }) {
                           )}
                         </div>
                       </>
-                    ) : (
+                    ) : childrenActive?.content_settings === "self-approval" ? (
                       <div
                         className="header-center-category-item"
                         // onClick={() => handleChangeCategory("Học tập")}
@@ -397,7 +405,7 @@ export default function Header({ page }) {
                         <OrangeIcon className="category-item-icon" />
                         <span>Đã phê duyệt cho bạn</span>
                       </div>
-                    )}
+                    ) : null}
                   </div>
                 ) : null}
               </div>
