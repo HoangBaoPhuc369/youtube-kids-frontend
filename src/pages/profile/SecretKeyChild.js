@@ -4,7 +4,8 @@ import "./style.css";
 import { useSelector, useDispatch } from "react-redux";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import Header from "../../component/header";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import { setCategory } from "../../redux/feature/videolistSlice";
 
 export default function SecretKeyChild() {
   const { childrenActive } = useSelector((state) => state.auth);
@@ -17,7 +18,8 @@ export default function SecretKeyChild() {
   const [value2, setValue2] = useState("");
   const [value3, setValue3] = useState("");
   const [disableBtn, setDisableBtn] = useState(true);
-  
+
+  const dispatch = useDispatch();
 
   const input1Ref = useRef(null);
   const input2Ref = useRef(null);
@@ -77,7 +79,8 @@ export default function SecretKeyChild() {
     // setFormData(value + value1 + value2 + value3);
     const passwordUser = value + value1 + value2 + value3;
     if (passwordUser === childrenActive?.secret_password) {
-        navigate("/");
+      dispatch(setCategory("Chương trình"));
+      navigate("/");
     }
   };
 

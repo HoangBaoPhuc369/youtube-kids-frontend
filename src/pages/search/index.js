@@ -10,7 +10,7 @@ import "./style.css";
 
 export default function Search() {
   const { key } = useParams();
-  const { videos } = useSelector((state) => state.video);
+  const { videos, loading } = useSelector((state) => state.video);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(searchVideos({ key: key }));
@@ -22,7 +22,7 @@ export default function Search() {
         <div className="search-content">
           <div className="search-background-left"></div>
           {videos?.length > 0 ? (
-            <Video videos={videos} />
+            <Video videos={videos} loading={loading} />
           ) : (
             <>
               <div className="search-not-found"></div>

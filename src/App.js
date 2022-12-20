@@ -29,6 +29,7 @@ import ChooseContentSettings from "./pages/Admin/ChooseContentSettings";
 import SecretKeyChild from "./pages/profile/SecretKeyChild";
 import { useEffect, useState } from "react";
 import DetailsTest from "./pages/Details/DetailsTest";
+import VideoPlayer from "./component/video player";
 
 
 function App() {
@@ -108,7 +109,7 @@ function App() {
           exact
         />
 
-        {/* <Route path="/video-detail-test/:id" element={<DetailsTest />} exact /> */}
+        <Route path="/video-player-test/" element={<VideoPlayer />} exact />
       </Route>
     </Routes>
   );

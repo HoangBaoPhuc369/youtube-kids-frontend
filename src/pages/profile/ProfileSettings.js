@@ -84,22 +84,24 @@ export default function ProfileSettings() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (validator.isEmpty(name) || validator.isEmpty(pictureActive)) {
-      setDisableBtn(true);
-    } else if (!validator.matches(name, /^[a-zA-Z ]+$/)) {
-      setDisableBtn(true);
-    } else {
-      console.log(name, pictureActive);
-      dispatch(
-        updateChildrenProfileForChildren({
-          childId: childrenActive._id,
-          userId: user?.google_id,
-          name: name,
-          picture: pictureActive,
-        })
-      );
-      setDisableBtn(false);
-    }
+    // if (validator.isEmpty(name) || validator.isEmpty(pictureActive)) {
+    //   setDisableBtn(true);
+    // } else if (!validator.matches(name, /^[a-zA-Z ]+$/)) {
+    //   setDisableBtn(true);
+    // } else {
+    //   console.log(name, pictureActive);
+
+    // }
+
+    dispatch(
+      updateChildrenProfileForChildren({
+        childId: childrenActive._id,
+        userId: user?.google_id,
+        name: name,
+        picture: pictureActive,
+      })
+    );
+    setDisableBtn(false);
   };
 
   const navigate = useNavigate();

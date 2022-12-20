@@ -48,6 +48,11 @@ export default function Details() {
   const chatRef = useRef(null);
   const videoRef = useRef(null);
   const playRef = useRef(null);
+  const scrollRef = useRef();
+
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [chatVideo?.messages]);
 
   useEffect(() => {
     dispatch(createOrGetChatVideo({ videoId: param.id }));
@@ -163,8 +168,10 @@ export default function Details() {
                       picture={m.picture}
                       name={m.name}
                       text={m.text}
+                      scrollRef={scrollRef}
                     />
                   ))}
+                  
                 </div>
                 <div className="video-chat-footer">
                   <div className="video-chat-input-wrap">
