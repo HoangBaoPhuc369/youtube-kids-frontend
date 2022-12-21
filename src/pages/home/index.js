@@ -4,13 +4,16 @@ import Footer from "../../component/footer";
 import Header from "../../component/header";
 import ContentSettingsToast from "../../component/toast/ContentSettingsToast";
 import Video from "../../component/video";
+import VideoHistory from "../../component/video/videoHistory";
 import { searchVideos } from "../../redux/feature/videolistSlice";
 import "./style.css";
 
 export default function Home({ page }) {
-  const { videos, loading, category } = useSelector((state) => state.video);
+  const { videos, loading, category, error } = useSelector(
+    (state) => state.video
+  );
 
-  const { childrenSelected } = useSelector((state) => state.auth);
+  const { childrenActive } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
 
@@ -31,18 +34,24 @@ export default function Home({ page }) {
     }
   };
 
-  // useEffect(() => {
-  //   dispatch(searchVideos({ key: keyword(category) }));
-  // }, [category]);
+  useEffect(() => {
+    if (childrenActive.content_settings !== "self-approval") {
+      dispatch(searchVideos({ key: keyword(category) }));
+    }
+  }, [category, dispatch]);
 
   return (
     <div className="home-wrapper">
       <Header page={page} />
 
       <div className="home-container">
-        {/* <div className="home-background-left"></div>
-        <Video videos={videos} loading={loading} />
-        <div className="home-background-right"></div> */}
+        <div className="home-background-left"></div>
+        {childrenActive.content_settings !== "self-approval" ? (
+          <Video videos={videos} loading={loading} error={error} />
+        ) : (
+          <VideoHistory videos={childrenActive.approvedContent} />
+        )}
+        <div className="home-background-right"></div>
       </div>
 
       <Footer />

@@ -10,10 +10,13 @@ export const getUser = createAsyncThunk(
 
       const children = data.user.childrens;
       if (children.length === 0) {
-        navigate("/profile-account");
+        setTimeout(() => {
+          navigate("/profile-account");
+        }, 500);
       } else {
-        const listProfilePage = `/list-profile/${data.user.google_id}`;
-        navigate(listProfilePage);
+        setTimeout(() => {
+          navigate("/list-profile");
+        }, 500);
       }
       return data.user;
     } catch (err) {
@@ -190,6 +193,42 @@ export const updateContentChidlrenSettings = createAsyncThunk(
   }
 );
 
+export const addVideoByParent = createAsyncThunk(
+  "children/addVideoByParent",
+  async (
+    { childId, userId, videoId, channelId, thumbnail, title },
+    { rejectWithValue }
+  ) => {
+    try {
+      const { data } = await api.addVideoByParent(
+        childId,
+        userId,
+        videoId,
+        channelId,
+        thumbnail,
+        title
+      );
+      console.log(data);
+      return data;
+    } catch (err) {
+      return err.response.data;
+    }
+  }
+);
+
+export const removeVideoByParent = createAsyncThunk(
+  "children/removeVideoByParent",
+  async ({ childId, userId, videoId }, { rejectWithValue }) => {
+    try {
+      const { data } = await api.removeVideoByParent(childId, userId, videoId);
+      console.log(data);
+      return data;
+    } catch (err) {
+      return err.response.data;
+    }
+  }
+);
+
 const initialState = {
   user: Cookies.get("user") ? JSON.parse(Cookies.get("user")) : null,
   guess: null,
@@ -241,8 +280,8 @@ export const authSlice = createSlice({
     },
     [getUser.fulfilled]: (state, action) => {
       state.loading = false;
-      Cookies.set("user", JSON.stringify(action.payload), { expires: 7 });
       state.user = action.payload;
+      Cookies.set("user", JSON.stringify(action.payload), { expires: 7 });
       state.error = "";
     },
     [getUser.rejected]: (state, action) => {
@@ -344,11 +383,37 @@ export const authSlice = createSlice({
     [updateContentChidlrenSettings.rejected]: (state, action) => {
       state.error = action.payload.message;
     },
+
+    [addVideoByParent.fulfilled]: (state, action) => {
+      state.user.childrens = action.payload.childrens;
+      Cookies.set("user", JSON.stringify(state.user));
+      if (
+        state.childrenActive !== null &&
+        state.childrenActive._id === action.payload.children._id
+      ) {
+        state.childrenActive = action.payload.children;
+      }
+      state.childrenSelected = action.payload.children;
+      Cookies.set("childrenSelected", JSON.stringify(action.payload.children));
+      state.error = "";
+    },
+
+    [removeVideoByParent.fulfilled]: (state, action) => {
+      state.user.childrens = action.payload.childrens;
+      Cookies.set("user", JSON.stringify(state.user));
+      state.childrenSelected = action.payload.children;
+      Cookies.set("childrenSelected", JSON.stringify(action.payload.children));
+      state.error = "";
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { Logout, setChildrenActive, setChildrenSelect, removeChildrenCreated } =
-  authSlice.actions;
+export const {
+  Logout,
+  setChildrenActive,
+  setChildrenSelect,
+  removeChildrenCreated,
+} = authSlice.actions;
 
 export default authSlice.reducer;

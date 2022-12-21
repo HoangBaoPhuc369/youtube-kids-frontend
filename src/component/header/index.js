@@ -260,8 +260,7 @@ export default function Header({ page }) {
                 ) : null}
                 {!search ? (
                   <div className="header-center-category-wrapper">
-                    {childrenActive?.content_settings === "kiddie" ||
-                    childrenSelected?.content_settings === "kiddie" ? (
+                    {childrenActive?.content_settings === "kiddie"  ? (
                       <>
                         <div
                           className="header-center-category-item"
@@ -312,9 +311,7 @@ export default function Header({ page }) {
                           )}
                         </div>
                       </>
-                    ) : childrenActive?.content_settings === "teen" ||
-                      (childrenSelected?.content_settings === "self-approval" &&
-                        !checkAdminPage) ? (
+                    ) : childrenActive?.content_settings === "teen" ? (
                       <>
                         <div
                           className="header-center-category-item"

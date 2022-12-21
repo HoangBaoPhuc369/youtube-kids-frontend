@@ -1,19 +1,41 @@
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Badge from "react-bootstrap/Badge";
 import Dropdown from "react-bootstrap/Dropdown";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import { HiDotsVertical } from "react-icons/hi";
+import { useDispatch } from "react-redux";
+import { setVideo } from "../../redux/feature/videolistSlice";
 
 export default function VideoCardHistory({ video, role }) {
+  // const checkRole =
+  //   role === "parent"
+  //     ? `/admin/video-details/${video.videoId}`
+  //     : `/video-detail/${video.videoId}`;
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const hanldeLinkTo = () => {
+    dispatch(
+      setVideo({
+        videoId: video.videoId,
+        channelId: video.channelId,
+        title: video.title,
+        channelTitle: video.channelTitle,
+      })
+    );
 
-  const checkRole = role === "parent" ? `/admin/video-details/${video.videoId}` : `/video-detail/${video.videoId}`
+    if (role === "parent") {
+      navigate(`/admin/video-details/${video.videoId}`);
+    } else {
+      navigate(`/video-detail/${video.videoId}`);
+    }
+  };
 
   return (
     <>
       <Col>
-        <Link className="video-link" to={checkRole}>
+        <div className="video-link" onClick={() => hanldeLinkTo()}>
           <Card className="video-card">
             <Card.Img variant="top" src={video.thumbnail} />
 
@@ -32,7 +54,7 @@ export default function VideoCardHistory({ video, role }) {
               </Dropdown>
             </Card.Body>
           </Card>
-        </Link>
+        </div>
       </Col>
     </>
   );

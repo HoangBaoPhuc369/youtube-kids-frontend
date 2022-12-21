@@ -18,7 +18,7 @@ import "./style.css";
 import ArrowLeftIcon from "../../svgs/ArrowLeftIcon";
 import useClickOutside from "../../utils/clickOutside";
 import { useDispatch, useSelector } from "react-redux";
-import { setCategory } from "../../redux/feature/videolistSlice";
+import { setCategory, setCategoryAdmin } from "../../redux/feature/videolistSlice";
 import MusicIconDisable from "./../../svgs/MusicIconDisable";
 import MusicIcon from "../../svgs/MusicIcon";
 import BopcornIconDisable from "../../svgs/BopcornIconDisable";
@@ -57,21 +57,17 @@ export default function HeaderVideoDetailAdmin() {
 
   window.addEventListener("scroll", changeBackground);
   const navigate = useNavigate();
-  const handleHistory = () => {
-    navigate("/history");
-  };
-
   const handleShowSearch = () => {
     setSearch(true);
     inputSearchRef.current?.focus();
   };
 
   const handleSearch = () => {
-    navigate(`/search/${inputSearchRef.current.value}`);
+    navigate(`/admin/search/${inputSearchRef.current.value}`);
   };
 
   const handleChangeCategory = (cate) => {
-    dispatch(setCategory(cate));
+    dispatch(setCategoryAdmin(cate));
   };
 
   return (
@@ -81,14 +77,14 @@ export default function HeaderVideoDetailAdmin() {
           <div className="header-wrap">
             <div className="header-left">
               <div className="header-left-icon">
-                <Link to={"/"} className="header-left-icon-wrap">
+                <Link to={"/admin/approve-content/"} className="header-left-icon-wrap">
                   <ArrowLeftIcon />
                 </Link>
               </div>
               <img
                 src={childrenSelected?.picture}
                 alt=""
-                onClick={handleHistory}
+              
               />
             </div>
 
@@ -130,35 +126,35 @@ export default function HeaderVideoDetailAdmin() {
               {!search ? (
                 <div className="header-center-category-wrapper">
                   <Link
-                    to={"/"}
+                    to={"/admin/approve-content/"}
                     onClick={() => handleChangeCategory("Chương trình")}
                     className="header-center-category-item"
                   >
                     <BopcornIconDisable className="category-item-icon" />
                   </Link>
                   <Link
-                    to={"/"}
+                    to={"/admin/approve-content/"}
                     onClick={() => handleChangeCategory("Âm nhạc")}
                     className="header-center-category-item"
                   >
                     <MusicIconDisable className="category-item-icon" />
                   </Link>
                   <Link
-                    to={"/"}
+                    to={"/admin/approve-content/"}
                     onClick={() => handleChangeCategory("Học tập")}
                     className="header-center-category-item"
                   >
                     <LightIconDisable className="category-item-icon" />
                   </Link>
                   <Link
-                    to={"/"}
+                    to={"/admin/approve-content/"}
                     onClick={() => handleChangeCategory("Khám phá")}
                     className="header-center-category-item"
                   >
                     <DiscoverDisableIcon className="category-item-icon" />
                   </Link>
                   <Link
-                    to={"/"}
+                    to={"/admin/approve-content/"}
                     onClick={() => handleChangeCategory("Trò chơi")}
                     className="header-center-category-item"
                   >

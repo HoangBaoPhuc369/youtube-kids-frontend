@@ -28,14 +28,12 @@ export const getPlaylistChannelVideos = (idPlaylist) =>
     `${process.env.REACT_APP_YOUTUBE_BASE_URL}playlistItems?part=snippet%2CcontentDetails%2Cstatus&maxResults=50&playlistId=${idPlaylist}&key=${process.env.REACT_APP_YOUTUBE_API_KEY}`
   );
 
-export const searchVideo = (key, nextPage) =>
-  // search?part=snippet&order=date&q=video cho tre em&safeSearch=strict&maxResults=32&key=AIzaSyAkCm5boRgvBXioONTHkoxomRa538S5zUg&regionCode=VN
+export const searchVideo = (key) =>
   axios.get(
-    `${process.env.REACT_APP_YOUTUBE_BASE_URL}search?part=snippet&order=date&q=${key}&safeSearch=strict&maxResults=32&key=${process.env.REACT_APP_YOUTUBE_API_KEY}&regionCode=VN${nextPage}`
+    `${process.env.REACT_APP_YOUTUBE_BASE_URL}search?part=snippet&order=date&q=${key}&safeSearch=strict&maxResults=32&key=${process.env.REACT_APP_YOUTUBE_API_KEY}&regionCode=VN`
   );
 
 export const checkVideoForChildren = (videosId) =>
-  // search?part=snippet&order=date&q=video cho tre em&safeSearch=strict&maxResults=32&key=AIzaSyAkCm5boRgvBXioONTHkoxomRa538S5zUg&regionCode=VN
   axios.get(
     `${process.env.REACT_APP_YOUTUBE_BASE_URL}videos?part=snippet%2CcontentDetails%2Cstatistics%2C%20status&id=${videosId}&maxResults=50&regionCode=VN&key=${process.env.REACT_APP_YOUTUBE_API_KEY}`
   );
@@ -139,11 +137,19 @@ export const updateChildrenProfileForParent = (childId, userId, formData) =>
     formData
   );
 
-export const addVideoByParent = (childId, userId, videoId, thumbnail, title) =>
+export const addVideoByParent = (
+  childId,
+  userId,
+  videoId,
+  channelId,
+  thumbnail,
+  title
+) =>
   axios.patch(
     `${process.env.REACT_APP_BACKEND_URL}/users/${userId}/childrens/${childId}/add-video`,
     {
       videoId,
+      channelId,
       thumbnail,
       title,
     }

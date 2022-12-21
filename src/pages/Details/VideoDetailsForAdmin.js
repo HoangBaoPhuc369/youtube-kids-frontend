@@ -32,8 +32,14 @@ import HeaderVideoDetailAdmin from "../../component/header/HeaderVideoDetailAdmi
 export default function VideoDetailsForAdmin({ page }) {
   const navigate = useNavigate();
   const param = useParams();
-  const { videos, channelVideo, chatVideo, loading, relateVideos } =
-    useSelector((state) => state.video);
+  const {
+    videos,
+    channelVideo,
+    chatVideo,
+    loading,
+    relateVideos,
+    videoSelected,
+  } = useSelector((state) => state.video);
   const { childrenActive, user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
@@ -42,12 +48,12 @@ export default function VideoDetailsForAdmin({ page }) {
   const videoRef = useRef(null);
 
   useEffect(() => {
-    // dispatch(getChannelVideo({ idChannel: findVideo.snippet.channelId }));
+    dispatch(getChannelVideo({ idChannel: videoSelected.channelId }));
   }, [param]);
 
-  //   const handleChannel = (id) => {
-  //     navigate(`/channel/${id}`);
-  //   };
+  const handleChannel = (id) => {
+    navigate(`/admin/channel/${id}`);
+  };
 
   return (
     <div className="video-detail-wrapper">
@@ -82,13 +88,18 @@ export default function VideoDetailsForAdmin({ page }) {
                   }
                   alt=""
                 />
-                <div className="video-info-title">
-                  <span>{videoPlay?.snippet.title}</span>
+                <div
+                  className="video-info-title"
+                  onClick={() => handleChannel(channelVideo[0]?.id)}
+                >
+                  <span onClick={() => handleChannel(channelVideo[0]?.id)}>
+                    {videoSelected.title}
+                  </span>
                   <p
                     className="video-info-description"
-                    //   onClick={() => handleChannel(channelVideo[0]?.id)}
+                    onClick={() => handleChannel(channelVideo[0]?.id)}
                   >
-                    {videoPlay?.snippet.channelTitle}
+                    {videoSelected.channelTitle}
                   </p>
                 </div>
               </Col>

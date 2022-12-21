@@ -12,11 +12,6 @@ export default function Video({ videos, loading, role, error }) {
       <div className="video-wrapper">
         <Container>
           <Row xs={1} md={2} lg={3} xl={4} className="g-4 video-row">
-            {!loading && !error
-              ? videos?.map((video, idx) => (
-                  <VideoCard video={video} key={idx} role={role} />
-                ))
-              : null}
             {loading ? (
               Array.from({ length: 8 }).map((ske, idx) => (
                 <Col key={idx}>
@@ -42,6 +37,10 @@ export default function Video({ videos, loading, role, error }) {
                     </Card.Body>
                   </Card>
                 </Col>
+              ))
+            ) : !loading && !error ? (
+              videos?.map((video, idx) => (
+                <VideoCard video={video} key={idx} role={role} />
               ))
             ) : (
               <>

@@ -12,7 +12,6 @@ import Admin from "./pages/Admin";
 import History from "./pages/History";
 import ProfileCreated from "./component/profileAcount/ProfileCreated";
 import LoggedInRoutes from "./routes/LoggedInRoutes";
-import ListProfileChildren from "./component/form/ListProfileChildren";
 import ProfileSettings from "./pages/profile/ProfileSettings";
 import { useSelector } from "react-redux";
 import ParentProfile from "./pages/ParentProfile";
@@ -24,14 +23,15 @@ import Education from "./pages/education";
 import ProfileOptions from "./component/profile-options";
 import ProfileSecretKey from "./pages/SecretKey/ProfileSecretKey";
 import RequiredAuth from "./routes/RequiredAuth";
-import ApproveContent from "./component/approveContent";
 import ChooseContentSettings from "./pages/Admin/ChooseContentSettings";
 import SecretKeyChild from "./pages/profile/SecretKeyChild";
 import { useEffect, useState } from "react";
-import DetailsTest from "./pages/Details/DetailsTest";
 import VideoPlayer from "./component/video player";
 import VideoDetailsForAdmin from "./pages/Details/VideoDetailsForAdmin";
 import HomeApproveContent from "./component/approveContent/HomeApproveContent";
+import ListProfileChildren from "./component/form/ListProfileChildren";
+import SearchVideoAdmin from "./pages/search/SearchVideoAdmin";
+import ChannelVideoAdmin from "./pages/Channel/ChannelVideoAdmin";
 
 function App() {
   // const { user } = useSelector((state) => state.auth);
@@ -53,8 +53,6 @@ function App() {
         <Route path="/history" element={<History />} exact />
         <Route path="/profile-settings" element={<ProfileSettings />} exact />
         <Route path="/search/:key" element={<Search />} exact />
-
-        <Route path="/profile-options" element={<ProfileOptions />} exact />
         <Route path="/secret-key-child" element={<SecretKeyChild />} exact />
         <Route
           path="/profile-settings/secret-key"
@@ -70,11 +68,8 @@ function App() {
       <Route element={<RequiredAuth />}>
         <Route path="/profile-account" element={<ProfileAccount />} exact />
         <Route path="/profile-created" element={<ProfileCreated />} exact />
-        <Route
-          path="/list-profile/:id"
-          element={<ListProfileChildren />}
-          exact
-        />
+        <Route path="/profile-options" element={<ProfileOptions />} exact />
+        <Route path="/list-profile" element={<ListProfileChildren />} exact />
 
         {/* Admin route */}
         <Route path="/admin" element={<Admin page="admin" />} exact />
@@ -98,7 +93,7 @@ function App() {
 
         <Route
           path="/admin/approve-content/"
-          element={<HomeApproveContent  />}
+          element={<HomeApproveContent />}
           exact
         />
         <Route
@@ -118,6 +113,10 @@ function App() {
           element={<VideoDetailsForAdmin page="details" />}
           exact
         />
+
+        <Route path="/admin/search/:key" element={<SearchVideoAdmin />} exact />
+
+        <Route path="/admin/channel/:id" element={<ChannelVideoAdmin />} exact />
       </Route>
       <Route path="/video-player-test/" element={<VideoPlayer />} exact />
     </Routes>

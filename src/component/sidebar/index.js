@@ -187,7 +187,7 @@ export default function Sidebar() {
             <input
               value={value}
               name="number1"
-              type="password"
+              type={user?.secret_password ? "password" : "text"}
               onChange={(e) => handleTypeInput(e, input1Ref.current.name)}
               placeholder="#"
               maxLength="1"
@@ -195,7 +195,7 @@ export default function Sidebar() {
             />
             <input
               value={value1}
-              type="password"
+              type={user?.secret_password ? "password" : "text"}
               name="number2"
               onChange={(e) => handleTypeInput(e, input2Ref.current.name)}
               placeholder="#"

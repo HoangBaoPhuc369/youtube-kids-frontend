@@ -78,6 +78,8 @@ export default function LoginOauth2() {
   const handleLogin = () => {
     if (!user) {
       Login();
+    } else if (user.childrens.length > 0) {
+      navigate("/list-profile");
     } else {
       navigate("/profile-account");
     }

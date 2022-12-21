@@ -136,3 +136,35 @@
   max-width: 736px;
   width: 100%;
 }
+
+.video-add-content {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-right: 20px;
+  font-size: 25px;
+  color: #fff;
+}
+
+.video-add-content > svg {
+  background-color: #000;
+  border-radius: 50%;
+}
+
+.video-saved-content {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 10px 20px;
+}
+
+.badge.bg-success {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}
+
+.video-saved-badge > svg {
+  font-size: 18px;
+  margin-right: 5px;
+}

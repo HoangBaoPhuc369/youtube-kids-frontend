@@ -76,6 +76,18 @@ export const searchVideos = createAsyncThunk(
   }
 );
 
+export const searchVideosForAdmin = createAsyncThunk(
+  "videos/searchVideosForAdmin",
+  async ({ key }, { rejectWithValue }) => {
+    try {
+      const { data } = await api.searchVideo(key);
+      return data.items;
+    } catch (err) {
+      return err.response?.data;
+    }
+  }
+);
+
 export const getPlaylistChannelVideos = createAsyncThunk(
   "search/getChannelVideos",
   async ({ key }) => {
@@ -121,6 +133,12 @@ const initialState = {
   chatVideo: null,
   category: "Chương trình",
   categoryAdmin: "Chương trình",
+  videoSelected: {
+    videoId: null,
+    channelId: null,
+    title: null,
+    channelTitle: null,
+  },
   error: "",
   loading: false,
 };
@@ -139,6 +157,10 @@ export const videolistSlice = createSlice({
 
     setCategoryAdmin: (state, action) => {
       state.categoryAdmin = action.payload;
+    },
+
+    setVideo: (state, action) => {
+      state.videoSelected = action.payload;
     },
   },
   extraReducers: {
@@ -206,6 +228,22 @@ export const videolistSlice = createSlice({
       state.error = action.payload.message;
     },
 
+    [searchVideosForAdmin.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [searchVideosForAdmin.fulfilled]: (state, action) => {
+      state.loading = false;
+      if (!action.payload.error) {
+        state.videos = action.payload;
+      } else {
+        state.error = action.payload.error.message;
+      }
+    },
+    [searchVideosForAdmin.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload.message;
+    },
+
     [getPlaylistChannelVideos.pending]: (state, action) => {
       state.loading = true;
     },
@@ -235,7 +273,7 @@ export const videolistSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { clearMessageSuccess, setCategory, setCategoryAdmin } =
+export const { clearMessageSuccess, setCategory, setCategoryAdmin, setVideo } =
   videolistSlice.actions;
 
 export default videolistSlice.reducer;

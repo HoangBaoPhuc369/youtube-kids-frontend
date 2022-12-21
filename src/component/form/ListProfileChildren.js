@@ -11,7 +11,6 @@ export default function ListProfileChildren() {
   const { user } = useSelector((state) => state.auth);
   const cardRef = useRef(null);
   const navigate = useNavigate();
-  const { id } = useParams();
 
   const dispatch = useDispatch();
 

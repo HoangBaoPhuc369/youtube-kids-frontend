@@ -11,7 +11,7 @@ export default function VideoHistory({ videos, role }) {
     <>
       <div className="video-wrapper">
         <Container>
-          <Row xs={1} md={2} lg={4} className="g-4">
+          <Row xs={1} md={2} lg={4} className="g-4 video-row">
             {videos?.map((video, idx) => (
               <VideoCardHistory video={video} key={idx} role={role} />
             ))}

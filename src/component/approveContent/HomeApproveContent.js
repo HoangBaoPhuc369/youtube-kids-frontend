@@ -4,6 +4,7 @@ import Footer from "../../component/footer";
 import Header from "../../component/header";
 import ContentSettingsToast from "../../component/toast/ContentSettingsToast";
 import Video from "../../component/video";
+import { fakeVideosData } from "../../data/videosData";
 import { searchVideos } from "../../redux/feature/videolistSlice";
 import HeaderHomeAPC from "../header/HeaderHomeAPC";
 import HeaderVideoDetailAdmin from "../header/HeaderVideoDetailAdmin";

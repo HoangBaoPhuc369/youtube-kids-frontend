@@ -25,7 +25,7 @@ export default function ContentSettingsToast() {
         </div>
       </div>
 
-      <PreviewVideo show={modalShow} onHide={() => setModalShow(false)} />
+      <PreviewVideo show={modalShow} videos={childrenSelected.approvedContent} onHide={() => setModalShow(false)} />
     </>
   );
 }

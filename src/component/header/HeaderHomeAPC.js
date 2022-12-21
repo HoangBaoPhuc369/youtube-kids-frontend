@@ -65,7 +65,7 @@ export default function HeaderHomeAPC() {
   };
 
   const handleSearch = () => {
-    navigate(`/search/${inputSearchRef.current.value}`);
+    navigate(`/admin/search/${inputSearchRef.current.value}`);
   };
 
   const handleChangeCategory = (cate) => {
