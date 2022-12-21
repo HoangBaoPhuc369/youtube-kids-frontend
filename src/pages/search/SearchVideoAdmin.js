@@ -13,7 +13,7 @@ import ContentSettingsToast from "../../component/toast/ContentSettingsToast";
 
 export default function Search() {
   const { key } = useParams();
-  const { videos, loading } = useSelector((state) => state.video);
+  const { videos, loading, error } = useSelector((state) => state.video);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(searchVideosForAdmin({ key: key }));
@@ -25,7 +25,13 @@ export default function Search() {
         <div className="search-content">
           <div className="search-background-left"></div>
           {videos?.length > 0 ? (
-            <Video videos={videos} loading={loading} role="admin" />
+            <Video
+              videos={videos}
+              error={error}
+              loading={loading}
+              role="admin"
+              type="search"
+            />
           ) : (
             <>
               <div className="search-not-found"></div>

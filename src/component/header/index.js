@@ -97,7 +97,9 @@ export default function Header({ page }) {
 
               <div className="header-right">
                 <div className="header-right-icon">
-                  {!search && !checkAdminPage ? (
+                  {!search &&
+                  !checkAdminPage &&
+                  childrenActive?.content_settings !== "self-approval" ? (
                     <div className="header-right-search-icon-wrap">
                       <div
                         className="header-right-search-icon"
@@ -260,7 +262,7 @@ export default function Header({ page }) {
                 ) : null}
                 {!search ? (
                   <div className="header-center-category-wrapper">
-                    {childrenActive?.content_settings === "kiddie"  ? (
+                    {childrenActive?.content_settings === "kiddie" ? (
                       <>
                         <div
                           className="header-center-category-item"

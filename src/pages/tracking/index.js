@@ -1,6 +1,6 @@
+import "./style.css";
 import { Button, Card, Container, Form } from "react-bootstrap";
 import Header from "../../component/header";
-import "./style.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -9,8 +9,9 @@ import { MdModeEdit } from "react-icons/md";
 import { listProfilePicture } from "../../data/listProfilePicture";
 import validator from "validator";
 import { updateChildrenProfileForParent } from "../../redux/feature/authSlice";
+import HeaderAdmin from "../../component/header/HeaderAdmin";
 
-function SettingProfile() {
+export default function Tracking() {
   const navigate = useNavigate();
   const { user, childrenSelected } = useSelector((state) => state.auth);
   const { picture, _id } = user;
@@ -86,15 +87,14 @@ function SettingProfile() {
       [input]: value,
     }));
   };
-
   return (
     <>
       <div className="admin-wrapper">
-        <Header />
+        <HeaderAdmin />
         <div className="parent-profile-wrapper">
           <div className="background-layer-left"></div>
           <Container className="container-center container-admin default-height">
-            <Card className="text-center login-form min-height-400">
+            <Card className="text-center login-form min-heght-card">
               <Card.Body className="">
                 <Form onSubmit={submitFormData}>
                   <Form.Label className="login-form-title">
@@ -191,5 +191,3 @@ function SettingProfile() {
     </>
   );
 }
-
-export default SettingProfile;

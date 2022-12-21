@@ -63,7 +63,7 @@
   height: 100%;
   margin: 0 auto;
   position: relative;
-  z-index: 999999;
+  z-index: 99999;
 }
 
 .header-center-search {

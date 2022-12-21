@@ -16,7 +16,7 @@ import { useState } from "react";
 import { RiCheckboxCircleLine } from "react-icons/ri";
 import { setVideo } from "../../redux/feature/videolistSlice";
 
-export default function VideoCard({ video, loading, role }) {
+export default function VideoCard({ video, loading, role, type }) {
   const { childrenSelected, user } = useSelector((state) => state.auth);
   const [isApproved, setIsApproved] = useState(false);
   const dispatch = useDispatch();
@@ -58,15 +58,16 @@ export default function VideoCard({ video, loading, role }) {
   }
 
   useEffect(() => {
-    const findVideo = childrenSelected.approvedContent.find(
-      (v) => v.videoId === video.id
+    const idVideo = type === "search" ? video.id.videoId : video.id;
+    const findVideo = childrenSelected?.approvedContent.find(
+      (v) => v.videoId === idVideo
     );
     if (findVideo) {
       setIsApproved(true);
     } else {
       setIsApproved(false);
     }
-  }, [childrenSelected.approvedContent, video.id]);
+  }, [childrenSelected?.approvedContent, video, type]);
 
   const linkTo = (id) => {
     dispatch(
@@ -74,18 +75,23 @@ export default function VideoCard({ video, loading, role }) {
         videoId: id,
         channelId: video.snippet.channelId,
         title: video.snippet.title,
-        channelTitle: video.snippet.channelTitle
+        channelTitle: video.snippet.channelTitle,
       })
     );
 
-    navigate(`/admin/video-details/${id}`);
+    if (role === "admin") {
+      navigate(`/admin/video-details/${id}`);
+    } else {
+      navigate(`/video-detail/${id}`);
+    }
   };
 
   const handleSaveVideo = () => {
+    const idVideo = type === "search" ? video.id.videoId : video.id;
     const data = {
       childId: childrenSelected?._id,
       userId: user?.google_id,
-      videoId: video.id,
+      videoId: idVideo,
       channelId: video.snippet.channelId,
       thumbnail: video.snippet.thumbnails.medium.url,
       title: video.snippet.title,
@@ -94,11 +100,12 @@ export default function VideoCard({ video, loading, role }) {
   };
 
   const handleRemoveVideo = () => {
+    const idVideo = type === "search" ? video.id.videoId : video.id;
     dispatch(
       removeVideoByParent({
         childId: childrenSelected?._id,
         userId: user?.google_id,
-        videoId: video.id,
+        videoId: idVideo,
       })
     );
   };

@@ -6,16 +6,21 @@ import { BsPlus } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { setChildrenSelect } from "../../redux/feature/authSlice";
+import {
+  deleteChildByParent,
+  deleteSecretPasswordChildren,
+  deleteSecretPasswordChildrenForParent,
+  Logout,
+  setChildrenSelect,
+} from "../../redux/feature/authSlice";
 
-export default function ParentProfile({page}) {
+export default function ParentProfile({ page }) {
   const navigate = useNavigate();
   const { user, childrenSelected } = useSelector((state) => state.auth);
   const { _id } = user;
   const dispatch = useDispatch();
   const { id } = useParams();
 
-  const [childrens, setChildrens] = useState(user?.childrens);
   // const [childrenActive, setChildrenActive] = useState(null);
 
   useEffect(() => {
@@ -40,6 +45,40 @@ export default function ParentProfile({page}) {
   const handleAddProfile = () => {
     const admin = true;
     navigate(`/admin/add-profile/${admin}`);
+  };
+
+  const handleDeleteKey = () => {
+    dispatch(
+      deleteSecretPasswordChildrenForParent({
+        childrenID: childrenSelected?._id,
+        userId: user?.google_id,
+        secretPassword: "",
+      })
+    );
+  };
+
+  const handleDelChild = () => {
+    if (user?.childrens.length > 1) {
+      dispatch(
+        deleteChildByParent({
+          childId: childrenSelected?._id,
+          userId: user?.google_id,
+          enough: true,
+          navigate,
+        })
+      );
+    } else {
+      dispatch(
+        deleteChildByParent({
+          childId: childrenSelected?._id,
+          userId: user?.google_id,
+          enough: false,
+          navigate,
+        })
+      );
+      window.open(`${process.env.REACT_APP_BACKEND_URL}/auth/logout`, "_self");
+      dispatch(Logout());
+    }
   };
 
   return (
@@ -111,7 +150,11 @@ export default function ParentProfile({page}) {
                       Chỉnh sửa
                     </Button>
                   </div>
-                  <hr />
+                </Card.Body>
+              </Card>
+              <Card className="my-2 w-50">
+                <Card.Header>Cài đặt riêng tư</Card.Header>
+                <Card.Body>
                   {childrenSelected?.content_settings === "self-approval" ? (
                     <>
                       <div className="d-flex justify-content-between">
@@ -137,17 +180,33 @@ export default function ParentProfile({page}) {
                     <div>Xóa hồ sơ này</div>
                     <Button
                       variant="light"
-                      // onClick={handleLogout}
+                      onClick={() => handleDelChild()}
                       className="text-end text-color-edit"
                     >
                       Xóa
                     </Button>
                   </div>
+
+                  {childrenSelected?.secret_password ? (
+                    <>
+                      <hr />
+                      <div className="d-flex justify-content-between">
+                        <div>Xóa mã bí mật</div>
+                        <Button
+                          variant="light"
+                          onClick={() => handleDeleteKey()}
+                          className="text-end text-color-edit"
+                        >
+                          Xóa
+                        </Button>
+                      </div>
+                    </>
+                  ) : null}
                 </Card.Body>
               </Card>
               <Card className="my-2 w-50">
                 <Card.Header>Hồ sơ</Card.Header>
-                {childrens?.map((children, index) => {
+                {user?.childrens?.map((children, index) => {
                   if (children?._id !== childrenSelected?._id) {
                     return (
                       <div

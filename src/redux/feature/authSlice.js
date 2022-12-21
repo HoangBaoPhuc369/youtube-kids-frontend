@@ -65,13 +65,19 @@ export const createSecretPasswordChildren = createAsyncThunk(
     { childrenID, userId, secretPassword, nextStep },
     { rejectWithValue }
   ) => {
+    console.log(childrenID, userId, secretPassword, nextStep);
     try {
       const { data } = await api.createSecretPasswordChildren(
         childrenID,
         userId,
         secretPassword
       );
-      return { data: data, nextStep };
+      if (data) {
+        setTimeout(() => {
+          nextStep();
+        }, 500);
+      }
+      return { data: data };
     } catch (err) {
       return err.response.data;
     }
@@ -94,18 +100,34 @@ export const deleteSecretPasswordChildren = createAsyncThunk(
   }
 );
 
+export const deleteSecretPasswordChildrenForParent = createAsyncThunk(
+  "children/deleteSecretPasswordChildrenForParent",
+  async ({ childrenID, userId, secretPassword }, { rejectWithValue }) => {
+    try {
+      const { data } = await api.createSecretPasswordChildren(
+        childrenID,
+        userId,
+        secretPassword
+      );
+      return data;
+    } catch (err) {
+      return err.response.data;
+    }
+  }
+);
+
 export const addVideoHistory = createAsyncThunk(
   "children/addVideoHistory",
   async (
-    { childrenID, userId, videoId, thumbnail, title },
+    { childrenID, userId, videoId, channelId, thumbnail, title },
     { rejectWithValue }
   ) => {
-    console.log(childrenID, videoId, thumbnail, title);
     try {
       const { data } = await api.addVideoHistory(
         childrenID,
         userId,
         videoId,
+        channelId,
         thumbnail,
         title
       );
@@ -208,7 +230,6 @@ export const addVideoByParent = createAsyncThunk(
         thumbnail,
         title
       );
-      console.log(data);
       return data;
     } catch (err) {
       return err.response.data;
@@ -221,7 +242,22 @@ export const removeVideoByParent = createAsyncThunk(
   async ({ childId, userId, videoId }, { rejectWithValue }) => {
     try {
       const { data } = await api.removeVideoByParent(childId, userId, videoId);
+      return data;
+    } catch (err) {
+      return err.response.data;
+    }
+  }
+);
+
+export const deleteChildByParent = createAsyncThunk(
+  "children/deleteChildByParent",
+  async ({ childId, userId, enough, navigate }, { rejectWithValue }) => {
+    try {
+      const { data } = await api.deleteChildByParent(childId, userId);
       console.log(data);
+      if (enough && data.childrens.length > 0) {
+        navigate(`/admin/parentprofilesettings/${data.childrens[0]._id}`);
+      }
       return data;
     } catch (err) {
       return err.response.data;
@@ -251,7 +287,9 @@ export const authSlice = createSlice({
       state.user = null;
       state.childrenActive = null;
       state.childrenCreated = null;
+      state.childrenSelected = null;
       Cookies.remove("childrenCreated");
+      Cookies.remove("childrenSelected");
       Cookies.remove("user");
     },
 
@@ -313,8 +351,6 @@ export const authSlice = createSlice({
       state.user.childrens = action.payload.data.childrens;
       Cookies.set("user", JSON.stringify(state.user));
       state.childrenActive = action.payload.data.children;
-      action.payload.nextStep();
-
       state.errorChildren = "";
     },
     [createSecretPasswordChildren.rejected]: (state, action) => {
@@ -328,6 +364,16 @@ export const authSlice = createSlice({
       state.errorChildren = "";
     },
     [deleteSecretPasswordChildren.rejected]: (state, action) => {
+      state.errorChildren = action.payload.message;
+    },
+
+    [deleteSecretPasswordChildrenForParent.fulfilled]: (state, action) => {
+      state.user.childrens = action.payload.childrens;
+      Cookies.set("user", JSON.stringify(state.user));
+      state.childrenSelected = action.payload.children;
+      state.errorChildren = "";
+    },
+    [deleteSecretPasswordChildrenForParent.rejected]: (state, action) => {
       state.errorChildren = action.payload.message;
     },
 
@@ -401,8 +447,20 @@ export const authSlice = createSlice({
     [removeVideoByParent.fulfilled]: (state, action) => {
       state.user.childrens = action.payload.childrens;
       Cookies.set("user", JSON.stringify(state.user));
+      if (
+        state.childrenActive !== null &&
+        state.childrenActive._id === action.payload.children._id
+      ) {
+        state.childrenActive = action.payload.children;
+      }
       state.childrenSelected = action.payload.children;
       Cookies.set("childrenSelected", JSON.stringify(action.payload.children));
+      state.error = "";
+    },
+
+    [deleteChildByParent.fulfilled]: (state, action) => {
+      state.user.childrens = action.payload.childrens;
+      Cookies.set("user", JSON.stringify(state.user));
       state.error = "";
     },
   },

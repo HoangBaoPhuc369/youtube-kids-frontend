@@ -92,6 +92,10 @@ export default function Admin({page}) {
     navigate(`/admin/add-profile/${admin}`);
   };
 
+  const hanldeTracking = () => {
+    navigate('/admin/tracking/');
+  }
+
   return (
     <>
       <div className="admin-wrapper">
@@ -267,6 +271,28 @@ export default function Admin({page}) {
                       </Accordion.Body>
                     </Accordion.Item>
                   </Accordion>
+                </Card.Body>
+              </Card>
+
+              <Card className="my-2 w-50">
+                <Card.Header>Theo dõi hoạt động của con</Card.Header>
+                <Card.Body>
+                  <div className="d-flex justify-content-between">
+                    <div>
+                    Xem các hoạt động của các con
+                      <br />
+                      <span className="font-size-accordion">
+                        
+                      </span>
+                    </div>
+                    <Button
+                      variant="light"
+                      className="text-end text-color-edit"
+                      onClick={() => hanldeTracking()}
+                    >
+                      Xem
+                    </Button>
+                  </div>
                 </Card.Body>
               </Card>
             </div>

@@ -84,7 +84,6 @@ export default function CheckSecretPassword({ nextStep, prevStep, formData }) {
           nextStep,
         })
       );
-        
     } else {
       textRef.current.innerHTML =
         "Không ổn, mã của bạn không khớp rồi. Hãy thử lại nào";

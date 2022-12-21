@@ -14,7 +14,6 @@ export default function OffCanvas() {
   const handleShow = () => setShow(true);
 
   const navigate = useNavigate();
-  const [menuOpen, setMenuOpen] = useState(false);
   const [value, setValue] = useState("");
   const [value1, setValue1] = useState("");
   const [value2, setValue2] = useState("");
@@ -59,14 +58,6 @@ export default function OffCanvas() {
     randomQuestion();
   }, []);
 
-  const handleStateChange = (state) => {
-    setMenuOpen(state.isOpen);
-  };
-
-  const closeMenu = () => {
-    setMenuOpen(false);
-  };
-
   const resetInput = () => {
     setValue("");
     setValue1("");
@@ -75,7 +66,6 @@ export default function OffCanvas() {
   };
 
   useClickOutside(sidebarRef, () => {
-    setMenuOpen(false);
     setTimeout(() => {
       !user?.secret_password && randomQuestion();
       resetInput();
@@ -150,7 +140,6 @@ export default function OffCanvas() {
     if (!user?.secret_password) {
       if (userResult === result.toString()) {
         navigate("/admin");
-        closeMenu();
       } else {
         textRef.current.innerHTML =
           "Câu trả lời chưa chính xác, vui lòng thử lại";
@@ -159,7 +148,6 @@ export default function OffCanvas() {
     } else {
       if (userResult2 === user?.secret_password) {
         navigate("/admin");
-        closeMenu();
       } else {
         textRef.current.innerHTML = "Mật mã không chính xác, vui lòng thử lại";
       }

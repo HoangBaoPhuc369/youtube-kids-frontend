@@ -25,7 +25,7 @@ export default function PreviewVideo({ show, onHide, videos }) {
       <Modal.Body>
         <Row xs={1} md={4} className="g-4">
           <div className="preview-video-wrapper">
-            <VideoHistory videos={childrenSelected.approvedContent} role="parent" />
+            <VideoHistory videos={childrenSelected?.approvedContent} role="parent" />
           </div>
         </Row>
       </Modal.Body>

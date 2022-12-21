@@ -105,6 +105,7 @@ export const addVideoHistory = (
   childrenID,
   userId,
   videoId,
+  channelId,
   thumbnail,
   title
 ) =>
@@ -112,6 +113,7 @@ export const addVideoHistory = (
     `${process.env.REACT_APP_BACKEND_URL}/users/${userId}/childrens/${childrenID}/add-video-history`,
     {
       videoId,
+      channelId,
       thumbnail,
       title,
     }
@@ -163,9 +165,9 @@ export const removeVideoByParent = (childId, userId, videoId) =>
     }
   );
 
-export const deleteChildByParent = (childId, userId, videoId) =>
+export const deleteChildByParent = (childId, userId) =>
   axios.delete(
-    `${process.env.REACT_APP_BACKEND_URL}users/${userId}/childrens/${childId}`
+    `${process.env.REACT_APP_BACKEND_URL}/users/${userId}/childrens/${childId}`
   );
 
 // --------------------------CHAT API-----------------------------------

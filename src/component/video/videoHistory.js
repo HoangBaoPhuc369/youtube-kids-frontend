@@ -12,9 +12,16 @@ export default function VideoHistory({ videos, role }) {
       <div className="video-wrapper">
         <Container>
           <Row xs={1} md={2} lg={4} className="g-4 video-row">
-            {videos?.map((video, idx) => (
-              <VideoCardHistory video={video} key={idx} role={role} />
-            ))}
+            {videos.length > 0 ? (
+              videos?.map((video, idx) => (
+                <VideoCardHistory video={video} key={idx} role={role} />
+              ))
+            ) : (
+              <div className="video-error">
+                <div className="video-not-found"></div>
+                <h3 style={{ textAlign: "center" }}>Chưa có video nào được phê duyệt cho bạn !</h3>
+              </div>
+            )}
           </Row>
         </Container>
       </div>

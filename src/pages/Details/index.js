@@ -26,15 +26,22 @@ import { addVideoHistory } from "../../redux/feature/authSlice";
 import Skeleton from "react-loading-skeleton";
 import { io } from "socket.io-client";
 import VideoPlayer from "../../component/video player";
+import { Container } from "react-bootstrap";
+import VideoDetailsWrap from "./VideoDetailsWrap";
 
 const socketRef = io.connect("http://localhost:8900");
 
-export default function Details({page}) {
+export default function Details({ page }) {
   const navigate = useNavigate();
   const param = useParams();
-  const { videos, channelVideo, chatVideo, loading, relateVideos } = useSelector(
-    (state) => state.video
-  );
+  const {
+    videos,
+    channelVideo,
+    chatVideo,
+    loading,
+    relateVideos,
+    videoSelected,
+  } = useSelector((state) => state.video);
   const { childrenActive, user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
@@ -63,14 +70,18 @@ export default function Details({page}) {
   }, []);
 
   useEffect(() => {
-    if (videos) {
-      const findVideo = videos.find((v) => v.id === param.id);
-      if (findVideo) {
-        setVideoPlay(findVideo);
-        dispatch(getChannelVideo({ idChannel: findVideo.snippet.channelId }));
-        dispatch(relatedToVideos({ videoId: param.id }));
-      }
+    const findVideo = videos?.find((v) => v.id === param.id);
+    if (videos && findVideo) {
+      setVideoPlay(findVideo);
     }
+    if (childrenActive.content_settings !== "self-approval") {
+      dispatch(relatedToVideos({ videoId: param.id }));
+    }
+    dispatch(
+      getChannelVideo({
+        idChannel: videoSelected?.channelId,
+      })
+    );
   }, [param]);
 
   const handleOffChat = () => {
@@ -78,15 +89,17 @@ export default function Details({page}) {
   };
 
   const handleStoreVideo = () => {
-    const findVideo = videos.find((v) => v.id === param.id);
-    const checkHistory = childrenActive.historyWatchVideo.find((v) => v.videoId === param.id);
-    console.log(findVideo)
+    const findVideo = videos?.find((v) => v.id === param.id);
+    const checkHistory = childrenActive.historyWatchVideo.find(
+      (v) => v.videoId === param.id
+    );
     if (findVideo && !checkHistory) {
       dispatch(
         addVideoHistory({
           childrenID: childrenActive?._id,
           userId: user?.google_id,
           videoId: param.id,
+          channelId: channelVideo[0]?.id,
           thumbnail: findVideo.snippet.thumbnails.medium.url,
           title: videoPlay?.snippet.title,
         })
@@ -119,145 +132,51 @@ export default function Details({page}) {
   const handleChannel = (id) => {
     navigate(`/channel/${id}`);
   };
-
+  console.log(childrenActive.content_settings);
   return (
     <div className="video-detail-wrapper">
       <Header page={page} />
-
-      <Row className="video-play-wrapper">
-        <Col xl={9} className="video-play-wrap">
-          <div className="video-play-row">
-            <div
-              className={
-                chatShow ? "video-play-left" : "video-play-left transform-video"
-              }
-            >
-              <VideoPlayer id={param.id} handleStoreVideo={handleStoreVideo} />
-            </div>
-            <div
-              className={
-                chatShow ? "video-play-right" : "video-play-right show-chat"
-              }
-            >
-              <div className="video-chat-live">
-                <div className="video-chat-header">
-                  <h5>Live chat</h5>
-                  <div
-                    className="video-chat-header-icon"
-                    onClick={handleOffChat}
-                  >
-                    <HiOutlineArrowRightCircle />
-                  </div>
-                </div>
-                <div className="video-chat-body">
-                  {chatVideo?.messages?.map((m, index) => (
-                    <Message
-                      key={index}
-                      picture={m.picture}
-                      name={m.name}
-                      text={m.text}
-                      scrollRef={scrollRef}
-                    />
-                  ))}
-                  
-                </div>
-                <div className="video-chat-footer">
-                  <div className="video-chat-input-wrap">
-                    <img
-                      src={childrenActive?.picture}
-                      className="message-img"
-                      alt=""
-                    />
-                    <div className="video-chat-input">
-                      <div className="message-user-name">
-                        {childrenActive.name}
-                      </div>
-                      <div className="video-chat-input-effect">
-                        <input
-                          className="effect-2"
-                          value={valueMessage}
-                          onChange={(e) => setValueMessage(e.target.value)}
-                          type="text"
-                          placeholder="Nói gì đó..."
-                        />
-                        <span className="focus-border"></span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="video-chat-btn-wrap">
-                    <div className="video-chat-btn-react">
-                      <BiSmile />
-                    </div>
-                    <div className="video-chat-btn-send" onClick={handleSend}>
-                      <IoSendSharp />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <Row className="video-play-bottom">
-            <Col sm={12} className="video-info">
-              <img
-                className="video-info-avatar"
-                src={
-                  channelVideo &&
-                  channelVideo[0]?.snippet?.thumbnails?.default?.url
-                }
-                alt=""
-              />
-              <div className="video-info-title">
-                <span>{videoPlay?.snippet.title}</span>
-                <p
-                  className="video-info-description"
-                  onClick={() => handleChannel(channelVideo[0]?.id)}
-                >
-                  {videoPlay?.snippet.channelTitle}
-                </p>
-              </div>
-
-              <div className="video-info-btn-wrap">
-                <Button variant="primary" onClick={handleStoreVideo}>
-                  Save
-                </Button>
-              </div>
-            </Col>
-          </Row>
-        </Col>
-        <Col xl={3} className="video-list-suggest scroll-bar">
-          <Row xs={1} md={1} lg={1} className="g-4 video-list-suggest-row">
-            {loading
-              ? Array.from({ length: 8 }).map((ske, idx) => (
-                  <Col key={idx}>
-                    <Card className="video-skeleton-card">
-                      <Skeleton
-                        height="172.13px"
-                        containerClassName="avatar-skeleton"
-                        style={{ borderRadius: "4px", paddingTop: "10px" }}
-                      />
-                      <Card.Body>
-                        <Skeleton
-                          height="18px"
-                          width="239px"
-                          containerClassName="avatar-skeleton"
-                          style={{ borderRadius: "4px", paddingTop: "10px" }}
-                        />
-                        <Skeleton
-                          height="18px"
-                          width="139px"
-                          containerClassName="avatar-skeleton"
-                          style={{ borderRadius: "4px", paddingTop: "10px" }}
-                        />
-                      </Card.Body>
-                    </Card>
-                  </Col>
-                ))
-              : relateVideos?.map((video, idx) => (
-                  <VideoCard video={video} key={video.id} />
-                ))}
-          </Row>
-        </Col>
-      </Row>
+      {childrenActive.content_settings !== "self-approval" ? (
+        <VideoDetailsWrap
+          childrenActive={childrenActive}
+          chatShow={chatShow}
+          param={param}
+          handleStoreVideo={handleStoreVideo}
+          handleOffChat={handleOffChat}
+          chatVideo={chatVideo}
+          scrollRef={scrollRef}
+          valueMessage={valueMessage}
+          setValueMessage={setValueMessage}
+          handleSend={handleSend}
+          channelVideo={channelVideo}
+          handleChannel={handleChannel}
+          videoPlay={videoPlay}
+          videoSelected={videoSelected}
+          loading={loading}
+          relateVideos={relateVideos}
+        />
+      ) : (
+        <Container>
+          <VideoDetailsWrap
+            childrenActive={childrenActive}
+            chatShow={chatShow}
+            param={param}
+            handleStoreVideo={handleStoreVideo}
+            handleOffChat={handleOffChat}
+            chatVideo={chatVideo}
+            scrollRef={scrollRef}
+            valueMessage={valueMessage}
+            setValueMessage={setValueMessage}
+            handleSend={handleSend}
+            channelVideo={channelVideo}
+            handleChannel={handleChannel}
+            videoPlay={videoPlay}
+            videoSelected={videoSelected}
+            loading={loading}
+            relateVideos={relateVideos}
+          />
+        </Container>
+      )}
     </div>
   );
 }

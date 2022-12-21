@@ -32,6 +32,7 @@ import HomeApproveContent from "./component/approveContent/HomeApproveContent";
 import ListProfileChildren from "./component/form/ListProfileChildren";
 import SearchVideoAdmin from "./pages/search/SearchVideoAdmin";
 import ChannelVideoAdmin from "./pages/Channel/ChannelVideoAdmin";
+import Tracking from "./pages/tracking";
 
 function App() {
   // const { user } = useSelector((state) => state.auth);
@@ -117,6 +118,8 @@ function App() {
         <Route path="/admin/search/:key" element={<SearchVideoAdmin />} exact />
 
         <Route path="/admin/channel/:id" element={<ChannelVideoAdmin />} exact />
+
+        <Route path="/admin/tracking/" element={<Tracking />} exact />
       </Route>
       <Route path="/video-player-test/" element={<VideoPlayer />} exact />
     </Routes>

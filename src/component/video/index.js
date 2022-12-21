@@ -6,7 +6,7 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { Card, Col } from "react-bootstrap";
 
-export default function Video({ videos, loading, role, error }) {
+export default function Video({ videos, loading, role, error, type }) {
   return (
     <>
       <div className="video-wrapper">
@@ -40,7 +40,7 @@ export default function Video({ videos, loading, role, error }) {
               ))
             ) : !loading && !error ? (
               videos?.map((video, idx) => (
-                <VideoCard video={video} key={idx} role={role} />
+                <VideoCard video={video} key={idx} role={role} type={type} />
               ))
             ) : (
               <>
