@@ -240,7 +240,7 @@ export default function VideoPlayer({ id, handleStoreVideo }) {
           onBookmark={addBookmark}
         />
       </div>
-      <canvas ref={canvasRef} />
+      {/* <canvas ref={canvasRef} /> */}
     </>
   );
 }

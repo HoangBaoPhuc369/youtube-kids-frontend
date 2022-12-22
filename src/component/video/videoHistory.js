@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import VideoCard from "./VideoCard";
 import VideoCardHistory from "./VideoCardHistory";
 
-export default function VideoHistory({ videos, role }) {
+export default function VideoHistory({ videos, role, socketRef }) {
   return (
     <>
       <div className="video-wrapper">

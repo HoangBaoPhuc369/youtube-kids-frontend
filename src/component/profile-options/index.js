@@ -1,20 +1,22 @@
 import { Card } from "react-bootstrap";
 import { Container, Row, Col } from "react-bootstrap";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./style.css";
 import OffCanvas from "../sidebar/offcanva";
 import { useNavigate } from "react-router-dom";
 import { setChildrenActive } from "../../redux/feature/authSlice";
+import SocketContext from "../../wssConnection/socketContext";
 
-export default function ProfileOptions({ socketRef }) {
+export default function ProfileOptions() {
   const { user } = useSelector((state) => state.auth);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const socketRef = useContext(SocketContext);
+
   useEffect(() => {
-    // socketRef?.emit("addUser", { userId: user?.google_id });
     socketRef?.emit("join_room", user?.google_id);
   }, []);
 

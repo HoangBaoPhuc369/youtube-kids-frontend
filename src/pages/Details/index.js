@@ -6,7 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Header from "./../../component/header/index";
 import { useSelector } from "react-redux";
 import VideoCard from "../../component/video/VideoCard";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import {
   createOrGetChatVideo,
@@ -28,10 +28,11 @@ import { io } from "socket.io-client";
 import VideoPlayer from "../../component/video player";
 import { Container } from "react-bootstrap";
 import VideoDetailsWrap from "./VideoDetailsWrap";
+import SocketContext from "../../wssConnection/socketContext";
 
 // const socketRef = io.connect("http://localhost:8900");
 
-export default function Details({ page, socketRef }) {
+export default function Details({ page }) {
   const navigate = useNavigate();
   const param = useParams();
   const {
@@ -53,6 +54,8 @@ export default function Details({ page, socketRef }) {
   const videoRef = useRef(null);
   const playRef = useRef(null);
   const scrollRef = useRef();
+
+  const socketRef = useContext(SocketContext);
 
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
