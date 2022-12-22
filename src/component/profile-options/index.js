@@ -7,11 +7,16 @@ import OffCanvas from "../sidebar/offcanva";
 import { useNavigate } from "react-router-dom";
 import { setChildrenActive } from "../../redux/feature/authSlice";
 
-export default function ProfileOptions() {
+export default function ProfileOptions({ socketRef }) {
   const { user } = useSelector((state) => state.auth);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    // socketRef?.emit("addUser", { userId: user?.google_id });
+    socketRef.emit("join_room", user?.google_id);
+  }, []);
 
   const handleChooseProfile = (childId) => {
     const findChildren = user.childrens.find((child) => child?._id === childId);

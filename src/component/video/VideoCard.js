@@ -16,8 +16,10 @@ import { useState } from "react";
 import { RiCheckboxCircleLine } from "react-icons/ri";
 import { setVideo } from "../../redux/feature/videolistSlice";
 
-export default function VideoCard({ video, loading, role, type }) {
-  const { childrenSelected, user } = useSelector((state) => state.auth);
+export default function VideoCard({ video, loading, role, type, socketRef }) {
+  const { childrenSelected, user, childrenActive } = useSelector(
+    (state) => state.auth
+  );
   const [isApproved, setIsApproved] = useState(false);
   const dispatch = useDispatch();
 
@@ -84,6 +86,22 @@ export default function VideoCard({ video, loading, role, type }) {
     } else {
       navigate(`/video-detail/${id}`);
     }
+    const idVideo = type === "search" ? video.id.videoId : video.id;
+    const data = {
+      name: childrenActive?.name,
+      picture: childrenActive?.picture,
+      type: "video",
+      activity: {
+        content: `${childrenActive?.name} vừa xem video ${video.snippet.title}`,
+        videoId: idVideo,
+        channelId: video.snippet.channelId,
+        new_name: "",
+        new_picture: "",
+      },
+    };
+    const date = new Date.now();
+
+    socketRef.emit("watch_video", { data: data, date: date, room: user?.google_id });
   };
 
   const handleSaveVideo = () => {

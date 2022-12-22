@@ -29,9 +29,9 @@ import VideoPlayer from "../../component/video player";
 import { Container } from "react-bootstrap";
 import VideoDetailsWrap from "./VideoDetailsWrap";
 
-const socketRef = io.connect("http://localhost:8900");
+// const socketRef = io.connect("http://localhost:8900");
 
-export default function Details({ page }) {
+export default function Details({ page, socketRef }) {
   const navigate = useNavigate();
   const param = useParams();
   const {
@@ -148,7 +148,6 @@ export default function Details({ page }) {
           valueMessage={valueMessage}
           setValueMessage={setValueMessage}
           handleSend={handleSend}
-          channelVideo={channelVideo}
           handleChannel={handleChannel}
           videoPlay={videoPlay}
           videoSelected={videoSelected}
@@ -168,7 +167,6 @@ export default function Details({ page }) {
             valueMessage={valueMessage}
             setValueMessage={setValueMessage}
             handleSend={handleSend}
-            channelVideo={channelVideo}
             handleChannel={handleChannel}
             videoPlay={videoPlay}
             videoSelected={videoSelected}

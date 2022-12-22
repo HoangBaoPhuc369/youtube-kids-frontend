@@ -8,7 +8,7 @@ import VideoHistory from "../../component/video/videoHistory";
 import { searchVideos } from "../../redux/feature/videolistSlice";
 import "./style.css";
 
-export default function Home({ page }) {
+export default function Home({ page, socketRef }) {
   const { videos, loading, category, error } = useSelector(
     (state) => state.video
   );
@@ -47,7 +47,7 @@ export default function Home({ page }) {
       <div className="home-container">
         <div className="home-background-left"></div>
         {childrenActive.content_settings !== "self-approval" ? (
-          <Video videos={videos} loading={loading} error={error} />
+          <Video socketRef={socketRef} videos={videos} loading={loading} error={error} />
         ) : (
           <VideoHistory videos={childrenActive.approvedContent} />
         )}

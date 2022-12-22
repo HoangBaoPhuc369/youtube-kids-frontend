@@ -7,13 +7,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../../redux/feature/authSlice";
 import { useNavigate } from "react-router-dom";
 
-export default function LoginOauth2() {
+export default function LoginOauth2({ socketRef }) {
   const container = useRef(null);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const { user } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    // socketRef?.emit("addUser", { userId: user?.google_id });
+    socketRef.emit("join_room", user?.google_id);
+  }, []);
+
+
 
   useEffect(() => {
     lottie.loadAnimation({

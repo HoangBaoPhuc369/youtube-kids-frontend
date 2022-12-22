@@ -1,3 +1,85 @@
 .min-heght-card {
+}
+
+.tracking-form {
+  width: 912px;
   min-height: 600px;
+  background: #fff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 99;
+}
+
+.tracking-notification {
+  background: #3ea6ff;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  border-radius: 10px;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.tracking-notification-img {
+  width: 50px;
+  height: 50px;
+}
+
+.tracking-notification-img > img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.tracking-notification-text-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.tracking-notification-text-wrap > span:first-child {
+  font-size: 18px;
+  font-weight: 500;
+  color: #fff;
+}
+
+.tracking-notification-text-wrap > span:last-child {
+  font-size: 14px;
+  color: #fff;
+}
+
+.tracking-form-wrapper {
+  overflow-y: scroll;
+  border-radius: 8px;
+  padding: 48px;
+  height: 450px;
+  width: 608px;
+  margin: 20px auto;
+  border: 1px solid rgba(0, 0, 0, 0.12) !important;
+}
+
+.tracking-notification-left {
+  gap: 10px;
+}
+
+.tracking-options {
+  margin-right: 10px;
+  width: 34px;
+  height: 34px;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.tracking-options > svg {
+  font-size: 20px;
 }

@@ -33,43 +33,80 @@ import ListProfileChildren from "./component/form/ListProfileChildren";
 import SearchVideoAdmin from "./pages/search/SearchVideoAdmin";
 import ChannelVideoAdmin from "./pages/Channel/ChannelVideoAdmin";
 import Tracking from "./pages/tracking";
+import { io } from "socket.io-client";
 
 function App() {
-  // const { user } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth);
   // const { childrenActive } = useSelector((state) => state.children);
+  const [socketRef, setSocketRef] = useState(null);
+
+  useEffect(() => {
+    const newSocket = io("http://localhost:8900/", {
+      transports: ["polling"],
+    });
+
+    setSocketRef(newSocket);
+    // newSocket.on("get_watch_video_activity", (data) => {
+    //   console.log(data);
+    // });
+
+    newSocket.on("get_watch_video_activity", (data) => {
+      console.log(data);
+    });
+
+    return () => newSocket.close();
+  }, [setSocketRef]);
 
   return (
     <Routes>
       <Route element={<LoggedInRoutes />}>
-        <Route path="/" element={<Home page="home" />} exact />
-        <Route path="/ability" element={<Ability />} exact />
-        <Route path="/education" element={<Education />} exact />
-        <Route path="/parent" element={<Parent />} exact />
-        <Route
-          path="/video-detail/:id"
-          element={<Details page="details" />}
-          exact
-        />
-        <Route path="/channel/:id" element={<Channel />} exact />
-        <Route path="/history" element={<History />} exact />
-        <Route path="/profile-settings" element={<ProfileSettings />} exact />
-        <Route path="/search/:key" element={<Search />} exact />
-        <Route path="/secret-key-child" element={<SecretKeyChild />} exact />
-        <Route
-          path="/profile-settings/secret-key"
-          element={<ProfileSecretKey />}
-          exact
-        />
+        {socketRef ? (
+          <>
+            <Route
+              path="/"
+              element={<Home page="home" socketRef={socketRef} />}
+              exact
+            />
+            <Route path="/parent" element={<Parent />} exact />
+            <Route
+              path="/video-detail/:id"
+              element={<Details page="details" socketRef={socketRef} />}
+              exact
+            />
+            <Route path="/channel/:id" element={<Channel />} exact />
+            <Route path="/history" element={<History />} exact />
+            <Route
+              path="/profile-settings"
+              element={<ProfileSettings />}
+              exact
+            />
+            <Route path="/search/:key" element={<Search />} exact />
+            <Route
+              path="/secret-key-child"
+              element={<SecretKeyChild />}
+              exact
+            />
+            <Route
+              path="/profile-settings/secret-key"
+              element={<ProfileSecretKey />}
+              exact
+            />
+          </>
+        ) : null}
       </Route>
 
-      <Route path="/login" element={<Login />} exact />
+      <Route path="/login" element={<Login />} socketRef={socketRef} exact />
       <Route path="/login/success" element={<LoginSuccess />} exact />
       <Route path="*" element={<div>Not found</div>} exact />
 
       <Route element={<RequiredAuth />}>
         <Route path="/profile-account" element={<ProfileAccount />} exact />
         <Route path="/profile-created" element={<ProfileCreated />} exact />
-        <Route path="/profile-options" element={<ProfileOptions />} exact />
+        <Route
+          path="/profile-options"
+          element={<ProfileOptions socketRef={socketRef} />}
+          exact
+        />
         <Route path="/list-profile" element={<ListProfileChildren />} exact />
 
         {/* Admin route */}
@@ -117,7 +154,11 @@ function App() {
 
         <Route path="/admin/search/:key" element={<SearchVideoAdmin />} exact />
 
-        <Route path="/admin/channel/:id" element={<ChannelVideoAdmin />} exact />
+        <Route
+          path="/admin/channel/:id"
+          element={<ChannelVideoAdmin />}
+          exact
+        />
 
         <Route path="/admin/tracking/" element={<Tracking />} exact />
       </Route>

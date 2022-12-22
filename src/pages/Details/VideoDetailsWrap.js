@@ -8,6 +8,7 @@ import { BiSmile } from "react-icons/bi";
 import { IoSendSharp } from "react-icons/io5";
 import Skeleton from "react-loading-skeleton";
 import VideoCard from "./../../component/video/VideoCard";
+import { useSelector } from "react-redux";
 
 export default function VideoDetailsWrap({
   childrenActive,
@@ -20,13 +21,13 @@ export default function VideoDetailsWrap({
   valueMessage,
   setValueMessage,
   handleSend,
-  channelVideo,
   handleChannel,
   videoPlay,
   videoSelected,
   loading,
   relateVideos,
 }) {
+  const { channelVideo } = useSelector((state) => state.video);
   return (
     <>
       <Row className="video-play-wrapper">
@@ -110,22 +111,30 @@ export default function VideoDetailsWrap({
               <img
                 className="video-info-avatar"
                 src={
-                  channelVideo &&
+                  channelVideo !== null &&
                   channelVideo[0]?.snippet?.thumbnails?.default?.url
                 }
                 alt=""
-                onClick={() => handleChannel(channelVideo[0]?.id)}
+                onClick={() =>
+                  handleChannel(channelVideo !== null && channelVideo[0]?.id)
+                }
               />
               <div className="video-info-title">
-                <span onClick={() => handleChannel(channelVideo[0]?.id)}>
+                <span
+                  onClick={() =>
+                    handleChannel(channelVideo !== null && channelVideo[0]?.id)
+                  }
+                >
                   {videoPlay?.snippet.title || videoSelected.title}
                 </span>
                 <p
                   className="video-info-description"
-                  onClick={() => handleChannel(channelVideo[0]?.id)}
+                  onClick={() =>
+                    handleChannel(channelVideo !== null && channelVideo[0]?.id)
+                  }
                 >
                   {videoPlay?.snippet.channelTitle ||
-                    channelVideo[0]?.snippet?.title}
+                    (channelVideo !== null && channelVideo[0]?.snippet?.title)}
                 </p>
               </div>
 

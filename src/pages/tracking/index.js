@@ -10,83 +10,17 @@ import { listProfilePicture } from "../../data/listProfilePicture";
 import validator from "validator";
 import { updateChildrenProfileForParent } from "../../redux/feature/authSlice";
 import HeaderAdmin from "../../component/header/HeaderAdmin";
+import ToastContainer from "react-bootstrap/ToastContainer";
+import Toast from "react-bootstrap/Toast";
+import { HiDotsHorizontal } from "react-icons/hi";
+import ActivityOptions from "../../component/modals/ActivityOptions";
 
 export default function Tracking() {
   const navigate = useNavigate();
   const { user, childrenSelected } = useSelector((state) => state.auth);
-  const { picture, _id } = user;
   const dispatch = useDispatch();
-  const { id } = useParams();
-
   const [modalShow, setModalShow] = useState(false);
-  const [profilePictures, setProfilePictures] = useState(listProfilePicture);
-  const [error, setError] = useState(false);
-  const [error2, setError2] = useState(false);
-  const [disableBtn, setDisableBtn] = useState(true);
-  const [formData, setFormData] = useState({
-    name: childrenSelected?.name,
-    picture: childrenSelected?.picture,
-    year: childrenSelected?.year,
-    month: childrenSelected?.month,
-  });
 
-  useEffect(() => {
-    if (
-      formData.kid_name === "" ||
-      formData.age === null ||
-      formData.age === ""
-    ) {
-      setDisableBtn(true);
-    } else {
-      setDisableBtn(false);
-    }
-  }, [formData]);
-
-  const submitFormData = (e) => {
-    e.preventDefault();
-
-    // checking if value of first name and last name is empty show error else take to step 2
-    if (validator.isEmpty(formData.name) || validator.isEmpty(formData.year)) {
-      setDisableBtn(true);
-    } else if (
-      (formData.year > 100 || formData.year <= 0) &&
-      !validator.matches(formData.name, /^[a-zA-Z ]+$/)
-    ) {
-      setError(true);
-      setError2(true);
-    } else if (
-      (formData.year > 100 || formData.year <= 0) &&
-      validator.matches(formData.name, /^[a-zA-Z ]+$/)
-    ) {
-      setError(true);
-      setError2(false);
-    } else if (
-      (formData.year <= 100 || formData.year > 0) &&
-      !validator.matches(formData.name, /^[a-zA-Z ]+$/)
-    ) {
-      setError(false);
-      setError2(true);
-    } else {
-      setDisableBtn(false);
-      dispatch(
-        updateChildrenProfileForParent({
-          childId: childrenSelected?._id,
-          userId: user?.google_id,
-          formData: formData,
-          navigate,
-        })
-      );
-    }
-  };
-
-  const handleInputData = (input) => (e) => {
-    const { value } = e.target;
-
-    setFormData((prevState) => ({
-      ...prevState,
-      [input]: value,
-    }));
-  };
   return (
     <>
       <div className="admin-wrapper">
@@ -94,100 +28,46 @@ export default function Tracking() {
         <div className="parent-profile-wrapper">
           <div className="background-layer-left"></div>
           <Container className="container-center container-admin default-height">
-            <Card className="text-center login-form min-heght-card">
+            <Card className="text-center tracking-form min-heght-card">
               <Card.Body className="">
-                <Form onSubmit={submitFormData}>
+                <Form>
                   <Form.Label className="login-form-title">
-                    Chỉnh sửa hồ sơ của
+                    Hoạt động con của tôi
                   </Form.Label>
 
-                  <div className="login-form-wrapper">
-                    <div
-                      className="login-form-profile-img"
-                      onClick={() => setModalShow(true)}
-                    >
-                      <img src={formData.picture} alt="" />
-                      <span className="login-form-profile-img-edit">
-                        <MdModeEdit />
-                      </span>
-                    </div>
-                    <div className="login-form-profile-info">
-                      <div className="input-effect">
-                        <input
-                          className={
-                            error2 ? "effect-2 error-input" : "effect-2"
-                          }
-                          type="text"
-                          value={formData.name}
-                          placeholder="Kid's firstname*"
-                          onChange={handleInputData("name")}
-                        />
-                        <span className="focus-border"></span>
-                        {error2 && (
-                          <span className="input-effect-error">
-                            Enter a valid name
-                          </span>
-                        )}
+                  <div className="tracking-form-wrapper">
+                    {Array.from({ length: 10 }).map((_, idx) => (
+                      <div className="tracking-notification">
+                        <div className="d-flex align-items-center tracking-notification-left">
+                          <div className="tracking-notification-img">
+                            <img
+                              src="https://www.gstatic.com/ytkids/avatars/bck_avatar_kids_emohorse_800_20170929.png"
+                              alt=""
+                            />
+                          </div>
+                          <div className="tracking-notification-text-wrap">
+                            <span>phuc hoang</span>
+                            <span>Vừa xem video</span>
+                          </div>
+                        </div>
+                        <div
+                          className="tracking-options"
+                          onClick={() => setModalShow(true)}
+                        >
+                          <HiDotsHorizontal />
+                        </div>
                       </div>
-
-                      <div className="input-effect">
-                        <input
-                          className={
-                            error ? "effect-2 error-input" : "effect-2"
-                          }
-                          type="text"
-                          value={formData.year}
-                          onChange={handleInputData("year")}
-                          placeholder="Age*"
-                        />
-                        <span className="focus-border"></span>
-                        {error && (
-                          <span className="input-effect-error">
-                            Enter a valid age
-                          </span>
-                        )}
-                      </div>
-
-                      <div className="input-effect">
-                        <input
-                          className="effect-2"
-                          type="text"
-                          value={formData.month}
-                          placeholder="Birth month"
-                          onChange={handleInputData("month")}
-                        />
-                        <span className="focus-border"></span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="group-login-btn pad-10">
-                    <div className="group-login-btn-left"></div>
-                    <div className="btn-right">
-                      <Button
-                        variant="primary"
-                        disabled={disableBtn}
-                        className="btn-next"
-                        type="submit"
-                      >
-                        Next
-                      </Button>
-                    </div>
+                    ))}
                   </div>
                 </Form>
               </Card.Body>
             </Card>
-
-            <ChooseProfilePicture
-              show={modalShow}
-              onHide={() => setModalShow(false)}
-              profilePictures={profilePictures}
-              setFormData={setFormData}
-            />
           </Container>
           <div className="background-layer-right"></div>
         </div>
       </div>
+
+      <ActivityOptions show={modalShow} onHide={() => setModalShow(false)} />
     </>
   );
 }

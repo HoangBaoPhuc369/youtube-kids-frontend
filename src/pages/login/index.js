@@ -7,7 +7,7 @@ import ChildrenForm from "../../component/form/ChildrenForm";
 import StepCheck from "../../component/form/StepCheck";
 import LoginOauth2 from "../../component/form/LoginOauth2";
 
-function Login() {
+function Login({socketRef}) {
   //state for steps
   const [step, setstep] = useState(2);
 
@@ -78,7 +78,7 @@ function Login() {
           <Container>
             <Row>
               <Col>
-                <LoginOauth2 nextStep={nextStep} />
+                <LoginOauth2 nextStep={nextStep} socketRef={socketRef} />
               </Col>
             </Row>
           </Container>
