@@ -143,10 +143,13 @@
 }
 
 .option-activity-detail-profile {
-  margin-top: 10px;
   padding: 40px 20px;
   background-color: #fdedec;
   display: flex;
+  flex-direction: column;
+  width: 400px;
+  align-items: center;
+  margin: 10px auto;
   border-radius: 8px;
 }
 
@@ -160,7 +163,6 @@
   width: 200px;
   height: 200px;
   border-radius: 50%;
-  margin-right: 40px;
 }
 
 .option-activity-detail-profile-img img {
