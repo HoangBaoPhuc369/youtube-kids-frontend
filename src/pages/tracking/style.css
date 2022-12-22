@@ -4,8 +4,9 @@
 .tracking-form {
   width: 912px;
   min-height: 600px;
-  background: #fff;
+  background: #ffffff00;
   position: absolute;
+  border: none;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -13,7 +14,8 @@
 }
 
 .tracking-notification {
-  background: #3ea6ff;
+  background: aliceblue;
+  border: 2px solid #3ea6ff;
   width: 100%;
   display: flex;
   align-items: center;
@@ -41,17 +43,16 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
+  color: #3a4f7a;
 }
 
 .tracking-notification-text-wrap > span:first-child {
   font-size: 18px;
   font-weight: 500;
-  color: #fff;
 }
 
 .tracking-notification-text-wrap > span:last-child {
   font-size: 14px;
-  color: #fff;
 }
 
 .tracking-form-wrapper {
@@ -60,8 +61,15 @@
   padding: 48px;
   height: 450px;
   width: 608px;
+  background-color: #fff;
   margin: 20px auto;
   border: 1px solid rgba(0, 0, 0, 0.12) !important;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.tracking-form-wrapper::-webkit-scrollbar {
+  display: none;
 }
 
 .tracking-notification-left {

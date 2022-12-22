@@ -35,7 +35,7 @@ export default function ActivityOptions({ show, onHide }) {
                     </div>
                   </div>
                   <div className="option-activity-detail">
-                    <iframe
+                    {/* <iframe
                       width="100%"
                       height="100%"
                       id="video-play"
@@ -46,7 +46,16 @@ export default function ActivityOptions({ show, onHide }) {
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       allowFullScreen
                       rel="0"
-                    ></iframe>
+                    ></iframe> */}
+                    <div className="option-activity-detail-profile">
+                      <div className="option-activity-detail-profile-img">
+                        <img
+                          src="https://res.cloudinary.com/same-cloud/image/upload/v1660639365/faceclone/picture/pexels-andrea-piacquadio-845457_wrixfv.jpg"
+                          alt="alt"
+                        />
+                      </div>
+                      <div>Luan Minh</div>
+                    </div>
                   </div>
                 </div>
                 <div className="option-activity-left-bottom">
