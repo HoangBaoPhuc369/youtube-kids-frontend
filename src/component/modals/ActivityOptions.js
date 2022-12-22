@@ -6,11 +6,29 @@ import "./style.css";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Form } from "react-bootstrap";
 import { blockVideo, clearBlockVideo } from "../../redux/feature/authSlice";
+import { ToastContainer, toast, cssTransition } from "react-toastify";
+import { bounce, CloseButton, Msg } from "../toast/ToastMessage";
+import { useContext } from "react";
+import SocketContext from "../../wssConnection/socketContext";
 
 export default function ActivityOptions({ show, onHide }) {
   const { trackingSelected } = useSelector((state) => state.tracking);
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+
+  const socketRef = useContext(SocketContext);
+
+  const toastMsg = (msg) => {
+    toast(<Msg msg={msg} />, {
+      className: "notification_form",
+      toastClassName: "notification_toast",
+      bodyClassName: "notification_body",
+      position: "bottom-center",
+      hideProgressBar: true,
+      autoClose: 2000,
+      transition: bounce,
+    });
+  };
 
   const handleBlock = () => {
     if (trackingSelected?.type === "video") {
@@ -19,8 +37,14 @@ export default function ActivityOptions({ show, onHide }) {
           childId: trackingSelected?.childrenId,
           userId: user?.google_id,
           videoId: trackingSelected?.activity.videoId,
+          toastMsg,
         })
       );
+      socketRef.emit("block-video", {
+        room: user?.google_id,
+        childrenId: trackingSelected?.childrenId,
+        videoId: trackingSelected?.activity.videoId,
+      });
     }
   };
 
@@ -30,8 +54,15 @@ export default function ActivityOptions({ show, onHide }) {
         clearBlockVideo({
           childId: trackingSelected?.childrenId,
           userId: user?.google_id,
+          toastMsg,
         })
       );
+
+      socketRef.emit("clear-block-video", {
+        room: user?.google_id,
+        childrenId: trackingSelected?.childrenId,
+        videoId: trackingSelected?.activity.videoId,
+      });
     }
   };
 
@@ -41,7 +72,6 @@ export default function ActivityOptions({ show, onHide }) {
     );
     const findeVideo = findChildren.block_video.find((v) => v === id);
 
-    console.log(findChildren, findeVideo);
     if (findeVideo) {
       return true;
     } else {
@@ -124,6 +154,8 @@ export default function ActivityOptions({ show, onHide }) {
               </div>
             </div>
           </div>
+
+          <ToastContainer transition={bounce} limit={2} />
         </Row>
       </Modal.Body>
     </Modal>

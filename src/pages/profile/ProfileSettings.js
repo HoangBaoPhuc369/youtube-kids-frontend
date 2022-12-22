@@ -20,6 +20,8 @@ import {
 } from "../../redux/feature/authSlice";
 import SocketContext from "../../wssConnection/socketContext";
 import { updateKidActivity } from "./../../redux/feature/authSlice";
+import { ToastContainer } from "react-toastify";
+import { bounce } from "../../component/toast/ToastMessage";
 
 export default function ProfileSettings() {
   const { user, childrenActive } = useSelector((state) => state.auth);
@@ -299,6 +301,7 @@ export default function ProfileSettings() {
         subtitle={subtitle}
         typeBtn={typeBtn}
       />
+      <ToastContainer transition={bounce} limit={2} />
     </>
   );
 }

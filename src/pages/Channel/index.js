@@ -11,6 +11,8 @@ import {
 import { Container } from "react-bootstrap";
 import RubyIcon from "../../svgs/RubyIcon";
 import { SlOptionsVertical } from "react-icons/sl";
+import { ToastContainer } from "react-toastify";
+import { bounce } from "../../component/toast/ToastMessage";
 
 export default function Channel() {
   const dispatch = useDispatch();
@@ -79,6 +81,7 @@ export default function Channel() {
         <Video videos={videos} loading={loading} />
       </div>
       <Footer />
+      <ToastContainer transition={bounce} limit={2} />
     </div>
   );
 }

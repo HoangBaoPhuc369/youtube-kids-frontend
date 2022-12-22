@@ -7,6 +7,8 @@ import { Button, Container } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import VideoHistory from "../../component/video/videoHistory";
 import { MdModeEdit } from "react-icons/md";
+import { ToastContainer } from "react-toastify";
+import { bounce } from "../../component/toast/ToastMessage";
 
 export default function History() {
   const dispatch = useDispatch();
@@ -84,7 +86,7 @@ export default function History() {
           </div>
         )}
       </div>
-
+      <ToastContainer transition={bounce} limit={2} />
       <Footer />
     </div>
   );

@@ -7,6 +7,8 @@ import Video from "../../component/video";
 import { useSelector } from "react-redux";
 import { searchVideos } from "./../../redux/feature/videolistSlice";
 import "./style.css";
+import { ToastContainer } from "react-toastify";
+import { bounce } from "../../component/toast/ToastMessage";
 
 export default function Search() {
   const { key } = useParams();
@@ -34,6 +36,7 @@ export default function Search() {
           <div className="search-background-right"></div>
         </div>
       </div>
+      <ToastContainer transition={bounce} limit={2} />
     </>
   );
 }

@@ -6,6 +6,8 @@ import { Container, Row, Col, Button } from "react-bootstrap";
 import Header from "../../component/header";
 import { useNavigate } from "react-router-dom";
 import { setCategory } from "../../redux/feature/videolistSlice";
+import { ToastContainer } from "react-toastify";
+import { bounce } from "../../component/toast/ToastMessage";
 
 export default function SecretKeyChild() {
   const { childrenActive } = useSelector((state) => state.auth);
@@ -183,6 +185,7 @@ export default function SecretKeyChild() {
           <div className="loading-background-right"></div>
         </div>
       </div>
+      <ToastContainer transition={bounce} limit={2} />
     </>
   );
 }

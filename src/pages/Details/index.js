@@ -32,8 +32,8 @@ import VideoPlayer from "../../component/video player";
 import { Container } from "react-bootstrap";
 import VideoDetailsWrap from "./VideoDetailsWrap";
 import SocketContext from "../../wssConnection/socketContext";
-
-// const socketRef = io.connect("http://localhost:8900");
+import { ToastContainer } from "react-toastify";
+import { bounce } from "../../component/toast/ToastMessage";
 
 export default function Details({ page }) {
   const navigate = useNavigate();
@@ -224,6 +224,7 @@ export default function Details({ page }) {
           />
         </Container>
       )}
+      <ToastContainer transition={bounce} limit={2} />
     </div>
   );
 }

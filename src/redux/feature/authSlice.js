@@ -281,9 +281,10 @@ export const updateKidActivity = createAsyncThunk(
 
 export const blockVideo = createAsyncThunk(
   "children/blockVideo",
-  async ({ childId, userId, videoId }, { rejectWithValue }) => {
+  async ({ childId, userId, videoId, toastMsg }, { rejectWithValue }) => {
     try {
       const { data } = await api.blockVideo(childId, userId, videoId);
+      toastMsg("Đã block video.");
       return data;
     } catch (err) {
       return err.response.data;
@@ -293,9 +294,10 @@ export const blockVideo = createAsyncThunk(
 
 export const clearBlockVideo = createAsyncThunk(
   "children/clearBlockVideo",
-  async ({ childId, userId }, { rejectWithValue }) => {
+  async ({ childId, userId, toastMsg }, { rejectWithValue }) => {
     try {
       const { data } = await api.clearBlockVideo(childId, userId);
+      toastMsg("Đã bỏ block video.");
       return data;
     } catch (err) {
       return err.response.data;
@@ -305,9 +307,10 @@ export const clearBlockVideo = createAsyncThunk(
 
 export const blockSearch = createAsyncThunk(
   "children/blockSearch",
-  async ({ childId, userId }, { rejectWithValue }) => {
+  async ({ childId, userId, toastMsg }, { rejectWithValue }) => {
     try {
       const { data } = await api.blockSearch(childId, userId);
+      toastMsg("Đã block tìm kiếm.");
       return data;
     } catch (err) {
       return err.response.data;
@@ -317,9 +320,10 @@ export const blockSearch = createAsyncThunk(
 
 export const allowSearch = createAsyncThunk(
   "children/allowSearch",
-  async ({ childId, userId }, { rejectWithValue }) => {
+  async ({ childId, userId, toastMsg }, { rejectWithValue }) => {
     try {
       const { data } = await api.allowSearch(childId, userId);
+      toastMsg("Đã mở tìm kiếm.");
       return data;
     } catch (err) {
       return err.response.data;
@@ -329,9 +333,10 @@ export const allowSearch = createAsyncThunk(
 
 export const blockChat = createAsyncThunk(
   "children/blockChat",
-  async ({ childId, userId }, { rejectWithValue }) => {
+  async ({ childId, userId, toastMsg }, { rejectWithValue }) => {
     try {
       const { data } = await api.blockChat(childId, userId);
+      toastMsg("Đã block chat.");
       return data;
     } catch (err) {
       return err.response.data;
@@ -341,9 +346,10 @@ export const blockChat = createAsyncThunk(
 
 export const allowChat = createAsyncThunk(
   "children/allowChat",
-  async ({ childId, userId }, { rejectWithValue }) => {
+  async ({ childId, userId, toastMsg }, { rejectWithValue }) => {
     try {
       const { data } = await api.allowChat(childId, userId);
+      toastMsg("Đã mở chat.");
       return data;
     } catch (err) {
       return err.response.data;
@@ -416,6 +422,33 @@ export const authSlice = createSlice({
     setActivityChildren: (state, action) => {
       state.user.kids_activity = [action.payload, ...state.user.kids_activity];
       localStorage.setItem("user", JSON.stringify(action.payload));
+    },
+
+    blockVideoState: (state, action) => {
+      state.childrenActive.block_video = [
+        action.payload,
+        ...state.childrenActive.block_video,
+      ];
+    },
+
+    clearVideoState: (state, action) => {
+      state.childrenActive.block_video = [];
+    },
+
+    blockSearchState: (state, action) => {
+      state.childrenActive.allow_search = false;
+    },
+
+    allowSearchState: (state, action) => {
+      state.childrenActive.allow_search = true;
+    },
+
+    blockChatState: (state, action) => {
+      state.childrenActive.allow_chat = true;
+    },
+
+    allowChatState: (state, action) => {
+      state.childrenActive.allow_chat = false;
     },
   },
   extraReducers: {
@@ -672,6 +705,12 @@ export const {
   setChildrenSelect,
   removeChildrenCreated,
   setActivityChildren,
+  blockVideoState,
+  clearVideoState,
+  blockSearchState,
+  allowSearchState,
+  blockChatState,
+  allowChatState,
 } = authSlice.actions;
 
 export default authSlice.reducer;

@@ -36,11 +36,17 @@ import Tracking from "./pages/tracking";
 import { io } from "socket.io-client";
 import useSocket from "./hooks/useSocket";
 import SocketContext from "./wssConnection/socketContext";
+import "animate.css/animate.min.css";
+import "react-toastify/dist/ReactToastify.css";
+import { bounce, Msg } from "./component/toast/ToastMessage";
+import { ToastContainer, toast, cssTransition } from "react-toastify";
 
 function App() {
   const { user } = useSelector((state) => state.auth);
-  // const { childrenActive } = useSelector((state) => state.children);
+  const { childrenActive } = useSelector((state) => state.auth);
   const socket = useSocket("http://localhost:8900");
+
+ 
 
   return (
     <SocketContext.Provider value={socket}>

@@ -71,3 +71,16 @@
   overflow-y: hidden;
   z-index: 9999999999999999;
 }
+
+.Toastify__close-button > svg {
+  display: none;
+}
+
+.notification_form {
+  background: #008596 !important;
+  border: 4px solid #fff !important;
+  border-radius: 10px !important;
+  padding: 20px 25px !important;
+  font-size: 20px !important;
+  color: #fff !important;
+}

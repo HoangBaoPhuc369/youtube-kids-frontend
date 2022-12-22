@@ -21,6 +21,8 @@ import {
 import { setTracking } from "../../redux/feature/trackingSlice";
 import { VscSearchStop, VscSearch } from "react-icons/vsc";
 import { RiChatCheckLine, RiChatDeleteFill } from "react-icons/ri";
+import { ToastContainer, toast, cssTransition } from "react-toastify";
+import { bounce, Msg } from "../../component/toast/ToastMessage";
 
 export default function Tracking() {
   const navigate = useNavigate();
@@ -43,12 +45,14 @@ export default function Tracking() {
   useEffect(() => {
     socketRef?.on("message_to_admin", (data) => {
       console.log(data);
+      dispatch(getKidActivity({ userId: user?.google_id }));
     });
   }, [socketRef]);
 
   useEffect(() => {
     socketRef?.on("get_search_activity", (data) => {
       console.log(data);
+      dispatch(getKidActivity({ userId: user?.google_id }));
     });
   }, [socketRef]);
 
@@ -63,6 +67,18 @@ export default function Tracking() {
     dispatch(setTracking(k));
 
     setModalShow(true);
+  };
+
+  const toastMsg = (msg) => {
+    toast(<Msg msg={msg} />, {
+      className: "notification_form",
+      toastClassName: "notification_toast",
+      bodyClassName: "notification_body",
+      position: "bottom-center",
+      hideProgressBar: true,
+      autoClose: 2000,
+      transition: bounce,
+    });
   };
 
   const checkBlockSearch = (id) => {
@@ -88,8 +104,14 @@ export default function Tracking() {
       blockSearch({
         childId: data.childrenId,
         userId: user?.google_id,
+        toastMsg,
       })
     );
+
+    socketRef.emit("block-search", {
+      room: user?.google_id,
+      childrenId: data.childrenId,
+    });
   };
 
   const handleAllowSeach = (data) => {
@@ -97,8 +119,14 @@ export default function Tracking() {
       allowSearch({
         childId: data.childrenId,
         userId: user?.google_id,
+        toastMsg,
       })
     );
+
+    socketRef.emit("allow-search", {
+      room: user?.google_id,
+      childrenId: data.childrenId,
+    });
   };
 
   const handleBlockChat = (data) => {
@@ -106,8 +134,14 @@ export default function Tracking() {
       blockChat({
         childId: data.childrenId,
         userId: user?.google_id,
+        toastMsg,
       })
     );
+
+    socketRef.emit("block-chat", {
+      room: user?.google_id,
+      childrenId: data.childrenId,
+    });
   };
 
   const handleAllowChat = (data) => {
@@ -115,8 +149,14 @@ export default function Tracking() {
       allowChat({
         childId: data.childrenId,
         userId: user?.google_id,
+        toastMsg,
       })
     );
+
+    socketRef.emit("allow-chat", {
+      room: user?.google_id,
+      childrenId: data.childrenId,
+    });
   };
 
   return (
@@ -134,63 +174,68 @@ export default function Tracking() {
                   </Form.Label>
 
                   <div className="tracking-form-wrapper">
-                    {user?.kids_activity.map((k, idx) => (
-                      <div className="tracking-notification">
-                        <div className="d-flex align-items-center tracking-notification-left">
-                          <div className="tracking-notification-img">
-                            <img src={k.picture} alt="" />
+                    {user?.kids_activity
+                      .slice()
+                      .sort((a, b) => {
+                        return new Date(b.createdAt) - new Date(a.createdAt);
+                      })
+                      .map((k, idx) => (
+                        <div className="tracking-notification" key={idx}>
+                          <div className="d-flex align-items-center tracking-notification-left">
+                            <div className="tracking-notification-img">
+                              <img src={k.picture} alt="" />
+                            </div>
+                            <div className="tracking-notification-text-wrap">
+                              <span>{k.name}</span>
+                              <span>{k.activity.content}</span>
+                            </div>
                           </div>
-                          <div className="tracking-notification-text-wrap">
-                            <span>{k.name}</span>
-                            <span>{k.activity.content}</span>
-                          </div>
-                        </div>
-                        {k.type === "search" ? (
-                          <>
+                          {k.type === "search" ? (
+                            <>
+                              <div
+                                className="tracking-options"
+                                onClick={() => {
+                                  if (checkBlockSearch(k.childrenId)) {
+                                    handleBlockSeach(k);
+                                  } else {
+                                    handleAllowSeach(k);
+                                  }
+                                }}
+                              >
+                                {checkBlockSearch(k.childrenId) ? (
+                                  <VscSearchStop />
+                                ) : (
+                                  <VscSearch />
+                                )}
+                              </div>
+                            </>
+                          ) : k.type === "chat" ? (
                             <div
                               className="tracking-options"
                               onClick={() => {
-                                if (checkBlockSearch(k.childrenId)) {
-                                  handleBlockSeach(k);
+                                if (checkBlockChat(k.childrenId)) {
+                                  handleBlockChat(k);
                                 } else {
-                                  handleAllowSeach(k);
+                                  handleAllowChat(k);
                                 }
                               }}
                             >
-                              {checkBlockSearch(k.childrenId) ? (
-                                <VscSearchStop />
+                              {checkBlockChat(k.childrenId) ? (
+                                <RiChatDeleteFill />
                               ) : (
-                                <VscSearch />
+                                <RiChatCheckLine />
                               )}
                             </div>
-                          </>
-                        ) : k.type === "chat" ? (
-                          <div
-                            className="tracking-options"
-                            onClick={() => {
-                              if (checkBlockChat(k.childrenId)) {
-                                handleBlockChat(k);
-                              } else {
-                                handleAllowChat(k);
-                              }
-                            }}
-                          >
-                            {checkBlockChat(k.childrenId) ? (
-                              <RiChatDeleteFill />
-                            ) : (
-                              <RiChatCheckLine />
-                            )}
-                          </div>
-                        ) : (
-                          <div
-                            className="tracking-options"
-                            onClick={() => handleTracking(k)}
-                          >
-                            <HiDotsHorizontal />
-                          </div>
-                        )}
-                      </div>
-                    ))}
+                          ) : (
+                            <div
+                              className="tracking-options"
+                              onClick={() => handleTracking(k)}
+                            >
+                              <HiDotsHorizontal />
+                            </div>
+                          )}
+                        </div>
+                      ))}
                   </div>
                 </Form>
               </Card.Body>
@@ -199,7 +244,7 @@ export default function Tracking() {
           <div className="background-layer-right"></div>
         </div>
       </div>
-
+      <ToastContainer transition={bounce} limit={2} />
       <ActivityOptions show={modalShow} onHide={() => setModalShow(false)} />
     </>
   );
