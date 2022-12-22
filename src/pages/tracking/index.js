@@ -25,10 +25,14 @@ export default function Tracking() {
   const socketRef = useContext(SocketContext);
 
   useEffect(() => {
-    socketRef?.on("get_watch_video_activity", data => {
+    socketRef?.emit("join_room", user?.google_id);
+  }, [socketRef]);
+
+  useEffect(() => {
+    socketRef?.on("get_watch_video_activity", (data) => {
       console.log(data);
-    })
-  }, [])
+    });
+  }, []);
 
   return (
     <>

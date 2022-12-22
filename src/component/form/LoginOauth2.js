@@ -20,7 +20,7 @@ export default function LoginOauth2() {
 
   useEffect(() => {
     socketRef?.emit("join_room", user?.google_id);
-  }, [user?.google_id]);
+  }, [socketRef, user?.google_id]);
 
   useEffect(() => {
     lottie.loadAnimation({
