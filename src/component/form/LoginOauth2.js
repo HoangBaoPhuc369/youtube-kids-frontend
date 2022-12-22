@@ -17,10 +17,8 @@ export default function LoginOauth2({ socketRef }) {
 
   useEffect(() => {
     // socketRef?.emit("addUser", { userId: user?.google_id });
-    socketRef.emit("join_room", user?.google_id);
+    socketRef?.emit("join_room", user?.google_id);
   }, []);
-
-
 
   useEffect(() => {
     lottie.loadAnimation({

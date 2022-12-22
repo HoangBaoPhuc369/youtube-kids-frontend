@@ -50,9 +50,9 @@ function App() {
     //   console.log(data);
     // });
 
-    newSocket.on("get_watch_video_activity", (data) => {
-      console.log(data);
-    });
+    // newSocket.on("get_watch_video_activity", (data) => {
+    //   console.log(data);
+    // });
 
     return () => newSocket.close();
   }, [setSocketRef]);

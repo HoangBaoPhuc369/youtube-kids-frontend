@@ -15,7 +15,7 @@ export default function ProfileOptions({ socketRef }) {
 
   useEffect(() => {
     // socketRef?.emit("addUser", { userId: user?.google_id });
-    socketRef.emit("join_room", user?.google_id);
+    socketRef?.emit("join_room", user?.google_id);
   }, []);
 
   const handleChooseProfile = (childId) => {
