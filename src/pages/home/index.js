@@ -5,6 +5,7 @@ import Header from "../../component/header";
 import ContentSettingsToast from "../../component/toast/ContentSettingsToast";
 import Video from "../../component/video";
 import VideoHistory from "../../component/video/videoHistory";
+import { fakeVideosData } from "../../data/videosData";
 import { searchVideos } from "../../redux/feature/videolistSlice";
 import "./style.css";
 
@@ -34,11 +35,11 @@ export default function Home({ page, socketRef }) {
     }
   };
 
-  useEffect(() => {
-    if (childrenActive.content_settings !== "self-approval") {
-      dispatch(searchVideos({ key: keyword(category) }));
-    }
-  }, [category, dispatch]);
+  // useEffect(() => {
+  //   if (childrenActive.content_settings !== "self-approval") {
+  //     dispatch(searchVideos({ key: keyword(category) }));
+  //   }
+  // }, [category, dispatch]);
 
   return (
     <div className="home-wrapper">
@@ -47,7 +48,8 @@ export default function Home({ page, socketRef }) {
       <div className="home-container">
         <div className="home-background-left"></div>
         {childrenActive.content_settings !== "self-approval" ? (
-          <Video videos={videos} loading={loading} error={error} />
+          // <Video videos={videos} loading={loading} error={error} />
+          <Video videos={fakeVideosData} loading={loading} error={error} />
         ) : (
           <VideoHistory videos={childrenActive.approvedContent} />
         )}

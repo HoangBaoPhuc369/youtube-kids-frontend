@@ -200,3 +200,75 @@ export const deleteMessage = (chatId, messageId) =>
   axios.delete(
     `${process.env.REACT_APP_BACKEND_URL}/chat/${chatId}/messages/${messageId}`
   );
+
+export const updateKidActivity = (userId, activity) =>
+  axios.patch(
+    `${process.env.REACT_APP_BACKEND_URL}/users/${userId}/kid-activity`,
+    activity
+  );
+
+export const blockVideo = (childId, userId, videoId) =>
+  axios.patch(
+    `${process.env.REACT_APP_BACKEND_URL}/users/${userId}/childrens/${childId}/block-video`,
+    {
+      videoId,
+    }
+  );
+
+export const clearBlockVideo = (childId, userId) =>
+  axios.patch(
+    `${process.env.REACT_APP_BACKEND_URL}/users/${userId}/childrens/${childId}/clear-block-video`
+  );
+
+export const blockSearch = (childId, userId) =>
+  axios.patch(
+    `${process.env.REACT_APP_BACKEND_URL}/users/${userId}/childrens/${childId}/block-search`
+  );
+
+export const allowSearch = (childId, userId) =>
+  axios.patch(
+    `${process.env.REACT_APP_BACKEND_URL}/users/${userId}/childrens/${childId}/allow-search`
+  );
+
+export const subscribeChannel = (childId, userId, channelId, title, picture) =>
+  axios.post(
+    `${process.env.REACT_APP_BACKEND_URL}/users/${userId}/childrens/${childId}/subscriptions`,
+    {
+      channelId,
+      title,
+      picture,
+    }
+  );
+
+export const unSubscribeChannel = (childId, userId, channelId) =>
+  axios.delete(
+    `${process.env.REACT_APP_BACKEND_URL}/users/${userId}/childrens/${childId}/subscriptions/${channelId}`
+  );
+
+export const blockChannel = (childId, userId, channelId) =>
+  axios.patch(
+    `${process.env.REACT_APP_BACKEND_URL}/users/${userId}/childrens/${childId}/block-channel`,
+    {
+      channelId,
+    }
+  );
+
+export const clearBlockChannel = (childId, userId) =>
+  axios.patch(
+    `${process.env.REACT_APP_BACKEND_URL}/users/${userId}/childrens/${childId}/clear-block-channel`
+  );
+
+export const blockChat = (childId, userId) =>
+  axios.patch(
+    `${process.env.REACT_APP_BACKEND_URL}/users/${userId}/childrens/${childId}/block-chat`
+  );
+
+export const allowChat = (childId, userId) =>
+  axios.patch(
+    `${process.env.REACT_APP_BACKEND_URL}/users/${userId}/childrens/${childId}/allow-chat`
+  );
+
+export const getKidActivity = (userId) =>
+  axios.get(
+    `${process.env.REACT_APP_BACKEND_URL}/users/${userId}/kids-activity`
+  );

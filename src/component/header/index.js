@@ -29,6 +29,7 @@ import GamingDisableIcon from "../../svgs/GamingDisableIcon";
 import OrangeIcon from "../../svgs/OrangeIcon";
 import OrangeDisableIcon from "../../svgs/OrangeDisableIcon";
 import SocketContext from "../../wssConnection/socketContext";
+import { updateKidActivity } from "../../redux/feature/authSlice";
 
 export default function Header({ page }) {
   const checkAdminPage = page === "admin" ? true : false;
@@ -71,7 +72,7 @@ export default function Header({ page }) {
 
   const handleSearch = () => {
     const data = {
-      childId: childrenActive?._id,
+      childrenId: childrenActive?._id,
       name: childrenActive?.name,
       picture: childrenActive?.picture,
       type: "search",
@@ -84,12 +85,31 @@ export default function Header({ page }) {
       },
     };
     const date = Date.now();
-    
+
     socketRef?.emit("search_activity", {
       data: data,
       date: date,
       room: user?.google_id,
     });
+
+    dispatch(
+      updateKidActivity({
+        userId: user?.google_id,
+        activity: {
+          childrenId: childrenActive?._id,
+          name: childrenActive?.name,
+          picture: childrenActive?.picture,
+          type: "search",
+          activity: {
+            content: `${childrenActive?.name} vừa tìm kiếm video bằng từ khóa ${inputSearchRef.current.value}`,
+            videoId: "",
+            channelId: "",
+            new_name: "",
+            new_picture: "",
+          },
+        },
+      })
+    );
 
     navigate(`/search/${inputSearchRef.current.value}`);
   };

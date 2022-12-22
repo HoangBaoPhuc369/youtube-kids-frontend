@@ -19,6 +19,7 @@ import {
   updateChildrenProfileForChildren,
 } from "../../redux/feature/authSlice";
 import SocketContext from "../../wssConnection/socketContext";
+import { updateKidActivity } from "./../../redux/feature/authSlice";
 
 export default function ProfileSettings() {
   const { user, childrenActive } = useSelector((state) => state.auth);
@@ -97,7 +98,7 @@ export default function ProfileSettings() {
     setDisableBtn(false);
 
     const data = {
-      childId: childrenActive?._id,
+      childrenId: childrenActive?._id,
       name: childrenActive?.name,
       picture: childrenActive?.picture,
       type: "profile",
@@ -110,12 +111,31 @@ export default function ProfileSettings() {
       },
     };
     const date = Date.now();
-    
+
     socketRef?.emit("profile_activity", {
       data: data,
       date: date,
       room: user?.google_id,
     });
+
+    dispatch(
+      updateKidActivity({
+        userId: user?.google_id,
+        activity: {
+          childrenId: childrenActive?._id,
+          name: childrenActive?.name,
+          picture: childrenActive?.picture,
+          type: "profile",
+          activity: {
+            content: `${childrenActive?.name} vừa cập nhật avatar và tên`,
+            videoId: "",
+            channelId: "",
+            new_name: name,
+            new_picture: pictureActive,
+          },
+        },
+      })
+    );
   };
 
   const navigate = useNavigate();

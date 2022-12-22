@@ -10,6 +10,7 @@ import { AiOutlinePlusCircle } from "react-icons/ai";
 import {
   addVideoByParent,
   removeVideoByParent,
+  updateKidActivity,
 } from "../../redux/feature/authSlice";
 import { useContext, useEffect } from "react";
 import { useState } from "react";
@@ -85,22 +86,39 @@ export default function VideoCard({ video, loading, role, type }) {
       })
     );
 
-    if (role === "admin") {
-      navigate(`/admin/video-details/${id}`);
-    } else {
-      navigate(`/video-detail/${id}`);
-    }
+    dispatch(
+      updateKidActivity({
+        userId: user?.google_id,
+        activity: {
+          childrenId: childrenActive?._id,
+          name: childrenActive?.name,
+          picture: childrenActive?.picture,
+          type: "video",
+          activity: {
+            content: `${childrenActive?.name} vừa xem video ${video.snippet.title}`,
+            videoId: id,
+            channelId: video.snippet.channelId,
+            new_name: "",
+            new_picture: "",
+          },
+        },
+      })
+    );
+
     const data = {
       childId: childrenActive?._id,
-      name: childrenActive?.name,
-      picture: childrenActive?.picture,
-      type: "video",
-      activity: {
-        content: `${childrenActive?.name} vừa xem video ${video.snippet.title}`,
-        videoId: id,
-        channelId: video.snippet.channelId,
-        new_name: "",
-        new_picture: "",
+      activityData: {
+        childrenId: childrenActive?._id,
+        name: childrenActive?.name,
+        picture: childrenActive?.picture,
+        type: "video",
+        activity: {
+          content: `${childrenActive?.name} vừa xem video ${video.snippet.title}`,
+          videoId: id,
+          channelId: video.snippet.channelId,
+          new_name: "",
+          new_picture: "",
+        },
       },
     };
     const date = Date.now();
@@ -110,6 +128,12 @@ export default function VideoCard({ video, loading, role, type }) {
       date: date,
       room: user?.google_id,
     });
+
+    if (role === "admin") {
+      navigate(`/admin/video-details/${id}`);
+    } else {
+      navigate(`/video-detail/${id}`);
+    }
   };
 
   const handleSaveVideo = () => {
@@ -120,12 +144,12 @@ export default function VideoCard({ video, loading, role, type }) {
       channelId: video.snippet.channelId,
       thumbnail: video.snippet.thumbnails.medium.url,
       title: video.snippet.title,
+      duration: video.contentDetails.duration,
     };
     dispatch(addVideoByParent(data));
   };
 
   const handleRemoveVideo = () => {
-    
     dispatch(
       removeVideoByParent({
         childId: childrenSelected?._id,

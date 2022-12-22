@@ -3,7 +3,7 @@
 
 .tracking-form {
   width: 912px;
-  min-height: 600px;
+  height: 100%;
   background: #ffffff00;
   position: absolute;
   border: none;
@@ -44,6 +44,8 @@
   align-items: flex-start;
   justify-content: center;
   color: #3a4f7a;
+  height: 70px;
+  width: 300px;
 }
 
 .tracking-notification-text-wrap > span:first-child {
@@ -53,13 +55,20 @@
 
 .tracking-notification-text-wrap > span:last-child {
   font-size: 14px;
+  text-align: left;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  word-wrap: break-word;
+  white-space: normal;
 }
 
 .tracking-form-wrapper {
   overflow-y: scroll;
   border-radius: 8px;
   padding: 48px;
-  height: 450px;
+  height: 500px;
   width: 608px;
   background-color: #fff;
   margin: 20px auto;

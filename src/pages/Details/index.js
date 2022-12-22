@@ -22,7 +22,10 @@ import { BiSmile } from "react-icons/bi";
 import { HiOutlineArrowRightCircle } from "react-icons/hi2";
 import "animate.css/animate.min.css";
 import { useRef } from "react";
-import { addVideoHistory } from "../../redux/feature/authSlice";
+import {
+  addVideoHistory,
+  updateKidActivity,
+} from "../../redux/feature/authSlice";
 import Skeleton from "react-loading-skeleton";
 import { io } from "socket.io-client";
 import VideoPlayer from "../../component/video player";
@@ -85,7 +88,7 @@ export default function Details({ page }) {
         idChannel: videoSelected?.channelId,
       })
     );
-  }, [param]);
+  }, [param.id]);
 
   const handleOffChat = () => {
     setChatShow((prev) => !prev);
@@ -105,6 +108,7 @@ export default function Details({ page }) {
           channelId: channelVideo[0]?.id,
           thumbnail: findVideo.snippet.thumbnails.medium.url,
           title: videoPlay?.snippet.title,
+          duration: videoPlay?.contentDetails.duration,
         })
       );
     }
@@ -120,7 +124,7 @@ export default function Details({ page }) {
     dispatch(sendMessage(messageChat));
 
     const data = {
-      childId: childrenActive?._id,
+      childrenId: childrenActive?._id,
       name: childrenActive?.name,
       picture: childrenActive?.picture,
       type: "chat",
@@ -146,6 +150,26 @@ export default function Details({ page }) {
       messageToAdmin: messageToAdmin,
     };
     await socketRef.emit("send_message", messageData);
+
+    dispatch(
+      updateKidActivity({
+        userId: user?.google_id,
+        activity: {
+          childrenId: childrenActive?._id,
+          name: childrenActive?.name,
+          picture: childrenActive?.picture,
+          type: "chat",
+          activity: {
+            content: `${childrenActive?.name} vừa nhắn ${valueMessage} tại video ${videoPlay?.snippet.title}`,
+            videoId: param.id,
+            channelId: channelVideo[0]?.id,
+            new_name: "",
+            new_picture: "",
+          },
+        },
+      })
+    );
+
     setValueMessage("");
   };
 

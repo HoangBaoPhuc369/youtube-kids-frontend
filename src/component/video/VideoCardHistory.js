@@ -34,6 +34,7 @@ export default function VideoCardHistory({ video, role}) {
     }
 
     const data = {
+      childrenId: childrenActive?._id,
       name: childrenActive?.name,
       picture: childrenActive?.picture,
       type: "video",

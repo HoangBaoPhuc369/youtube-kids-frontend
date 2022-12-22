@@ -69,6 +69,7 @@ export default function DetailsTest() {
           videoId: param.id,
           thumbnail: findVideo.snippet.thumbnails.medium.url,
           title: videoPlay?.snippet.title,
+          duration: videoPlay?.contentDetails.duration,
         })
       );
     }

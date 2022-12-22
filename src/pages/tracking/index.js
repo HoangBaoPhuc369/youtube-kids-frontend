@@ -9,6 +9,18 @@ import HeaderAdmin from "../../component/header/HeaderAdmin";
 import { HiDotsHorizontal } from "react-icons/hi";
 import ActivityOptions from "../../component/modals/ActivityOptions";
 import SocketContext from "../../wssConnection/socketContext";
+import {
+  allowChat,
+  allowSearch,
+  blockChat,
+  blockSearch,
+  getKidActivity,
+  setActivityChildren,
+  updateKidActivity,
+} from "../../redux/feature/authSlice";
+import { setTracking } from "../../redux/feature/trackingSlice";
+import { VscSearchStop, VscSearch } from "react-icons/vsc";
+import { RiChatCheckLine, RiChatDeleteFill } from "react-icons/ri";
 
 export default function Tracking() {
   const navigate = useNavigate();
@@ -24,7 +36,7 @@ export default function Tracking() {
 
   useEffect(() => {
     socketRef?.on("get_watch_video_activity", (data) => {
-      console.log(data);
+      dispatch(getKidActivity({ userId: user?.google_id }));
     });
   }, [socketRef]);
 
@@ -43,8 +55,69 @@ export default function Tracking() {
   useEffect(() => {
     socketRef?.on("get_profile_activity", (data) => {
       console.log(data);
+      dispatch(getKidActivity({ userId: user?.google_id }));
     });
   }, [socketRef]);
+
+  const handleTracking = (k) => {
+    dispatch(setTracking(k));
+
+    setModalShow(true);
+  };
+
+  const checkBlockSearch = (id) => {
+    const findChildren = user?.childrens.find((x) => x._id === id);
+    if (findChildren && findChildren.allow_search) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const checkBlockChat = (id) => {
+    const findChildren = user?.childrens.find((x) => x._id === id);
+    if (findChildren && findChildren.allow_chat) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const handleBlockSeach = (data) => {
+    dispatch(
+      blockSearch({
+        childId: data.childrenId,
+        userId: user?.google_id,
+      })
+    );
+  };
+
+  const handleAllowSeach = (data) => {
+    dispatch(
+      allowSearch({
+        childId: data.childrenId,
+        userId: user?.google_id,
+      })
+    );
+  };
+
+  const handleBlockChat = (data) => {
+    dispatch(
+      blockChat({
+        childId: data.childrenId,
+        userId: user?.google_id,
+      })
+    );
+  };
+
+  const handleAllowChat = (data) => {
+    dispatch(
+      allowChat({
+        childId: data.childrenId,
+        userId: user?.google_id,
+      })
+    );
+  };
 
   return (
     <>
@@ -57,30 +130,65 @@ export default function Tracking() {
               <Card.Body className="">
                 <Form>
                   <Form.Label className="login-form-title text-white">
-                    Hoạt động con của tôi
+                    Hoạt động của con tôi
                   </Form.Label>
 
                   <div className="tracking-form-wrapper">
-                    {Array.from({ length: 10 }).map((_, idx) => (
+                    {user?.kids_activity.map((k, idx) => (
                       <div className="tracking-notification">
                         <div className="d-flex align-items-center tracking-notification-left">
                           <div className="tracking-notification-img">
-                            <img
-                              src="https://www.gstatic.com/ytkids/avatars/bck_avatar_kids_emohorse_800_20170929.png"
-                              alt=""
-                            />
+                            <img src={k.picture} alt="" />
                           </div>
                           <div className="tracking-notification-text-wrap">
-                            <span>phuc hoang</span>
-                            <span>Vừa xem video</span>
+                            <span>{k.name}</span>
+                            <span>{k.activity.content}</span>
                           </div>
                         </div>
-                        <div
-                          className="tracking-options"
-                          onClick={() => setModalShow(true)}
-                        >
-                          <HiDotsHorizontal />
-                        </div>
+                        {k.type === "search" ? (
+                          <>
+                            <div
+                              className="tracking-options"
+                              onClick={() => {
+                                if (checkBlockSearch(k.childrenId)) {
+                                  handleBlockSeach(k);
+                                } else {
+                                  handleAllowSeach(k);
+                                }
+                              }}
+                            >
+                              {checkBlockSearch(k.childrenId) ? (
+                                <VscSearchStop />
+                              ) : (
+                                <VscSearch />
+                              )}
+                            </div>
+                          </>
+                        ) : k.type === "chat" ? (
+                          <div
+                            className="tracking-options"
+                            onClick={() => {
+                              if (checkBlockChat(k.childrenId)) {
+                                handleBlockChat(k);
+                              } else {
+                                handleAllowChat(k);
+                              }
+                            }}
+                          >
+                            {checkBlockChat(k.childrenId) ? (
+                              <RiChatDeleteFill />
+                            ) : (
+                              <RiChatCheckLine />
+                            )}
+                          </div>
+                        ) : (
+                          <div
+                            className="tracking-options"
+                            onClick={() => handleTracking(k)}
+                          >
+                            <HiDotsHorizontal />
+                          </div>
+                        )}
                       </div>
                     ))}
                   </div>

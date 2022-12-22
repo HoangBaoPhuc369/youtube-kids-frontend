@@ -265,8 +265,109 @@ export const deleteChildByParent = createAsyncThunk(
   }
 );
 
+export const updateKidActivity = createAsyncThunk(
+  "children/updateKidActivity",
+  async ({ userId, activity }, { rejectWithValue }) => {
+    console.log(activity);
+    try {
+      const res = await api.updateKidActivity(userId, activity);
+      console.log(res);
+      return res.data;
+    } catch (err) {
+      return err.response.data;
+    }
+  }
+);
+
+export const blockVideo = createAsyncThunk(
+  "children/blockVideo",
+  async ({ childId, userId, videoId }, { rejectWithValue }) => {
+    try {
+      const { data } = await api.blockVideo(childId, userId, videoId);
+      return data;
+    } catch (err) {
+      return err.response.data;
+    }
+  }
+);
+
+export const clearBlockVideo = createAsyncThunk(
+  "children/clearBlockVideo",
+  async ({ childId, userId }, { rejectWithValue }) => {
+    try {
+      const { data } = await api.clearBlockVideo(childId, userId);
+      return data;
+    } catch (err) {
+      return err.response.data;
+    }
+  }
+);
+
+export const blockSearch = createAsyncThunk(
+  "children/blockSearch",
+  async ({ childId, userId }, { rejectWithValue }) => {
+    try {
+      const { data } = await api.blockSearch(childId, userId);
+      return data;
+    } catch (err) {
+      return err.response.data;
+    }
+  }
+);
+
+export const allowSearch = createAsyncThunk(
+  "children/allowSearch",
+  async ({ childId, userId }, { rejectWithValue }) => {
+    try {
+      const { data } = await api.allowSearch(childId, userId);
+      return data;
+    } catch (err) {
+      return err.response.data;
+    }
+  }
+);
+
+export const blockChat = createAsyncThunk(
+  "children/blockChat",
+  async ({ childId, userId }, { rejectWithValue }) => {
+    try {
+      const { data } = await api.blockChat(childId, userId);
+      return data;
+    } catch (err) {
+      return err.response.data;
+    }
+  }
+);
+
+export const allowChat = createAsyncThunk(
+  "children/allowChat",
+  async ({ childId, userId }, { rejectWithValue }) => {
+    try {
+      const { data } = await api.allowChat(childId, userId);
+      return data;
+    } catch (err) {
+      return err.response.data;
+    }
+  }
+);
+
+export const getKidActivity = createAsyncThunk(
+  "children/getKidActivity",
+  async ({ userId }, { rejectWithValue }) => {
+    try {
+      const { data } = await api.getKidActivity(userId);
+      console.log(data);
+      return data;
+    } catch (err) {
+      return err.response.data;
+    }
+  }
+);
+
 const initialState = {
-  user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null,
+  user: localStorage.getItem("user")
+    ? JSON.parse(localStorage.getItem("user"))
+    : null,
   guess: null,
   childrenCreated: localStorage.getItem("childrenCreated")
     ? JSON.parse(localStorage.getItem("childrenCreated"))
@@ -311,6 +412,11 @@ export const authSlice = createSlice({
       state.childrenCreated = null;
       localStorage.removeItem("childrenCreated");
     },
+
+    setActivityChildren: (state, action) => {
+      state.user.kids_activity = [action.payload, ...state.user.kids_activity];
+      localStorage.setItem("user", JSON.stringify(action.payload));
+    },
   },
   extraReducers: {
     [getUser.pending]: (state, action) => {
@@ -319,7 +425,7 @@ export const authSlice = createSlice({
     [getUser.fulfilled]: (state, action) => {
       state.loading = false;
       state.user = action.payload;
-      localStorage.setItem("user", JSON.stringify(action.payload), { expires: 7 });
+      localStorage.setItem("user", JSON.stringify(action.payload));
       state.error = "";
     },
     [getUser.rejected]: (state, action) => {
@@ -423,7 +529,10 @@ export const authSlice = createSlice({
       localStorage.setItem("user", JSON.stringify(state.user));
       state.childrenActive = action.payload.children;
       state.childrenSelected = action.payload.children;
-      localStorage.setItem("childrenSelected", JSON.stringify(action.payload.children));
+      localStorage.setItem(
+        "childrenSelected",
+        JSON.stringify(action.payload.children)
+      );
       state.error = "";
     },
     [updateContentChidlrenSettings.rejected]: (state, action) => {
@@ -440,7 +549,10 @@ export const authSlice = createSlice({
         state.childrenActive = action.payload.children;
       }
       state.childrenSelected = action.payload.children;
-      localStorage.setItem("childrenSelected", JSON.stringify(action.payload.children));
+      localStorage.setItem(
+        "childrenSelected",
+        JSON.stringify(action.payload.children)
+      );
       state.error = "";
     },
 
@@ -454,12 +566,99 @@ export const authSlice = createSlice({
         state.childrenActive = action.payload.children;
       }
       state.childrenSelected = action.payload.children;
-      localStorage.setItem("childrenSelected", JSON.stringify(action.payload.children));
+      localStorage.setItem(
+        "childrenSelected",
+        JSON.stringify(action.payload.children)
+      );
       state.error = "";
     },
 
     [deleteChildByParent.fulfilled]: (state, action) => {
       state.user.childrens = action.payload.childrens;
+      localStorage.setItem("user", JSON.stringify(state.user));
+      state.error = "";
+    },
+
+    [updateKidActivity.fulfilled]: (state, action) => {
+      state.user = action.payload;
+      localStorage.setItem("user", JSON.stringify(state.user));
+      state.error = "";
+    },
+
+    [blockVideo.fulfilled]: (state, action) => {
+      state.user.childrens = action.payload.childrens;
+      localStorage.setItem("user", JSON.stringify(state.user));
+      if (
+        state.childrenActive !== null &&
+        state.childrenActive._id === action.payload.children._id
+      ) {
+        state.childrenActive = action.payload.children;
+      }
+      state.error = "";
+    },
+
+    [clearBlockVideo.fulfilled]: (state, action) => {
+      state.user.childrens = action.payload.childrens;
+      localStorage.setItem("user", JSON.stringify(state.user));
+      if (
+        state.childrenActive !== null &&
+        state.childrenActive._id === action.payload.children._id
+      ) {
+        state.childrenActive = action.payload.children;
+      }
+      state.error = "";
+    },
+
+    [blockSearch.fulfilled]: (state, action) => {
+      state.user.childrens = action.payload.childrens;
+      localStorage.setItem("user", JSON.stringify(state.user));
+      if (
+        state.childrenActive !== null &&
+        state.childrenActive._id === action.payload.children._id
+      ) {
+        state.childrenActive = action.payload.children;
+      }
+      state.error = "";
+    },
+
+    [allowSearch.fulfilled]: (state, action) => {
+      state.user.childrens = action.payload.childrens;
+      localStorage.setItem("user", JSON.stringify(state.user));
+      if (
+        state.childrenActive !== null &&
+        state.childrenActive._id === action.payload.children._id
+      ) {
+        state.childrenActive = action.payload.children;
+      }
+      state.error = "";
+    },
+
+    [blockChat.fulfilled]: (state, action) => {
+      state.user.childrens = action.payload.childrens;
+      localStorage.setItem("user", JSON.stringify(state.user));
+      if (
+        state.childrenActive !== null &&
+        state.childrenActive._id === action.payload.children._id
+      ) {
+        state.childrenActive = action.payload.children;
+      }
+      state.error = "";
+    },
+
+    [allowChat.fulfilled]: (state, action) => {
+      state.user.childrens = action.payload.childrens;
+      localStorage.setItem("user", JSON.stringify(state.user));
+      if (
+        state.childrenActive !== null &&
+        state.childrenActive._id === action.payload.children._id
+      ) {
+        state.childrenActive = action.payload.children;
+      }
+      state.error = "";
+    },
+
+    [getKidActivity.fulfilled]: (state, action) => {
+      state.user.kids_activity = action.payload;
       localStorage.setItem("user", JSON.stringify(state.user));
       state.error = "";
     },
@@ -472,6 +671,7 @@ export const {
   setChildrenActive,
   setChildrenSelect,
   removeChildrenCreated,
+  setActivityChildren,
 } = authSlice.actions;
 
 export default authSlice.reducer;

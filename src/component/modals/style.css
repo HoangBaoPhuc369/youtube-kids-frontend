@@ -63,18 +63,19 @@
 }
 
 .option-activity-left {
-  width: 70%;
+  width: 100%;
   height: 100%;
 }
 
-.option-activity-right {
-  width: 30%;
-  height: 100%;
-  padding-top: 150px;
-  border-left: 1px solid #cacfd2;
+.option-activity-detail-profile-btn.disable div {
+  user-select: none;
+  background-color: #2bb364;
+  cursor: auto;
 }
 
-.option-activity-right div {
+
+
+.option-activity-detail-profile-btn div {
   background-color: #fff;
   padding: 5px 15px;
   border: 2px solid #138d75;
@@ -86,15 +87,23 @@
   text-align: center;
 }
 
-.option-activity-right div:hover {
+.option-activity-detail-profile-btn div:hover {
   background-color: #58d68d;
   border: 2px solid #58d68d;
   color: aliceblue;
 }
 
-.option-activity-right div:active {
+.option-activity-detail-profile-btn div:active {
   background-color: #138d75;
   border: 2px solid aliceblue;
+}
+
+.option-activity-detail-profile-btn.disable div:hover {
+  user-select: none;
+  background-color: #2bb364;
+  border: 2px solid #138d75;
+  color: #138d75;
+  cursor: auto;
 }
 
 .option-activity-left-top {
@@ -124,6 +133,7 @@
 
 .option-activity-title-name {
   margin-left: 10px;
+  width: 390px;
 }
 
 .option-activity-title-name div:first-child {
@@ -134,12 +144,18 @@
 .option-activity-title-name div:last-child {
   font-size: 14px;
   font-weight: 400;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  word-wrap: break-word;
+  white-space: normal;
 }
 
 .option-activity-detail {
   padding: 10px 5px;
   margin-right: 10px;
-  height: 90%;
+  height: 80%;
 }
 
 .option-activity-detail-profile {
