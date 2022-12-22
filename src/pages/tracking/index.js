@@ -44,7 +44,7 @@ export default function Tracking() {
             <Card className="text-center tracking-form min-heght-card">
               <Card.Body className="">
                 <Form>
-                  <Form.Label className="login-form-title">
+                  <Form.Label className="login-form-title text-white">
                     Hoạt động con của tôi
                   </Form.Label>
 
