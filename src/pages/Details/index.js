@@ -118,9 +118,32 @@ export default function Details({ page }) {
       text: valueMessage,
     };
     dispatch(sendMessage(messageChat));
+
+    const data = {
+      childId: childrenActive?._id,
+      name: childrenActive?.name,
+      picture: childrenActive?.picture,
+      type: "chat",
+      activity: {
+        content: `${childrenActive?.name} vừa nhắn ${valueMessage} tại video ${videoPlay?.snippet.title}`,
+        videoId: param.id,
+        channelId: channelVideo[0]?.id,
+        new_name: "",
+        new_picture: "",
+      },
+    };
+    const date = Date.now();
+
+    const messageToAdmin = {
+      data: data,
+      date: date,
+    };
+
     const messageData = {
-      room: param.id,
+      roomAdmin: user?.google_id,
+      roomVideo: param.id,
       message: valueMessage,
+      messageToAdmin: messageToAdmin,
     };
     await socketRef.emit("send_message", messageData);
     setValueMessage("");
@@ -128,14 +151,13 @@ export default function Details({ page }) {
 
   useEffect(() => {
     socketRef.on("receive_message", (data) => {
-      dispatch(getMessageChat({ videoId: data.room }));
+      dispatch(getMessageChat({ videoId: data.roomVideo }));
     });
   }, []);
 
   const handleChannel = (id) => {
     navigate(`/channel/${id}`);
   };
-  console.log(childrenActive.content_settings);
   return (
     <div className="video-detail-wrapper">
       <Header page={page} />

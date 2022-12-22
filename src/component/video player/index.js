@@ -81,7 +81,6 @@ export default function VideoPlayer({ id, handleStoreVideo }) {
   };
 
   const handleSeekChange = (e, newValue) => {
-    console.log({ newValue });
     setState({ ...state, played: parseFloat(newValue / 100) });
   };
 
@@ -90,7 +89,6 @@ export default function VideoPlayer({ id, handleStoreVideo }) {
   };
 
   const handleSeekMouseUp = (e, newValue) => {
-    console.log({ value: e.target });
     setState({ ...state, seeking: false });
     playerRef.current.seekTo(newValue / 100, "fraction");
   };
@@ -119,7 +117,6 @@ export default function VideoPlayer({ id, handleStoreVideo }) {
   };
 
   const handleMouseMove = () => {
-    console.log("mousemove");
     controlsRef.current.style.visibility = "visible";
     count = 0;
   };

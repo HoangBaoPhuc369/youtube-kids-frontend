@@ -47,9 +47,9 @@ export default function Home({ page, socketRef }) {
       <div className="home-container">
         <div className="home-background-left"></div>
         {childrenActive.content_settings !== "self-approval" ? (
-          <Video socketRef={socketRef} videos={videos} loading={loading} error={error} />
+          <Video videos={videos} loading={loading} error={error} />
         ) : (
-          <VideoHistory socketRef={socketRef} videos={childrenActive.approvedContent} />
+          <VideoHistory videos={childrenActive.approvedContent} />
         )}
         <div className="home-background-right"></div>
       </div>

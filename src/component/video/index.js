@@ -12,7 +12,6 @@ export default function Video({
   role,
   error,
   type,
-  socketRef,
 }) {
   return (
     <>
@@ -52,7 +51,6 @@ export default function Video({
                   key={idx}
                   role={role}
                   type={type}
-                  socketRef={socketRef}
                 />
               ))
             ) : (

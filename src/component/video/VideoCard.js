@@ -11,12 +11,13 @@ import {
   addVideoByParent,
   removeVideoByParent,
 } from "../../redux/feature/authSlice";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useState } from "react";
 import { RiCheckboxCircleLine } from "react-icons/ri";
 import { setVideo } from "../../redux/feature/videolistSlice";
+import SocketContext from "../../wssConnection/socketContext";
 
-export default function VideoCard({ video, loading, role, type, socketRef }) {
+export default function VideoCard({ video, loading, role, type }) {
   const { childrenSelected, user, childrenActive } = useSelector(
     (state) => state.auth
   );
@@ -24,6 +25,8 @@ export default function VideoCard({ video, loading, role, type, socketRef }) {
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
+
+  const idVideo = type === "search" ? video.id.videoId : video.id;
 
   function formatDuration(x) {
     if (x && !x.includes("DT") && !x.includes("P0")) {
@@ -59,8 +62,9 @@ export default function VideoCard({ video, loading, role, type, socketRef }) {
     }
   }
 
+  const socketRef = useContext(SocketContext);
+
   useEffect(() => {
-    const idVideo = type === "search" ? video.id.videoId : video.id;
     const findVideo = childrenSelected?.approvedContent.find(
       (v) => v.videoId === idVideo
     );
@@ -86,26 +90,29 @@ export default function VideoCard({ video, loading, role, type, socketRef }) {
     } else {
       navigate(`/video-detail/${id}`);
     }
-    const idVideo = type === "search" ? video.id.videoId : video.id;
     const data = {
+      childId: childrenActive?._id,
       name: childrenActive?.name,
       picture: childrenActive?.picture,
       type: "video",
       activity: {
         content: `${childrenActive?.name} vừa xem video ${video.snippet.title}`,
-        videoId: idVideo,
+        videoId: id,
         channelId: video.snippet.channelId,
         new_name: "",
         new_picture: "",
       },
     };
-    const date = new Date.now();
+    const date = Date.now();
 
-    socketRef.emit("watch_video", { data: data, date: date, room: user?.google_id });
+    socketRef?.emit("watch_video", {
+      data: data,
+      date: date,
+      room: user?.google_id,
+    });
   };
 
   const handleSaveVideo = () => {
-    const idVideo = type === "search" ? video.id.videoId : video.id;
     const data = {
       childId: childrenSelected?._id,
       userId: user?.google_id,
@@ -118,7 +125,7 @@ export default function VideoCard({ video, loading, role, type, socketRef }) {
   };
 
   const handleRemoveVideo = () => {
-    const idVideo = type === "search" ? video.id.videoId : video.id;
+    
     dispatch(
       removeVideoByParent({
         childId: childrenSelected?._id,
@@ -132,7 +139,7 @@ export default function VideoCard({ video, loading, role, type, socketRef }) {
     <>
       <Col>
         <Card className="video-card">
-          <div className="video-link" onClick={() => linkTo(video.id)}>
+          <div className="video-link" onClick={() => linkTo(idVideo)}>
             <Card.Img variant="top" src={video.snippet.thumbnails.medium.url} />
             {video.contentDetails?.duration ? (
               <Badge bg="dark" className="video-duration">

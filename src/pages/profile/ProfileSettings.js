@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import { Card, Button } from "react-bootstrap";
 import "./style.css";
 import { MdModeEdit } from "react-icons/md";
@@ -18,6 +18,7 @@ import {
   deleteSecretPasswordChildren,
   updateChildrenProfileForChildren,
 } from "../../redux/feature/authSlice";
+import SocketContext from "../../wssConnection/socketContext";
 
 export default function ProfileSettings() {
   const { user, childrenActive } = useSelector((state) => state.auth);
@@ -28,6 +29,7 @@ export default function ProfileSettings() {
   const [typeBtn, setTypeBtn] = useState("");
 
   const dispatch = useDispatch();
+  const socketRef = useContext(SocketContext);
 
   const [show, setShow] = useState(false);
 
@@ -84,15 +86,6 @@ export default function ProfileSettings() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // if (validator.isEmpty(name) || validator.isEmpty(pictureActive)) {
-    //   setDisableBtn(true);
-    // } else if (!validator.matches(name, /^[a-zA-Z ]+$/)) {
-    //   setDisableBtn(true);
-    // } else {
-    //   console.log(name, pictureActive);
-
-    // }
-
     dispatch(
       updateChildrenProfileForChildren({
         childId: childrenActive._id,
@@ -102,6 +95,27 @@ export default function ProfileSettings() {
       })
     );
     setDisableBtn(false);
+
+    const data = {
+      childId: childrenActive?._id,
+      name: childrenActive?.name,
+      picture: childrenActive?.picture,
+      type: "profile",
+      activity: {
+        content: `${childrenActive?.name} vừa cập nhật avatar và tên`,
+        videoId: "",
+        channelId: "",
+        new_name: name,
+        new_picture: pictureActive,
+      },
+    };
+    const date = Date.now();
+    
+    socketRef?.emit("profile_activity", {
+      data: data,
+      date: date,
+      room: user?.google_id,
+    });
   };
 
   const navigate = useNavigate();

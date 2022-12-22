@@ -1,17 +1,11 @@
 import "./style.css";
-import { Button, Card, Container, Form } from "react-bootstrap";
-import Header from "../../component/header";
+import { Card, Container, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useContext, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import ChooseProfilePicture from "../../component/modals/ChooseProfilePicture";
-import { MdModeEdit } from "react-icons/md";
-import { listProfilePicture } from "../../data/listProfilePicture";
-import validator from "validator";
-import { updateChildrenProfileForParent } from "../../redux/feature/authSlice";
+import { useNavigate } from "react-router-dom";
+
 import HeaderAdmin from "../../component/header/HeaderAdmin";
-import ToastContainer from "react-bootstrap/ToastContainer";
-import Toast from "react-bootstrap/Toast";
+
 import { HiDotsHorizontal } from "react-icons/hi";
 import ActivityOptions from "../../component/modals/ActivityOptions";
 import SocketContext from "../../wssConnection/socketContext";
@@ -32,7 +26,25 @@ export default function Tracking() {
     socketRef?.on("get_watch_video_activity", (data) => {
       console.log(data);
     });
-  }, []);
+  }, [socketRef]);
+
+  useEffect(() => {
+    socketRef?.on("message_to_admin", (data) => {
+      console.log(data);
+    });
+  }, [socketRef]);
+
+  useEffect(() => {
+    socketRef?.on("get_search_activity", (data) => {
+      console.log(data);
+    });
+  }, [socketRef]);
+
+  useEffect(() => {
+    socketRef?.on("get_profile_activity", (data) => {
+      console.log(data);
+    });
+  }, [socketRef]);
 
   return (
     <>

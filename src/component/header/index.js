@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
@@ -28,14 +28,15 @@ import GamingIcon from "./../../svgs/GamingIcon";
 import GamingDisableIcon from "../../svgs/GamingDisableIcon";
 import OrangeIcon from "../../svgs/OrangeIcon";
 import OrangeDisableIcon from "../../svgs/OrangeDisableIcon";
+import SocketContext from "../../wssConnection/socketContext";
 
 export default function Header({ page }) {
   const checkAdminPage = page === "admin" ? true : false;
-
+  const socketRef = useContext(SocketContext);
   const [navbar, setNavbar] = useState(false);
   const [search, setSearch] = useState(false);
 
-  const { childrenActive, childrenSelected } = useSelector(
+  const { childrenActive, childrenSelected, user } = useSelector(
     (state) => state.auth
   );
   const { category } = useSelector((state) => state.video);
@@ -69,6 +70,27 @@ export default function Header({ page }) {
   };
 
   const handleSearch = () => {
+    const data = {
+      childId: childrenActive?._id,
+      name: childrenActive?.name,
+      picture: childrenActive?.picture,
+      type: "search",
+      activity: {
+        content: `${childrenActive?.name} vừa tìm kiếm video bằng từ khóa ${inputSearchRef.current.value}`,
+        videoId: "",
+        channelId: "",
+        new_name: "",
+        new_picture: "",
+      },
+    };
+    const date = Date.now();
+    
+    socketRef?.emit("search_activity", {
+      data: data,
+      date: date,
+      room: user?.google_id,
+    });
+
     navigate(`/search/${inputSearchRef.current.value}`);
   };
 
@@ -227,7 +249,9 @@ export default function Header({ page }) {
 
               <div className="header-right">
                 <div className="header-right-icon">
-                  {!search && checkAdminPage ? (
+                  {(!search && checkAdminPage) ||
+                  (!search &&
+                    childrenActive?.content_settings !== "self-approval") ? (
                     <div className="header-right-search-icon-wrap">
                       <div
                         className="header-right-search-icon"
