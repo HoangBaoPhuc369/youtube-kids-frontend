@@ -2,7 +2,7 @@ import "./style.css";
 import { Button, Card, Container, Form } from "react-bootstrap";
 import Header from "../../component/header";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import ChooseProfilePicture from "../../component/modals/ChooseProfilePicture";
 import { MdModeEdit } from "react-icons/md";
@@ -14,12 +14,21 @@ import ToastContainer from "react-bootstrap/ToastContainer";
 import Toast from "react-bootstrap/Toast";
 import { HiDotsHorizontal } from "react-icons/hi";
 import ActivityOptions from "../../component/modals/ActivityOptions";
+import SocketContext from "../../wssConnection/socketContext";
 
 export default function Tracking() {
   const navigate = useNavigate();
   const { user, childrenSelected } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const [modalShow, setModalShow] = useState(false);
+
+  const socketRef = useContext(SocketContext);
+
+  useEffect(() => {
+    socketRef?.on("get_watch_video_activity", data => {
+      console.log(data);
+    })
+  }, [])
 
   return (
     <>

@@ -34,136 +34,107 @@ import SearchVideoAdmin from "./pages/search/SearchVideoAdmin";
 import ChannelVideoAdmin from "./pages/Channel/ChannelVideoAdmin";
 import Tracking from "./pages/tracking";
 import { io } from "socket.io-client";
+import useSocket from "./hooks/useSocket";
+import SocketContext from "./wssConnection/socketContext";
 
 function App() {
   const { user } = useSelector((state) => state.auth);
   // const { childrenActive } = useSelector((state) => state.children);
-  const [socketRef, setSocketRef] = useState(null);
-
-  useEffect(() => {
-    const newSocket = io("http://localhost:8900/", {
-      transports: ["polling"],
-    });
-
-    setSocketRef(newSocket);
-    // newSocket.on("get_watch_video_activity", (data) => {
-    //   console.log(data);
-    // });
-
-    // newSocket.on("get_watch_video_activity", (data) => {
-    //   console.log(data);
-    // });
-
-    return () => newSocket.close();
-  }, [setSocketRef]);
+  const socket = useSocket("http://localhost:8900");
 
   return (
-    <Routes>
-      <Route element={<LoggedInRoutes />}>
-        {socketRef ? (
-          <>
-            <Route
-              path="/"
-              element={<Home page="home" socketRef={socketRef} />}
-              exact
-            />
-            <Route path="/parent" element={<Parent />} exact />
-            <Route
-              path="/video-detail/:id"
-              element={<Details page="details" socketRef={socketRef} />}
-              exact
-            />
-            <Route path="/channel/:id" element={<Channel />} exact />
-            <Route path="/history" element={<History />} exact />
-            <Route
-              path="/profile-settings"
-              element={<ProfileSettings />}
-              exact
-            />
-            <Route path="/search/:key" element={<Search />} exact />
-            <Route
-              path="/secret-key-child"
-              element={<SecretKeyChild />}
-              exact
-            />
-            <Route
-              path="/profile-settings/secret-key"
-              element={<ProfileSecretKey />}
-              exact
-            />
-          </>
-        ) : null}
-      </Route>
+    <SocketContext.Provider value={socket}>
+      <Routes>
+        <Route element={<LoggedInRoutes />}>
+          <Route path="/" element={<Home page="home" />} exact />
+          <Route path="/parent" element={<Parent />} exact />
+          <Route
+            path="/video-detail/:id"
+            element={<Details page="details" />}
+            exact
+          />
+          <Route path="/channel/:id" element={<Channel />} exact />
+          <Route path="/history" element={<History />} exact />
+          <Route path="/profile-settings" element={<ProfileSettings />} exact />
+          <Route path="/search/:key" element={<Search />} exact />
+          <Route path="/secret-key-child" element={<SecretKeyChild />} exact />
+          <Route
+            path="/profile-settings/secret-key"
+            element={<ProfileSecretKey />}
+            exact
+          />
+        </Route>
 
-      <Route path="/login" element={<Login />} socketRef={socketRef} exact />
-      <Route path="/login/success" element={<LoginSuccess />} exact />
-      <Route path="*" element={<div>Not found</div>} exact />
+        <Route path="/login" element={<Login />} exact />
+        <Route path="/login/success" element={<LoginSuccess />} exact />
+        <Route path="*" element={<div>Not found</div>} exact />
 
-      <Route element={<RequiredAuth />}>
-        <Route path="/profile-account" element={<ProfileAccount />} exact />
-        <Route path="/profile-created" element={<ProfileCreated />} exact />
-        <Route
-          path="/profile-options"
-          element={<ProfileOptions socketRef={socketRef} />}
-          exact
-        />
-        <Route path="/list-profile" element={<ListProfileChildren />} exact />
+        <Route element={<RequiredAuth />}>
+          <Route path="/profile-account" element={<ProfileAccount />} exact />
+          <Route path="/profile-created" element={<ProfileCreated />} exact />
+          <Route path="/profile-options" element={<ProfileOptions />} exact />
+          <Route path="/list-profile" element={<ListProfileChildren />} exact />
 
-        {/* Admin route */}
-        <Route path="/admin" element={<Admin page="admin" />} exact />
-        <Route
-          path="/admin/profile-settings/:id"
-          element={<ProfileSettings />}
-          exact
-        />
-        <Route
-          path="/admin/parentprofilesettings/:id"
-          element={<ParentProfile page="admin" />}
-          exact
-        />
+          {/* Admin route */}
+          <Route path="/admin" element={<Admin page="admin" />} exact />
+          <Route
+            path="/admin/profile-settings/:id"
+            element={<ProfileSettings />}
+            exact
+          />
+          <Route
+            path="/admin/parentprofilesettings/:id"
+            element={<ParentProfile page="admin" />}
+            exact
+          />
 
-        <Route
-          path="/admin/setting-profile/:id"
-          element={<SettingProfile />}
-          exact
-        />
-        <Route path="/admin/setting-age/:id" element={<SettingAge />} exact />
+          <Route
+            path="/admin/setting-profile/:id"
+            element={<SettingProfile />}
+            exact
+          />
+          <Route path="/admin/setting-age/:id" element={<SettingAge />} exact />
 
-        <Route
-          path="/admin/approve-content/"
-          element={<HomeApproveContent />}
-          exact
-        />
-        <Route
-          path="/admin/content-settings/"
-          element={<ChooseContentSettings />}
-          exact
-        />
+          <Route
+            path="/admin/approve-content/"
+            element={<HomeApproveContent />}
+            exact
+          />
+          <Route
+            path="/admin/content-settings/"
+            element={<ChooseContentSettings />}
+            exact
+          />
 
-        <Route
-          path="/admin/add-profile/:admin"
-          element={<ProfileAccount />}
-          exact
-        />
+          <Route
+            path="/admin/add-profile/:admin"
+            element={<ProfileAccount />}
+            exact
+          />
 
-        <Route
-          path="/admin/video-details/:id"
-          element={<VideoDetailsForAdmin page="details" />}
-          exact
-        />
+          <Route
+            path="/admin/video-details/:id"
+            element={<VideoDetailsForAdmin page="details" />}
+            exact
+          />
 
-        <Route path="/admin/search/:key" element={<SearchVideoAdmin />} exact />
+          <Route
+            path="/admin/search/:key"
+            element={<SearchVideoAdmin />}
+            exact
+          />
 
-        <Route
-          path="/admin/channel/:id"
-          element={<ChannelVideoAdmin />}
-          exact
-        />
+          <Route
+            path="/admin/channel/:id"
+            element={<ChannelVideoAdmin />}
+            exact
+          />
 
-        <Route path="/admin/tracking/" element={<Tracking />} exact />
-      </Route>
-      <Route path="/video-player-test/" element={<VideoPlayer />} exact />
-    </Routes>
+          <Route path="/admin/tracking/" element={<Tracking />} exact />
+        </Route>
+        <Route path="/video-player-test/" element={<VideoPlayer />} exact />
+      </Routes>
+    </SocketContext.Provider>
   );
 }
 

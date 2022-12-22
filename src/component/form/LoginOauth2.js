@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import { Card, Button } from "react-bootstrap";
 import lottie from "lottie-web";
 import "./style.css";
@@ -6,8 +6,9 @@ import { FaAngleRight, FaUserCircle } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../../redux/feature/authSlice";
 import { useNavigate } from "react-router-dom";
+import SocketContext from "../../wssConnection/socketContext";
 
-export default function LoginOauth2({ socketRef }) {
+export default function LoginOauth2() {
   const container = useRef(null);
 
   const dispatch = useDispatch();
@@ -15,10 +16,11 @@ export default function LoginOauth2({ socketRef }) {
 
   const { user } = useSelector((state) => state.auth);
 
+  const socketRef = useContext(SocketContext);
+
   useEffect(() => {
-    // socketRef?.emit("addUser", { userId: user?.google_id });
     socketRef?.emit("join_room", user?.google_id);
-  }, []);
+  }, [user?.google_id]);
 
   useEffect(() => {
     lottie.loadAnimation({
