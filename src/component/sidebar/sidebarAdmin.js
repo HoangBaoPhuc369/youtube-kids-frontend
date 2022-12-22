@@ -1,27 +1,16 @@
-import React, { useState, useEffect, useRef } from "react";
-import Button from "react-bootstrap/Button";
-import Offcanvas from "react-bootstrap/Offcanvas";
+import { slide as Menu } from "react-burger-menu";
 import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import "./style.css";
+import LockIcon from "../../svgs/LockIcon";
 import useClickOutside from "../../utils/clickOutside";
-import { MdLock } from "react-icons/md";
+import Button from "react-bootstrap/Button";
 import { useSelector } from "react-redux";
 
-export default function OffCanvas() {
-  const { user } = useSelector((state) => state.auth);
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => {
-    setShow(false);
-
-    setTimeout(() => {
-      !user?.secret_password && randomQuestion();
-      resetInput();
-      setDisableBtn(true);
-    }, 1000);
-  };
-  const handleShow = () => setShow(true);
-
+export default function Sidebar() {
   const navigate = useNavigate();
+  const { user } = useSelector((state) => state.auth);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [value, setValue] = useState("");
   const [value1, setValue1] = useState("");
   const [value2, setValue2] = useState("");
@@ -66,12 +55,29 @@ export default function OffCanvas() {
     randomQuestion();
   }, []);
 
+  const handleStateChange = (state) => {
+    setMenuOpen(state.isOpen);
+  };
+
+  const closeMenu = () => {
+    setMenuOpen(false);
+  };
+
   const resetInput = () => {
     setValue("");
     setValue1("");
     setValue2("");
     setValue3("");
   };
+
+  useClickOutside(sidebarRef, () => {
+    setMenuOpen(false);
+    setTimeout(() => {
+      !user?.secret_password && randomQuestion();
+      resetInput();
+      setDisableBtn(true);
+    }, 1000);
+  });
 
   const handleTypeInput = (e, ref) => {
     const re = /^[0-9\b]+$/;
@@ -140,6 +146,7 @@ export default function OffCanvas() {
     if (!user?.secret_password) {
       if (userResult === result.toString()) {
         navigate("/admin");
+        closeMenu();
       } else {
         textRef.current.innerHTML =
           "Câu trả lời chưa chính xác, vui lòng thử lại";
@@ -148,6 +155,7 @@ export default function OffCanvas() {
     } else {
       if (userResult2 === user?.secret_password) {
         navigate("/admin");
+        closeMenu();
       } else {
         textRef.current.innerHTML = "Mật mã không chính xác, vui lòng thử lại";
       }
@@ -155,99 +163,85 @@ export default function OffCanvas() {
   };
 
   return (
-    <>
-      <div className="profile-options-header-sidebar" onClick={handleShow}>
-        <span>Thêm hồ sơ của trẻ trong phần cài đặt dành cho cha mẹ </span>
-        <MdLock />
-      </div>
-
-      <div>
-        <Offcanvas
-          show={show}
-          onHide={handleClose}
-          placement={"end"}
-          name={"end"}
-        >
-          <Offcanvas.Body>
-            <div className="sidebar-container">
-              <div className="sidebar-title">Chỉ dành cho cha mẹ</div>
-              <div className="sidebar-subtitle" ref={textRef}>
-                {user?.secret_password
-                  ? "Vui lòng nhập mật mã để tiếp tục"
-                  : "Vui lòng nhập câu trả lời chính xác để tiếp tục"}
-              </div>
-              {!user?.secret_password ? (
-                <div className="sidebar-calculate">
-                  {num1} X {num2} = ?
-                </div>
-              ) : null}
-              <div className="sidebar-input">
-                <input
-                  value={value}
-                  name="number1"
-                  type={user?.secret_password ? "password" : "text"}
-                  onChange={(e) => handleTypeInput(e, input1Ref.current.name)}
-                  placeholder="#"
-                  maxLength="1"
-                  ref={input1Ref}
-                />
-                <input
-                  value={value1}
-                  type={user?.secret_password ? "password" : "text"}
-                  name="number2"
-                  onChange={(e) => handleTypeInput(e, input2Ref.current.name)}
-                  placeholder="#"
-                  maxLength="1"
-                  ref={input2Ref}
-                  onKeyDown={handleDelNumber2}
-                />
-                {user?.secret_password ? (
-                  <>
-                    <input
-                      value={value2}
-                      name="number3"
-                      type="password"
-                      onChange={(e) =>
-                        handleTypeInput(e, input3Ref.current.name)
-                      }
-                      placeholder="#"
-                      maxLength="1"
-                      ref={input3Ref}
-                      onKeyDown={handleDelNumber3}
-                    />
-                    <input
-                      value={value3}
-                      name="number4"
-                      type="password"
-                      onChange={(e) =>
-                        handleTypeInput(e, input4Ref.current.name)
-                      }
-                      placeholder="#"
-                      maxLength="1"
-                      ref={input4Ref}
-                      onKeyDown={handleDelNumber4}
-                    />
-                  </>
-                ) : null}
-              </div>
-              <div className="sidebar-button">
-                <Button
-                  variant="primary"
-                  className={
-                    disableBtn
-                      ? "sidebar-button-disable"
-                      : "sidebar-button-active"
-                  }
-                  onClick={handleCheckResult}
-                  disabled={disableBtn}
-                >
-                  Gửi
-                </Button>
-              </div>
+    <div ref={sidebarRef}>
+      <Menu
+        isOpen={menuOpen}
+        onStateChange={(state) => handleStateChange(state)}
+        right
+        customBurgerIcon={<LockIcon />}
+        width={456}
+      >
+        <div className="sidebar-container">
+          <div className="sidebar-title">Chỉ dành cho cha mẹ</div>
+          <div className="sidebar-subtitle" ref={textRef}>
+            {user?.secret_password
+              ? "Vui lòng nhập mật mã để tiếp tục"
+              : "Vui lòng nhập câu trả lời chính xác để tiếp tục"}
+          </div>
+          {!user?.secret_password ? (
+            <div className="sidebar-calculate">
+              {num1} X {num2} = ?
             </div>
-          </Offcanvas.Body>
-        </Offcanvas>
-      </div>
-    </>
+          ) : null}
+          <div className="sidebar-input">
+            <input
+              value={value}
+              name="number1"
+              type={user?.secret_password ? "password" : "text"}
+              onChange={(e) => handleTypeInput(e, input1Ref.current.name)}
+              placeholder="#"
+              maxLength="1"
+              ref={input1Ref}
+            />
+            <input
+              value={value1}
+              type={user?.secret_password ? "password" : "text"}
+              name="number2"
+              onChange={(e) => handleTypeInput(e, input2Ref.current.name)}
+              placeholder="#"
+              maxLength="1"
+              ref={input2Ref}
+              onKeyDown={handleDelNumber2}
+            />
+            {user?.secret_password ? (
+              <>
+                <input
+                  value={value2}
+                  name="number3"
+                  type="password"
+                  onChange={(e) => handleTypeInput(e, input3Ref.current.name)}
+                  placeholder="#"
+                  maxLength="1"
+                  ref={input3Ref}
+                  onKeyDown={handleDelNumber3}
+                />
+                <input
+                  value={value3}
+                  name="number4"
+                  type="password"
+                  onChange={(e) => handleTypeInput(e, input4Ref.current.name)}
+                  placeholder="#"
+                  maxLength="1"
+                  ref={input4Ref}
+                  onKeyDown={handleDelNumber4}
+                />
+              </>
+            ) : null}
+          </div>
+          <div className="sidebar-button">
+            <Button
+              variant="primary"
+              className={
+                disableBtn ? "sidebar-button-disable" : "sidebar-button-active"
+              }
+              onClick={handleCheckResult}
+              disabled={disableBtn}
+            >
+              Gửi
+            </Button>
+          </div>
+        </div>
+      </Menu>
+    </div>
   );
 }

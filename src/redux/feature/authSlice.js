@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
 import * as api from "../api";
 
 export const getUser = createAsyncThunk(
@@ -266,14 +266,14 @@ export const deleteChildByParent = createAsyncThunk(
 );
 
 const initialState = {
-  user: Cookies.get("user") ? JSON.parse(Cookies.get("user")) : null,
+  user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null,
   guess: null,
-  childrenCreated: Cookies.get("childrenCreated")
-    ? JSON.parse(Cookies.get("childrenCreated"))
+  childrenCreated: localStorage.getItem("childrenCreated")
+    ? JSON.parse(localStorage.getItem("childrenCreated"))
     : null,
   childrenActive: null,
-  childrenSelected: Cookies.get("childrenSelected")
-    ? JSON.parse(Cookies.get("childrenSelected"))
+  childrenSelected: localStorage.getItem("childrenSelected")
+    ? JSON.parse(localStorage.getItem("childrenSelected"))
     : null,
   error: "",
   loading: false,
@@ -288,9 +288,9 @@ export const authSlice = createSlice({
       state.childrenActive = null;
       state.childrenCreated = null;
       state.childrenSelected = null;
-      Cookies.remove("childrenCreated");
-      Cookies.remove("childrenSelected");
-      Cookies.remove("user");
+      localStorage.removeItem("childrenCreated");
+      localStorage.removeItem("childrenSelected");
+      localStorage.removeItem("user");
     },
 
     setChildrenActive: (state, action) => {
@@ -303,13 +303,13 @@ export const authSlice = createSlice({
       );
       if (findChildren) {
         state.childrenSelected = findChildren;
-        Cookies.set("childrenSelected", JSON.stringify(findChildren));
+        localStorage.setItem("childrenSelected", JSON.stringify(findChildren));
       }
     },
 
     removeChildrenCreated: (state, action) => {
       state.childrenCreated = null;
-      Cookies.remove("childrenCreated");
+      localStorage.removeItem("childrenCreated");
     },
   },
   extraReducers: {
@@ -319,7 +319,7 @@ export const authSlice = createSlice({
     [getUser.fulfilled]: (state, action) => {
       state.loading = false;
       state.user = action.payload;
-      Cookies.set("user", JSON.stringify(action.payload), { expires: 7 });
+      localStorage.setItem("user", JSON.stringify(action.payload), { expires: 7 });
       state.error = "";
     },
     [getUser.rejected]: (state, action) => {
@@ -328,7 +328,7 @@ export const authSlice = createSlice({
     },
 
     [createSecretPassword.fulfilled]: (state, action) => {
-      Cookies.set("user", JSON.stringify(action.payload));
+      localStorage.setItem("user", JSON.stringify(action.payload));
       state.user = action.payload;
       state.error = "";
     },
@@ -338,9 +338,9 @@ export const authSlice = createSlice({
 
     [createChildren.fulfilled]: (state, action) => {
       state.user.childrens.push(action.payload);
-      Cookies.set("user", JSON.stringify(state.user));
+      localStorage.setItem("user", JSON.stringify(state.user));
       state.childrenCreated = action.payload;
-      Cookies.set("childrenCreated", JSON.stringify(action.payload));
+      localStorage.setItem("childrenCreated", JSON.stringify(action.payload));
       state.error = "";
     },
     [createChildren.rejected]: (state, action) => {
@@ -349,7 +349,7 @@ export const authSlice = createSlice({
 
     [createSecretPasswordChildren.fulfilled]: (state, action) => {
       state.user.childrens = action.payload.data.childrens;
-      Cookies.set("user", JSON.stringify(state.user));
+      localStorage.setItem("user", JSON.stringify(state.user));
       state.childrenActive = action.payload.data.children;
       state.errorChildren = "";
     },
@@ -359,7 +359,7 @@ export const authSlice = createSlice({
 
     [deleteSecretPasswordChildren.fulfilled]: (state, action) => {
       state.user.childrens = action.payload.childrens;
-      Cookies.set("user", JSON.stringify(state.user));
+      localStorage.setItem("user", JSON.stringify(state.user));
       state.childrenActive = action.payload.children;
       state.errorChildren = "";
     },
@@ -369,7 +369,7 @@ export const authSlice = createSlice({
 
     [deleteSecretPasswordChildrenForParent.fulfilled]: (state, action) => {
       state.user.childrens = action.payload.childrens;
-      Cookies.set("user", JSON.stringify(state.user));
+      localStorage.setItem("user", JSON.stringify(state.user));
       state.childrenSelected = action.payload.children;
       state.errorChildren = "";
     },
@@ -379,7 +379,7 @@ export const authSlice = createSlice({
 
     [addVideoHistory.fulfilled]: (state, action) => {
       state.user.childrens = action.payload.childrens;
-      Cookies.set("user", JSON.stringify(state.user));
+      localStorage.setItem("user", JSON.stringify(state.user));
       state.childrenActive = action.payload.children;
       state.error = "";
     },
@@ -389,7 +389,7 @@ export const authSlice = createSlice({
 
     [clearHistoryVideo.fulfilled]: (state, action) => {
       state.user.childrens = action.payload.childrens;
-      Cookies.set("user", JSON.stringify(state.user));
+      localStorage.setItem("user", JSON.stringify(state.user));
 
       state.childrenActive = action.payload.children;
       state.error = "";
@@ -400,7 +400,7 @@ export const authSlice = createSlice({
 
     [updateChildrenProfileForChildren.fulfilled]: (state, action) => {
       state.user.childrens = action.payload.childrens;
-      Cookies.set("user", JSON.stringify(state.user));
+      localStorage.setItem("user", JSON.stringify(state.user));
       state.childrenActive = action.payload.children;
       state.error = "";
     },
@@ -410,7 +410,7 @@ export const authSlice = createSlice({
 
     [updateChildrenProfileForParent.fulfilled]: (state, action) => {
       state.user.childrens = action.payload.childrens;
-      Cookies.set("user", JSON.stringify(state.user));
+      localStorage.setItem("user", JSON.stringify(state.user));
       state.childrenActive = action.payload.children;
       state.error = "";
     },
@@ -420,10 +420,10 @@ export const authSlice = createSlice({
 
     [updateContentChidlrenSettings.fulfilled]: (state, action) => {
       state.user.childrens = action.payload.childrens;
-      Cookies.set("user", JSON.stringify(state.user));
+      localStorage.setItem("user", JSON.stringify(state.user));
       state.childrenActive = action.payload.children;
       state.childrenSelected = action.payload.children;
-      Cookies.set("childrenSelected", JSON.stringify(action.payload.children));
+      localStorage.setItem("childrenSelected", JSON.stringify(action.payload.children));
       state.error = "";
     },
     [updateContentChidlrenSettings.rejected]: (state, action) => {
@@ -432,7 +432,7 @@ export const authSlice = createSlice({
 
     [addVideoByParent.fulfilled]: (state, action) => {
       state.user.childrens = action.payload.childrens;
-      Cookies.set("user", JSON.stringify(state.user));
+      localStorage.setItem("user", JSON.stringify(state.user));
       if (
         state.childrenActive !== null &&
         state.childrenActive._id === action.payload.children._id
@@ -440,13 +440,13 @@ export const authSlice = createSlice({
         state.childrenActive = action.payload.children;
       }
       state.childrenSelected = action.payload.children;
-      Cookies.set("childrenSelected", JSON.stringify(action.payload.children));
+      localStorage.setItem("childrenSelected", JSON.stringify(action.payload.children));
       state.error = "";
     },
 
     [removeVideoByParent.fulfilled]: (state, action) => {
       state.user.childrens = action.payload.childrens;
-      Cookies.set("user", JSON.stringify(state.user));
+      localStorage.setItem("user", JSON.stringify(state.user));
       if (
         state.childrenActive !== null &&
         state.childrenActive._id === action.payload.children._id
@@ -454,13 +454,13 @@ export const authSlice = createSlice({
         state.childrenActive = action.payload.children;
       }
       state.childrenSelected = action.payload.children;
-      Cookies.set("childrenSelected", JSON.stringify(action.payload.children));
+      localStorage.setItem("childrenSelected", JSON.stringify(action.payload.children));
       state.error = "";
     },
 
     [deleteChildByParent.fulfilled]: (state, action) => {
       state.user.childrens = action.payload.childrens;
-      Cookies.set("user", JSON.stringify(state.user));
+      localStorage.setItem("user", JSON.stringify(state.user));
       state.error = "";
     },
   },
