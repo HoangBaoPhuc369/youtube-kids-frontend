@@ -23,18 +23,42 @@ export default function ActivityOptions({ show, onHide }) {
               <div className="option-activity-left">
                 <div className="option-activity-left-top">
                   <div className="option-activity-title">
-                    Phuc Hoang vua xem video
+                    <div className="option-activity-title-img">
+                      <img
+                        src="https://res.cloudinary.com/same-cloud/image/upload/v1660639364/faceclone/picture/1_vkf6n4.jpg"
+                        alt="alt"
+                      />
+                    </div>
+                    <div className="option-activity-title-name">
+                      <div>Luan hehe</div>
+                      <div>Luan hehe dang xem video</div>
+                    </div>
                   </div>
-                  <div className="option-activity-detail"></div>
+                  <div className="option-activity-detail">
+                    <iframe
+                      width="100%"
+                      height="100%"
+                      id="video-play"
+                      // ref={videoRef}
+                      src={`https://www.youtube.com/embed/-hI2TA8uqyI`}
+                      title="YouTube video player"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      rel="0"
+                    ></iframe>
+                  </div>
                 </div>
                 <div className="option-activity-left-bottom">
-                  <Form.Control type="text" placeholder="Normal text" />
-                  <Button variant="primary">Primary</Button>
+                  <input type="text" placeholder="Normal text" />
+                  <input type="button" value="Gui" />
                 </div>
               </div>
               <div className="option-activity-right">
-                <Button variant="primary">Primary</Button>
-                <Button variant="primary">Primary</Button>
+                {/* <Button variant="primary">Primary</Button> */}
+                {/* <Button variant="primary">Primary</Button> */}
+                <div>Primary</div>
+                <div>Primary</div>
               </div>
             </div>
           </div>

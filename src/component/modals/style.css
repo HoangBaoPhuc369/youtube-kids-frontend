@@ -52,6 +52,7 @@
 .option-activity-wrapper {
   width: 100%;
   min-height: 600px;
+  user-select: none;
 }
 
 .option-activity-container {
@@ -63,24 +64,131 @@
 
 .option-activity-left {
   width: 70%;
-  background: blue;
   height: 100%;
 }
 
 .option-activity-right {
   width: 30%;
-  background: red;
   height: 100%;
+  padding-top: 150px;
+  border-left: 1px solid #cacfd2;
+}
+
+.option-activity-right div {
+  background-color: #fff;
+  padding: 5px 15px;
+  border: 2px solid #138d75;
+  color: #138d75;
+  transition: 0.2s;
+  cursor: pointer;
+  width: 200px;
+  margin: 15px auto;
+  text-align: center;
+}
+
+.option-activity-right div:hover {
+  background-color: #58d68d;
+  border: 2px solid #58d68d;
+  color: aliceblue;
+}
+
+.option-activity-right div:active {
+  background-color: #138d75;
+  border: 2px solid aliceblue;
 }
 
 .option-activity-left-top {
   width: 100%;
   height: 80%;
-  background: grey;
+  background: #fff;
+  border-top-left-radius: 10px;
+}
+
+.option-activity-title {
+  display: flex;
+  align-items: center;
+}
+
+.option-activity-title-img {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  border-radius: 50%;
+}
+
+.option-activity-title-img img {
+  width: 100%;
+  object-fit: scale-down;
+  border-radius: 50%;
+}
+
+.option-activity-title-name {
+  margin-left: 10px;
+}
+
+.option-activity-title-name div:first-child {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.option-activity-title-name div:last-child {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.option-activity-detail {
+  padding: 10px 5px;
+  margin-right: 10px;
+  height: 90%;
 }
 
 .option-activity-left-bottom {
   width: 100%;
   height: 20%;
-  background: yellow;
+  padding-right: 15px;
+}
+
+.option-activity-left-bottom input[type="text"] {
+  height: 50px;
+  padding: 2px 5px;
+  margin: 5px 0;
+  border: 1px solid #fff;
+  background-color: #fff;
+  border-bottom: 1px solid #cacfd2;
+  width: 100%;
+  transition: 0.2s;
+}
+
+.option-activity-left-bottom input[type="text"]:focus {
+  outline: none;
+  border: 1px solid aliceblue;
+  background-color: aliceblue;
+  border-bottom: 1px solid #34495e;
+}
+
+.option-activity-left-bottom input[type="button"] {
+  background-color: #fff;
+  padding: 5px 15px;
+  border: 2px solid #138d75;
+  color: #138d75;
+  transition: 0.2s;
+  cursor: pointer;
+}
+
+.option-activity-left-bottom input[type="button"]:hover {
+  background-color: #58d68d;
+  border: 2px solid #58d68d;
+  color: aliceblue;
+}
+
+.option-activity-left-bottom input[type="button"]:active {
+  background-color: #138d75;
+  border: 2px solid aliceblue;
+}
+
+/* override */
+
+.modal.show .modal-dialog {
+  transform: none;
+  margin: 0 auto;
 }
