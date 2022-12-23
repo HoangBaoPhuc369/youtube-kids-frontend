@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import { Card } from "react-bootstrap";
 import "./style.css";
 import { useSelector, useDispatch } from "react-redux";
@@ -8,6 +8,8 @@ import { useNavigate } from "react-router-dom";
 import { setCategory } from "../../redux/feature/videolistSlice";
 import { ToastContainer } from "react-toastify";
 import { bounce } from "../../component/toast/ToastMessage";
+import SocketContext from "../../wssConnection/socketContext";
+import { parentMsg } from "../../wssConnection/socketFromParent";
 
 export default function SecretKeyChild() {
   const { childrenActive } = useSelector((state) => state.auth);
@@ -85,6 +87,12 @@ export default function SecretKeyChild() {
       navigate("/");
     }
   };
+
+  const socketRef = useContext(SocketContext);
+
+  useEffect(() => {
+    parentMsg(socketRef, childrenActive, dispatch);
+  }, []);
 
   return (
     <>

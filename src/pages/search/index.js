@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import Footer from "../../component/footer";
@@ -9,14 +9,24 @@ import { searchVideos } from "./../../redux/feature/videolistSlice";
 import "./style.css";
 import { ToastContainer } from "react-toastify";
 import { bounce } from "../../component/toast/ToastMessage";
+import SocketContext from "../../wssConnection/socketContext";
+import { parentMsg } from "../../wssConnection/socketFromParent";
+import { setChildrenActive } from "../../redux/feature/authSlice";
 
 export default function Search() {
   const { key } = useParams();
   const { videos, loading } = useSelector((state) => state.video);
+  const { childrenActive } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(searchVideos({ key: key }));
   }, [key]);
+
+  const socketRef = useContext(SocketContext);
+
+  useEffect(() => {
+    parentMsg(socketRef, childrenActive, dispatch);
+  }, []);
   return (
     <>
       <div className="search-wrapper">

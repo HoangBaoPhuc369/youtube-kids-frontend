@@ -45,7 +45,6 @@ const StepTwo = ({ nextStep, prevStep, jump2Step }) => {
     }
   };
 
-
   const handleDelNumber2 = (e) => {
     const key = e.keyCode || e.charCode;
     const checkKey = key === 8 || key === 46;
@@ -80,9 +79,8 @@ const StepTwo = ({ nextStep, prevStep, jump2Step }) => {
     const userYear = value + value1 + value2 + value3;
     const currentYear = new Date().getFullYear();
     const userAge = currentYear - userYear;
-    if (userAge >= 18 ) {
+    if (userAge >= 18) {
       jump2Step();
-
     } else {
       nextStep();
     }

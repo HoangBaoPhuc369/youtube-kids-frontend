@@ -34,6 +34,7 @@ import VideoDetailsWrap from "./VideoDetailsWrap";
 import SocketContext from "../../wssConnection/socketContext";
 import { ToastContainer } from "react-toastify";
 import { bounce } from "../../component/toast/ToastMessage";
+import { parentMsg } from "../../wssConnection/socketFromParent";
 
 export default function Details({ page }) {
   const navigate = useNavigate();
@@ -53,12 +54,19 @@ export default function Details({ page }) {
   const [chatShow, setChatShow] = useState(false);
   const [valueMessage, setValueMessage] = useState("");
 
+
+  
+
   const chatRef = useRef(null);
   const videoRef = useRef(null);
   const playRef = useRef(null);
   const scrollRef = useRef();
 
   const socketRef = useContext(SocketContext);
+
+  useEffect(() => {
+    parentMsg(socketRef, childrenActive, dispatch);
+  }, []);
 
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });

@@ -46,8 +46,6 @@ function App() {
   const { childrenActive } = useSelector((state) => state.auth);
   const socket = useSocket("http://localhost:8900");
 
- 
-
   return (
     <SocketContext.Provider value={socket}>
       <Routes>

@@ -13,6 +13,9 @@ import RubyIcon from "../../svgs/RubyIcon";
 import { SlOptionsVertical } from "react-icons/sl";
 import { ToastContainer } from "react-toastify";
 import { bounce } from "../../component/toast/ToastMessage";
+import { useContext } from "react";
+import SocketContext from "../../wssConnection/socketContext";
+import { parentMsg } from "../../wssConnection/socketFromParent";
 
 export default function Channel() {
   const dispatch = useDispatch();
@@ -26,6 +29,12 @@ export default function Channel() {
       number
     );
   };
+
+  const socketRef = useContext(SocketContext);
+
+  useEffect(() => {
+    parentMsg(socketRef, childrenActive, dispatch);
+  }, []);
 
   useEffect(() => {
     dispatch(

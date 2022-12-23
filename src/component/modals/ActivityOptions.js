@@ -70,7 +70,7 @@ export default function ActivityOptions({ show, onHide }) {
     const findChildren = user?.childrens.find(
       (x) => x._id === trackingSelected?.childrenId
     );
-    const findeVideo = findChildren.block_video.find((v) => v === id);
+    const findeVideo = findChildren?.block_video.find((v) => v === id);
 
     if (findeVideo) {
       return true;

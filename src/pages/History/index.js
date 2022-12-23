@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Footer from "../../component/footer";
 import Header from "../../component/header";
@@ -9,6 +9,8 @@ import VideoHistory from "../../component/video/videoHistory";
 import { MdModeEdit } from "react-icons/md";
 import { ToastContainer } from "react-toastify";
 import { bounce } from "../../component/toast/ToastMessage";
+import SocketContext from "../../wssConnection/socketContext";
+import { parentMsg } from "../../wssConnection/socketFromParent";
 
 export default function History() {
   const dispatch = useDispatch();
@@ -19,6 +21,12 @@ export default function History() {
   const handleSettings = () => {
     navigate("/profile-settings");
   };
+
+  const socketRef = useContext(SocketContext);
+
+  useEffect(() => {
+    parentMsg(socketRef, childrenActive, dispatch);
+  }, []);
 
   return (
     <div className="home-wrapper background-history">

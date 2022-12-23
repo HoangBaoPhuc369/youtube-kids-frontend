@@ -12,11 +12,11 @@ export const getUser = createAsyncThunk(
       if (children.length === 0) {
         setTimeout(() => {
           navigate("/profile-account");
-        }, 500);
+        }, 300);
       } else {
         setTimeout(() => {
           navigate("/list-profile");
-        }, 500);
+        }, 300);
       }
       return data.user;
     } catch (err) {

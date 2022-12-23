@@ -22,6 +22,7 @@ import SocketContext from "../../wssConnection/socketContext";
 import { updateKidActivity } from "./../../redux/feature/authSlice";
 import { ToastContainer } from "react-toastify";
 import { bounce } from "../../component/toast/ToastMessage";
+import { parentMsg } from "../../wssConnection/socketFromParent";
 
 export default function ProfileSettings() {
   const { user, childrenActive } = useSelector((state) => state.auth);
@@ -39,6 +40,11 @@ export default function ProfileSettings() {
   const handleClose = () => {
     setShow(false);
   };
+
+
+  useEffect(() => {
+    parentMsg(socketRef, childrenActive, dispatch);
+  }, []);
 
   const handleClear = (type) => {
     if (type === "history") {
