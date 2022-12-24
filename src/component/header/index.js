@@ -167,7 +167,7 @@ export default function Header({ page }) {
                     <input
                       type="text"
                       ref={inputSearchRef}
-                      placeholder="Tìm kiếm trên Youtube Kids"
+                      placeholder="Tìm kiếm trên YouKids"
                     />
                     <button onClick={handleSearch}>
                       <SearchIcon />
@@ -297,7 +297,7 @@ export default function Header({ page }) {
                     <input
                       type="text"
                       ref={inputSearchRef}
-                      placeholder="Tìm kiếm trên Youtube Kids"
+                      placeholder="Tìm kiếm trên YouKids"
                     />
                     <button onClick={handleSearch}>
                       <SearchIcon />

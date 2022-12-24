@@ -116,7 +116,7 @@ export default function HeaderVideoDetailAdmin() {
                   <input
                     type="text"
                     ref={inputSearchRef}
-                    placeholder="Tìm kiếm trên Youtube Kids"
+                    placeholder="Tìm kiếm trên YouKids"
                   />
                   <button onClick={handleSearch}>
                     <SearchIcon />

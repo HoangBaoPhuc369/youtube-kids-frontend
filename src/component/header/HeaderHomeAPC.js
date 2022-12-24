@@ -113,7 +113,7 @@ export default function HeaderHomeAPC() {
                   <input
                     type="text"
                     ref={inputSearchRef}
-                    placeholder="Tìm kiếm trên Youtube Kids"
+                    placeholder="Tìm kiếm trên YouKids"
                   />
                   <button onClick={handleSearch}>
                     <SearchIcon />

@@ -44,7 +44,7 @@ export default function ListProfileChildren() {
                       Bạn đã hoàn tất! Chúc mừng {user?.name}!
                     </Form.Label>
                     <Form.Label className="login-form-text mgbt-20">
-                      Ai đang dùng YouTube Kids?
+                      Ai đang dùng YouKids?
                     </Form.Label>
 
                     <Row

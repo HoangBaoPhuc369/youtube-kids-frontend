@@ -42,7 +42,7 @@ export default function ProfileOptions() {
         <div className="profile-options-body">
           <div className="profile-options-body-title">Chọn hồ sơ</div>
           <div className="profile-options-body--sub-title">
-            Ai hiện đang sử dụng YouTube Kids?
+            Ai hiện đang sử dụng YouKids?
           </div>
 
           <div className="profile-options-body-item-wrapper">

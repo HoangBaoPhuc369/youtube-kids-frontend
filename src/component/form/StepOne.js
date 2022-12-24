@@ -14,7 +14,7 @@ const StepOne = ({ nextStep, prevStep }) => {
             <BackgroundLogin />
           </Card.Title>
           <Card.Text className="login-form-title">
-            Hãy nhờ cha mẹ thiết lập YouTube Kids
+            Hãy nhờ cha mẹ thiết lập YouKids
           </Card.Text>
           <div className="login-form-btn-group">
             <Button variant="primary" onClick={() => prevStep()}>

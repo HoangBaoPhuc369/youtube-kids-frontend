@@ -23,6 +23,7 @@ import { VscSearchStop, VscSearch } from "react-icons/vsc";
 import { RiChatCheckLine, RiChatDeleteFill } from "react-icons/ri";
 import { ToastContainer, toast, cssTransition } from "react-toastify";
 import { bounce, Msg } from "../../component/toast/ToastMessage";
+import moment from "moment/moment";
 
 export default function Tracking() {
   const navigate = useNavigate();
@@ -159,6 +160,13 @@ export default function Tracking() {
     });
   };
 
+  const formatDate = (data) => {
+    const date = moment(data);
+    date.locale("vi");
+    const formattedDate = date.format("LLL");
+    return formattedDate;
+  };
+
   return (
     <>
       <div className="admin-wrapper">
@@ -186,7 +194,7 @@ export default function Tracking() {
                               <img src={k.picture} alt="" />
                             </div>
                             <div className="tracking-notification-text-wrap">
-                              <span>{k.name}</span>
+                              <span>{formatDate(k.createdAt)}</span>
                               <span>{k.activity.content}</span>
                             </div>
                           </div>

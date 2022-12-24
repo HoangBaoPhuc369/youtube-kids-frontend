@@ -115,7 +115,7 @@ export default function ChooseVideosByAges({
             </Form.Label>
             <Form.Label className="login-form-text">
               Sự lựa chọn của bạn sẽ tác động đến các loại video có trong
-              YouTube Kids
+              YouKids
             </Form.Label>
             <div className="choose-age-btn-wrapper">
               <Row xs={1} md={2} lg={3} className="g-4">
